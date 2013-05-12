@@ -1,0 +1,11 @@
+Include("AAF.h")
+
+obj = Class("_aafUID_t", "AAFTypes.h")
+
+exclude(obj.Data4)
+rename(obj, "aafUID_t")
+
+#Class("aafSearchCrit_t","AAFTypes.h")
+
+#obj = Enum("_aafSearchTag_e","AAFTypes.h")
+#rename(obj._aafSearchTag_e, "aafSearchTag_e")

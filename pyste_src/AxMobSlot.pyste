@@ -1,0 +1,5 @@
+ 
+Class("AxMobSlot", "AxMobSlot.h")
+Class("AxTimelineMobSlot", "AxMobSlot.h")
+Class("AxEventMobSlot", "AxMobSlot.h")
+Class("AxStaticMobSlot", "AxMobSlot.h")

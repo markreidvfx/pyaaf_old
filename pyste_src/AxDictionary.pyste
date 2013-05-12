@@ -1,0 +1,2 @@
+obj = Class("AxDictionary", "AxDictionary.h")
+exclude(obj.dump)

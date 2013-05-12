@@ -1,0 +1,3 @@
+obj = Class("AxContentStorage", "AxContentStorage.h")
+exclude(obj.dump)
+exclude(obj.operator['<<'])

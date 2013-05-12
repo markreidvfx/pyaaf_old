@@ -1,0 +1,13 @@
+#Import("AxBaseObj.pyste")
+aheader= Class("AxHeader", "AxHeader.h")
+exclude(aheader.dump)
+exclude(aheader.operator['<<'])
+
+Include("AxSmartPointer.h")
+
+module_code("""
+
+//class_<IAAFSmartPointer<IAAFHeader> >("IAAFHeader");
+
+"""
+)

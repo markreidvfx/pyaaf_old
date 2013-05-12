@@ -1,0 +1,21 @@
+#Import("AxBaseObj.pyste")
+
+PySaveAs = Wrapper("PySaveAs",
+    """
+void PySaveAs(AxFile file, AxString path)
+{
+
+AxFile newfile;
+newfile.OpenNewModify( path );
+file.SaveCopyAs(newfile);
+newfile.Close();
+    }
+""")
+
+
+
+
+axfile = Class("AxFile", "AxFile.h")
+exclude(axfile.dump)
+exclude(axfile.operator['<<'])
+set_wrapper(axfile.SaveCopyAs, PySaveAs)
