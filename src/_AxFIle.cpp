@@ -10,6 +10,64 @@
 using namespace boost::python;
 
 // Declarations ================================================================
+
+
+#include "AxEx.h"
+#include "AxHrMap.h"
+#include "AxUtil.h"
+
+#include "AAF.h"
+#include "AAFFileKinds.h"
+#include "AAFResult.h"
+
+#include <iostream>
+#include <sys/stat.h>
+
+using namespace std;
+
+bool fileExists(const string& filename)
+{
+    struct stat buf;
+    if (stat(filename.c_str(), &buf) != -1)
+    {
+        return true;
+    }
+    return false;
+}
+
+void pySaveAsXml(AxFile file, string path)
+{
+
+if (fileExists(path))
+{
+
+if( remove( path.c_str() ) != 0 )
+{
+    HRESULT hr = AAFRESULT_NOT_WRITEABLE;
+    throw AxExHResult( hr, L"Cannot Overwrite File" );
+}
+
+}
+
+AxString fileName( AxStringUtil::mbtowc( path.c_str() ) );
+
+IAAFFileSP outfile;
+AxProductIdentification ident;
+
+CHECK_HRESULT(AAFFileOpenNewModifyEx(fileName.c_str(),
+                                &kAAFFileKind_AafXmlText, 0,
+                                const_cast<aafProductIdentification_t*>( ident.getProductId() ),
+                                &outfile ));
+                     
+AxFile newfile = AxFile(outfile);
+file.SaveCopyAs(newfile);
+newfile.Close();
+
+}
+
+
+
+
 namespace  {
 
 BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(AxFile_OpenNewModify_overloads_1_3, OpenNewModify, 1, 3)
@@ -52,6 +110,7 @@ void Export_pyste_src_AxFIle()
         .def("getHeader", &AxFile::getHeader)
         .staticmethod("isAAFFile")
         .def("to_IAAFFileSP", &AxFile::operator IAAFFileSP)
+        .def("toXml", pySaveAsXml)
     ;
 
 }
