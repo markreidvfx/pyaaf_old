@@ -1,6 +1,5 @@
 
 f = open("smart.txt", 'r')
-print f
 s = f.read()
 
 f.close()
@@ -34,7 +33,7 @@ for line in s.splitlines():
             #    pass
             #else:
             
-            print pointer_name
+            #print pointer_name
             
             string =  'class_< %s > ("%s");\n' 
             string = string % (pointer_name,pointer_name)

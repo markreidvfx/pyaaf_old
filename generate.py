@@ -13,7 +13,6 @@ aaf_include_dirs = [os.path.join(AAF_ROOT, 'AAF%sSDK' % AAF_PLATFORM, 'g++', 'in
                     os.path.join(AAF_ROOT,'examples2','axLib'),
                     ]
                     
-pyste_files = glob.glob('./pyste_src/*.pyste')
 
 
 
@@ -47,7 +46,12 @@ def run_gen():
     subprocess.check_call(cmd,cwd=working_dir)
     
   
-def run_pyste():
+def run_pyste(pyste_files=None):
+    
+    if not pyste_files:
+        pyste_files = glob.glob('./pyste_src/*.pyste')
+        
+    all_pyste_files = glob.glob('./pyste_src/*.pyste')
     
     includes = []
     
@@ -58,7 +62,7 @@ def run_pyste():
         
     cmd = ['pyste.py', '--module=pyaaf', '--multiple', '--generate-main', '--out=./src']
     cmd.extend(includes)
-    cmd.extend(pyste_files)
+    cmd.extend(all_pyste_files)
     
     commands.append(cmd)
     
@@ -84,7 +88,12 @@ def run_pyste():
     
 
 if __name__ == "__main__":
+    from optparse import OptionParser
+    
+    parser = OptionParser()
+    (options, args) = parser.parse_args()
+    
     run_gen()    
-    run_pyste()
+    run_pyste(args)
 
 
