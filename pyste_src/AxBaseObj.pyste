@@ -1,0 +1,9 @@
+#base = Class("AxBaseObj", "AxBaseObj.h")
+
+Include("AxBaseObj.h")
+
+
+module_code("""
+    class_<AxBaseObj ,std::auto_ptr<AxBaseObj>, boost::noncopyable> ("AxBaseObj", no_init);
+"""
+)

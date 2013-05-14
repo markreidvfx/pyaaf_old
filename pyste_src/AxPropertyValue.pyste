@@ -1,0 +1,11 @@
+Include("AxPropertyValue.h")
+
+module_code("""
+
+    class_<AxPropertyValue ,std::auto_ptr<AxPropertyValue>, boost::noncopyable> ("AxPropertyValue", no_init)
+    .def("GetType",&AxPropertyValue::GetType)
+    .def("GetValue",&AxPropertyValue::GetValue)
+    ;
+
+"""
+)

@@ -1,0 +1,11 @@
+Include("AxObject.h")
+
+module_code("""
+
+    class_<AxObject ,std::auto_ptr<AxObject>, boost::noncopyable> ("AxObject", no_init)
+    .def("GetClassName",&AxObject::GetClassName)
+    .def("GetProperties",&AxObject::GetProperties)
+    .def("GetDefinition",&AxObject::GetDefinition)
+    ;
+"""
+)
