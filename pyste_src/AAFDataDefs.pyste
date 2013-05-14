@@ -1,0 +1,13 @@
+
+Var("kAAFDataDef_Picture", "AAFDataDefs.h")
+Var("kAAFDataDef_LegacyPicture", "AAFDataDefs.h")
+Var("kAAFDataDef_Matte", "AAFDataDefs.h")
+Var("kAAFDataDef_PictureWithMatte", "AAFDataDefs.h")
+Var("kAAFDataDef_Sound", "AAFDataDefs.h")
+Var("kAAFDataDef_LegacySound", "AAFDataDefs.h")
+Var("kAAFDataDef_Timecode", "AAFDataDefs.h")
+Var("kAAFDataDef_LegacyTimecode", "AAFDataDefs.h")
+Var("kAAFDataDef_Edgecode", "AAFDataDefs.h")
+Var("kAAFDataDef_DescriptiveMetadata", "AAFDataDefs.h")
+Var("kAAFDataDef_Auxiliary", "AAFDataDefs.h")
+Var("kAAFDataDef_Unknown", "AAFDataDefs.h")
