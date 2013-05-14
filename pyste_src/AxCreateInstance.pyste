@@ -1,0 +1,32 @@
+Include("AxDictionary.h")
+
+declaration_code("""
+template <class Type>
+
+struct AxCreateInstanceWrapper
+{
+    
+    static IAAFSmartPointer<Type> create_instance(AxDictionary& dict)
+    {
+        
+        return AxCreateInstance<Type>(dict);
+        
+    }
+    
+    static void wrap(const char* python_name)
+    {
+        
+        def(python_name, create_instance);
+        
+    }
+};
+
+"""
+)
+
+module_code("""
+
+    AxCreateInstanceWrapper<IAAFCompositionMob>().wrap("createCompositionMobSP");
+
+"""
+)

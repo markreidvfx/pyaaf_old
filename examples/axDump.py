@@ -39,9 +39,10 @@ for item in ObjectRecIter:
         obj = ax.toAxProperty()
         name = obj.GetName()
         auid = obj.GetAUID()
+        definition = obj.GetDefinition()
         value = pyaaf.AxPropertyValue(obj.GetValue())
         
-        print "AxProperty",name,value.toString()
+        print "AxProperty",name,value,definition
     
     elif ax.isAxPropertyValue():
         obj = ax.toAxPropertyValue()

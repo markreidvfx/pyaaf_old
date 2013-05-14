@@ -1,0 +1,34 @@
+Include("AxSmartPointer.h")
+
+
+declaration_code("""
+
+template <class TypeSrc, class TypeDst>
+struct AxQueryInterfaceWrapper
+{
+    
+    static IAAFSmartPointer<TypeDst> query_interface( IAAFSmartPointer<TypeSrc> spSrc)
+    {
+        
+        return AxQueryInterface<TypeSrc,TypeDst>( spSrc );
+    }
+    
+    static void wrap(const char* python_name)
+    {
+        
+        def(python_name, query_interface);
+        
+    }
+    
+};
+
+"""
+)
+
+module_code("""
+
+    AxQueryInterfaceWrapper<IAAFMob,IAAFMasterMob>().wrap("MobSP_to_MasterMobSP");
+
+
+"""
+)

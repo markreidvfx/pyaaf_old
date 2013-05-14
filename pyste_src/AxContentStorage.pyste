@@ -1,3 +1,50 @@
-obj = Class("AxContentStorage", "AxContentStorage.h")
-exclude(obj.dump)
-exclude(obj.operator['<<'])
+
+#obj = Class("AxContentStorage", "AxContentStorage.h")
+
+#exclude(obj.dump)
+#exclude(obj.operator['<<'])
+
+
+Include("AxIterator.h")
+Include("AxContentStorage.h")
+
+declaration_code("""
+AxMobIter PyGetMasterMobs(AxContentStorage* storage)
+    {
+        
+        aafSearchCrit_t criteria;
+        criteria.searchTag = kAAFByMobKind;
+        criteria.tags.mobKind = kAAFMasterMob;
+        AxMobIter axMobIter( storage->GetMobs( &criteria ) );
+        return axMobIter;
+    }
+
+namespace  {
+
+BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(AxContentStorage_GetMobs_overloads_0_1, GetMobs, 0, 1)
+
+
+}// namespace 
+
+"""
+)
+
+module_code("""
+
+    class_< AxContentStorage, boost::noncopyable >("AxContentStorage", init< IAAFContentStorageSP >())
+        .def("LookupMob", &AxContentStorage::LookupMob)
+        .def("LookupEssenceData", &AxContentStorage::LookupEssenceData)
+        .def("CountEssenceData", &AxContentStorage::CountEssenceData)
+        .def("IsEssenceDataPresent", &AxContentStorage::IsEssenceDataPresent)
+        .def("GetMobs", &AxContentStorage::GetMobs, AxContentStorage_GetMobs_overloads_0_1())
+        .def("EnumEssenceData", &AxContentStorage::EnumEssenceData)
+        .def("GetClassName", &AxObject::GetClassName)
+        .def("GetDictionary", &AxObject::GetDictionary)
+        .def("GetProperties", &AxObject::GetProperties)
+        .def("GetDefinition", &AxObject::GetDefinition)
+        .def("GetMasterMobs",PyGetMasterMobs)
+    ;
+
+
+"""
+)
