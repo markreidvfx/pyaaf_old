@@ -39,6 +39,7 @@ void Export_pyste_src_AxPropertyValue()
     .def("GetType",&AxPropertyValue::GetType)
     .def("GetValue",&AxPropertyValue::GetValue)
     .def("toString",valueToString)
+    .def("__str__",valueToString)
     ;
 
 }

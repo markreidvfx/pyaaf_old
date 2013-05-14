@@ -46,7 +46,7 @@ for item in ObjectRecIter:
     elif ax.isAxPropertyValue():
         obj = ax.toAxPropertyValue()
         #dump = pyaaf.valueDump(obj)
-        print "AxPropertyValue",obj.toString()
+        print "AxPropertyValue",str(obj)
 
         
     elif ax.isAxRecordIterator():
@@ -57,7 +57,7 @@ for item in ObjectRecIter:
         second = record.second()
         p = pyaaf.AxPropertyValue(second)
         
-        print "AxRecordIterator", record.first(),p.toString()
+        print "AxRecordIterator", record.first(),str(p)
 
     else:
         print "***",item
