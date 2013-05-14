@@ -4,6 +4,7 @@
 #include <boost/cstdint.hpp>
 
 // Includes ====================================================================
+#include <AxComponent.h>
 #include <AxDictionary.h>
 #include <AxMob.h>
 
@@ -44,6 +45,7 @@ void Export_pyste_src_AxCreateInstance()
 
     
     AxCreateInstanceWrapper<IAAFCompositionMob, AxCompositionMob >().wrap("createAxCompositionMob");
+    AxCreateInstanceWrapper<IAAFSequence, AxSequence >().wrap("createAxSequence");
 
 }
 
