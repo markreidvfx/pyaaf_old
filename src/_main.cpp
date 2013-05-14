@@ -22,6 +22,7 @@ void Export_pyste_src_AxDictionary();
 void Export_pyste_src_AxDataDef();
 void Export_pyste_src_AxCreateInstance();
 void Export_pyste_src_AxContentStorage();
+void Export_pyste_src_AxComponent();
 void Export_pyste_src_AxBaseObjIter();
 void Export_pyste_src_AxBaseObj();
 void Export_pyste_src_AAFTypes();
@@ -50,6 +51,7 @@ BOOST_PYTHON_MODULE(pyaaf)
     Export_pyste_src_AxDataDef();
     Export_pyste_src_AxCreateInstance();
     Export_pyste_src_AxContentStorage();
+    Export_pyste_src_AxComponent();
     Export_pyste_src_AxBaseObjIter();
     Export_pyste_src_AxBaseObj();
     Export_pyste_src_AAFTypes();
