@@ -5,31 +5,36 @@
 
 // Includes ====================================================================
 #include <AxDictionary.h>
+#include <AxMob.h>
 
 // Using =======================================================================
 using namespace boost::python;
 
 // Declarations ================================================================
 
-template <class Type>
+template <class Type, class AxType>
 
 struct AxCreateInstanceWrapper
 {
     
-    static IAAFSmartPointer<Type> create_instance(AxDictionary& dict)
+    static AxType* create_instance(AxDictionary& dict)
     {
         
-        return AxCreateInstance<Type>(dict);
+        AxType* result;
+        result = new AxType(AxCreateInstance<Type>(dict));
+        
+        return result;
         
     }
     
     static void wrap(const char* python_name)
     {
         
-        def(python_name, create_instance);
+        def(python_name, create_instance,return_value_policy<manage_new_object>());
         
     }
 };
+
 
 
 
@@ -37,8 +42,8 @@ struct AxCreateInstanceWrapper
 void Export_pyste_src_AxCreateInstance()
 {
 
-
-    AxCreateInstanceWrapper<IAAFCompositionMob>().wrap("createCompositionMobSP");
+    
+    AxCreateInstanceWrapper<IAAFCompositionMob, AxCompositionMob >().wrap("createAxCompositionMob");
 
 }
 
