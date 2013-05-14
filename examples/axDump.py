@@ -38,19 +38,22 @@ for item in ObjectRecIter:
     elif ax.isAxProperty():
         obj = ax.toAxProperty()
         name = obj.GetName()
+        auid = obj.GetAUID()
         
-        print "AxProperty",name
+        print "AxProperty",name,"**", auid
     
     elif ax.isAxPropertyValue():
         obj = ax.toAxPropertyValue()
-        print "AxPropertyValue", obj.GetType()
+        dump = pyaaf.valueDump(obj)
+        print "AxPropertyValue",dump
+
         
     elif ax.isAxRecordIterator():
         obj = ax.toAxRecordIterator()
         record = pyaaf.PyRecord()
         record.set_object(obj)
         print "AxRecordIterator", record.first(), record.second()
-        
+
     else:
         print "***",item
         
