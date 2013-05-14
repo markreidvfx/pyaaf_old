@@ -20,5 +20,11 @@ void Export_pyste_src_AAFTypes()
         .def_readwrite("Data3", &_aafUID_t::Data3)
     ;
 
+    class_< _aafRational_t >("aafRational_t", init<  >())
+        .def(init< const _aafRational_t& >())
+        .def_readwrite("numerator", &_aafRational_t::numerator)
+        .def_readwrite("denominator", &_aafRational_t::denominator)
+    ;
+
 }
 

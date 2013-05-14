@@ -5,6 +5,9 @@ obj = Class("_aafUID_t", "AAFTypes.h")
 exclude(obj.Data4)
 rename(obj, "aafUID_t")
 
+obj = Class("_aafRational_t", "AAFTypes.h")
+rename(obj, "aafRational_t")
+
 #Class("aafSearchCrit_t","AAFTypes.h")
 
 #obj = Enum("_aafSearchTag_e","AAFTypes.h")
