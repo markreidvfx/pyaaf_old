@@ -52,7 +52,11 @@ for item in ObjectRecIter:
         obj = ax.toAxRecordIterator()
         record = pyaaf.PyRecord()
         record.set_object(obj)
-        print "AxRecordIterator", record.first(), record.second()
+        
+        second = record.second()
+        p = pyaaf.AxPropertyValue(second)
+        
+        print "AxRecordIterator", record.first(),pyaaf.valueDump(p)
 
     else:
         print "***",item

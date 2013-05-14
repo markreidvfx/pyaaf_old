@@ -13,7 +13,7 @@ using namespace boost::python;
 void Export_pyste_src_AxProperty()
 {
 
-    class_<AxProperty ,std::auto_ptr<AxProperty>, boost::noncopyable> ("AxProperty", no_init)
+    class_<AxProperty ,std::auto_ptr<AxProperty>, boost::noncopyable> ("AxProperty", init <IAAFPropertySP>())
     .def("GetName",&AxProperty::GetName)
     .def("GetValue",&AxProperty::GetValue)
     .def("GetAUID", &AxProperty::GetAUID)

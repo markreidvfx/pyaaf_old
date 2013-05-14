@@ -14,7 +14,7 @@ void Export_pyste_src_AxPropertyValue()
 {
 
 
-    class_<AxPropertyValue ,std::auto_ptr<AxPropertyValue>, boost::noncopyable> ("AxPropertyValue", no_init)
+    class_<AxPropertyValue ,std::auto_ptr<AxPropertyValue>, boost::noncopyable> ("AxPropertyValue", init <IAAFPropertyValueSP>())
     .def("GetType",&AxPropertyValue::GetType)
     .def("GetValue",&AxPropertyValue::GetValue)
     ;
