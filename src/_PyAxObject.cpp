@@ -28,7 +28,7 @@ public:
     bool isAxExHResult();
     
     std::auto_ptr<AxObject> toAxObject();
-    std::auto_ptr<AxHeader> toAxHeader();
+    AxHeader* toAxHeader();
     std::auto_ptr<AxProperty> toAxProperty();
     std::auto_ptr<AxPropertyValue> toAxPropertyValue();
     std::auto_ptr<AxBaseObjAny<AxRecordIterator::Pair> > toAxRecordIterator();
@@ -61,13 +61,13 @@ std::auto_ptr<AxObject> PyAxObject::toAxObject()
     }
 }
 
-std::auto_ptr<AxHeader> PyAxObject::toAxHeader()
+AxHeader* PyAxObject::toAxHeader()
 {
 
     if (isAxHeader())
     {
         std::auto_ptr<AxHeader> obj(dynamic_cast<AxHeader*>( _obj.release() ) );
-        return obj;
+        return obj.release();
         
     }
         
@@ -225,7 +225,7 @@ void Export_pyste_src_PyAxObject()
     .def("isAxExHResult",&PyAxObject::isAxExHResult)
     
     .def("toAxObject", &PyAxObject::toAxObject)
-    .def("toAxHeader", &PyAxObject::toAxHeader)
+    .def("toAxHeader", &PyAxObject::toAxHeader,  return_value_policy<manage_new_object>() )
     .def("toAxProperty", &PyAxObject::toAxProperty)
     .def("toAxPropertyValue", &PyAxObject::toAxPropertyValue)
     .def("toAxRecordIterator", &PyAxObject::toAxRecordIterator)
