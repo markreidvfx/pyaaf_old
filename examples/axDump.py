@@ -27,8 +27,9 @@ for item in ObjectRecIter:
     
     print " " * level,
     
-    if isinstance(item, pyaaf.AxHeader):
-        print "AxHeader"
+    if ax.isAxHeader():
+        obj = ax.toAxHeader()
+        print "AxHeader",obj
     
     elif ax.isAxObject():
         obj = ax.toAxObject()
