@@ -14,6 +14,7 @@ void Export_pyste_src_AxProperty();
 void Export_pyste_src_AxObject();
 void Export_pyste_src_AxMobSlot();
 void Export_pyste_src_AxMob();
+void Export_pyste_src_AxMetaDef();
 void Export_pyste_src_AxIterator();
 void Export_pyste_src_AxInit();
 void Export_pyste_src_AxHeader();
@@ -44,6 +45,7 @@ BOOST_PYTHON_MODULE(pyaaf)
     Export_pyste_src_AxObject();
     Export_pyste_src_AxMobSlot();
     Export_pyste_src_AxMob();
+    Export_pyste_src_AxMetaDef();
     Export_pyste_src_AxIterator();
     Export_pyste_src_AxInit();
     Export_pyste_src_AxHeader();
