@@ -21,12 +21,14 @@ public:
     void set_object(std::auto_ptr<AxBaseObj>);
     
     bool isAxObject();
+    bool isAxHeader();
     bool isAxProperty();
     bool isAxPropertyValue();
     bool isAxRecordIterator();
     bool isAxExHResult();
     
     std::auto_ptr<AxObject> toAxObject();
+    std::auto_ptr<AxHeader> toAxHeader();
     std::auto_ptr<AxProperty> toAxProperty();
     std::auto_ptr<AxPropertyValue> toAxPropertyValue();
     std::auto_ptr<AxBaseObjAny<AxRecordIterator::Pair> > toAxRecordIterator();
@@ -58,6 +60,24 @@ std::auto_ptr<AxObject> PyAxObject::toAxObject()
         boost::python::throw_error_already_set();
     }
 }
+
+std::auto_ptr<AxHeader> PyAxObject::toAxHeader()
+{
+
+    if (isAxHeader())
+    {
+        std::auto_ptr<AxHeader> obj(dynamic_cast<AxHeader*>( _obj.release() ) );
+        return obj;
+        
+    }
+        
+    else
+    {
+        PyErr_SetString(PyExc_RuntimeError, "cannot convert to AxHeader");
+        boost::python::throw_error_already_set();
+    }
+}
+
 
 std::auto_ptr<AxProperty> PyAxObject::toAxProperty()
 {
@@ -142,6 +162,15 @@ bool PyAxObject::isAxObject()
     return false;
 }
 
+bool PyAxObject::isAxHeader()
+{
+    if (dynamic_cast<AxHeader*>( _obj.get()))
+    {
+        return true;
+    }
+    return false;
+}
+
 bool PyAxObject::isAxProperty()
 {
     if (dynamic_cast<AxProperty*>( _obj.get()))
@@ -189,12 +218,14 @@ void Export_pyste_src_PyAxObject()
  class_<PyAxObject,boost::noncopyable> ("PyAxObject")
     .def("set_object",&PyAxObject::set_object)
     .def("isAxObject",&PyAxObject::isAxObject)
+    .def("isAxHeader",&PyAxObject::isAxHeader)
     .def("isAxProperty",&PyAxObject::isAxProperty)
     .def("isAxPropertyValue",&PyAxObject::isAxPropertyValue)
     .def("isAxRecordIterator",&PyAxObject::isAxRecordIterator)
     .def("isAxExHResult",&PyAxObject::isAxExHResult)
     
     .def("toAxObject", &PyAxObject::toAxObject)
+    .def("toAxHeader", &PyAxObject::toAxHeader)
     .def("toAxProperty", &PyAxObject::toAxProperty)
     .def("toAxPropertyValue", &PyAxObject::toAxPropertyValue)
     .def("toAxRecordIterator", &PyAxObject::toAxRecordIterator)
