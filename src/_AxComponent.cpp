@@ -72,7 +72,6 @@ void Export_pyste_src_AxComponent()
         .def("GetDictionary", &AxObject::GetDictionary)
         .def("GetProperties", &AxObject::GetProperties)
         .def("GetDefinition", &AxObject::GetDefinition)
-    
     ;
 
     class_< AxTimecode, boost::noncopyable >("AxTimecode", init< IAAFTimecodeSP >())

@@ -1,0 +1,23 @@
+Include("AxSmartPointer.h")
+Include("AxHeader.h")
+Include("AxComponent.h")
+Include("AxMob.h")
+Include("AxDefObject.h")
+
+module_code("""
+    
+    //Components
+    implicitly_convertible<AxSequence,IAAFSmartPointer<IAAFSegment> > ();
+    
+    //Mobs
+    implicitly_convertible<AxMob,IAAFSmartPointer<IAAFMob> > ();
+    implicitly_convertible<AxMasterMob,IAAFSmartPointer<IAAFMob> > ();
+    implicitly_convertible<AxMasterMob,IAAFSmartPointer<IAAFMasterMob> > ();
+    
+    //AxDataDef
+    
+    implicitly_convertible<AxDataDef,IAAFDataDefSP > ();
+
+
+"""
+)

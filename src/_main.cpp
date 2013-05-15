@@ -2,6 +2,7 @@
 #include <boost/python/module.hpp>
 
 // Exports =====================================================================
+void Export_pyste_src_implicitly_convertible();
 void Export_pyste_src_PyRecord();
 void Export_pyste_src_PyAxObject();
 void Export_pyste_src_AxUtil();
@@ -31,6 +32,7 @@ void Export_pyste_src_AAFDataDefs();
 // Module ======================================================================
 BOOST_PYTHON_MODULE(pyaaf)
 {
+    Export_pyste_src_implicitly_convertible();
     Export_pyste_src_PyRecord();
     Export_pyste_src_PyAxObject();
     Export_pyste_src_AxUtil();
