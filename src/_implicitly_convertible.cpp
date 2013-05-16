@@ -26,9 +26,10 @@ void Export_pyste_src_implicitly_convertible()
     implicitly_convertible<AxMasterMob,IAAFSmartPointer<IAAFMob> > ();
     implicitly_convertible<AxMasterMob,IAAFSmartPointer<IAAFMasterMob> > ();
     
-    //AxDataDef
+    //AxDefObject
     
     implicitly_convertible<AxDataDef,IAAFDataDefSP > ();
+    implicitly_convertible<AxOperationDef,IAAFOperationDefSP > ();
 
 
 }
