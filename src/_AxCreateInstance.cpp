@@ -5,6 +5,7 @@
 
 // Includes ====================================================================
 #include <AxComponent.h>
+#include <AxDefObject.h>
 #include <AxDictionary.h>
 #include <AxMob.h>
 
@@ -46,6 +47,7 @@ void Export_pyste_src_AxCreateInstance()
     
     AxCreateInstanceWrapper<IAAFCompositionMob, AxCompositionMob >().wrap("createAxCompositionMob");
     AxCreateInstanceWrapper<IAAFSequence, AxSequence >().wrap("createAxSequence");
+    AxCreateInstanceWrapper<IAAFOperationDef, AxOperationDef >().wrap("createAxOperationDef");
 
 }
 
