@@ -38,7 +38,10 @@ void Export_pyste_src_AxQueryInterface()
 {
 
 
-    AxQueryInterfaceWrapper<IAAFMob,IAAFMasterMob>().wrap("MobSP_to_MasterMobSP");
+    AxQueryInterfaceWrapper<IAAFMob,IAAFMasterMob>().wrap("_MobSPtoMasterMobSP");
+    AxQueryInterfaceWrapper<IAAFMob,IAAFMasterMobEx>().wrap("_MobSPtoMasterMobExSP");
+    AxQueryInterfaceWrapper<IAAFMob,IAAFCompositionMob>().wrap("_MobSPtoCompositionMobSP");
+    AxQueryInterfaceWrapper<IAAFMob,IAAFSourceMob>().wrap("_MobSPtoSourceMobSP");
 
 
 }
