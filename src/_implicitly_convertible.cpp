@@ -30,6 +30,7 @@ void Export_pyste_src_implicitly_convertible()
     
     implicitly_convertible<AxDataDef,IAAFDataDefSP > ();
     implicitly_convertible<AxOperationDef,IAAFOperationDefSP > ();
+    implicitly_convertible<AxOperationGroup,IAAFOperationGroupSP > ();
 
 
 }

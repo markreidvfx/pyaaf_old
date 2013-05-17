@@ -18,6 +18,7 @@ module_code("""
     
     implicitly_convertible<AxDataDef,IAAFDataDefSP > ();
     implicitly_convertible<AxOperationDef,IAAFOperationDefSP > ();
+    implicitly_convertible<AxOperationGroup,IAAFOperationGroupSP > ();
 
 
 """
