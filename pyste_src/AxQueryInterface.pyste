@@ -27,14 +27,15 @@ struct AxQueryInterfaceWrapper
 
 module_code("""
     //Mobs
-    AxQueryInterfaceWrapper<IAAFMob,IAAFMasterMob>().wrap("_MobSPtoMasterMobSP");
-    AxQueryInterfaceWrapper<IAAFMob,IAAFMasterMobEx>().wrap("_MobSPtoMasterMobExSP");
-    AxQueryInterfaceWrapper<IAAFMob,IAAFCompositionMob>().wrap("_MobSPtoCompositionMobSP");
-    AxQueryInterfaceWrapper<IAAFMob,IAAFSourceMob>().wrap("_MobSPtoSourceMobSP");
+    AxQueryInterfaceWrapper<IAAFMob,IAAFMasterMob>().wrap("_MobSP_to_MasterMobSP");
+    AxQueryInterfaceWrapper<IAAFMob,IAAFMasterMobEx>().wrap("_MobSP_to_MasterMobExSP");
+    AxQueryInterfaceWrapper<IAAFMob,IAAFCompositionMob>().wrap("_MobSP_to_CompositionMobSP");
+    AxQueryInterfaceWrapper<IAAFMob,IAAFSourceMob>().wrap("_MobSP_to_SourceMobSP");
     
     //MobSlots
-    AxQueryInterfaceWrapper<IAAFMobSlot,IAAFTimelineMobSlot>().wrap("_MobSlotSPtoTimelineMobSlotSP");
-
+    AxQueryInterfaceWrapper<IAAFMobSlot,IAAFTimelineMobSlot>().wrap("_MobSlotSP_to_TimelineMobSlotSP");
+    AxQueryInterfaceWrapper<IAAFSegment,IAAFSourceClip>().wrap("_SegmentSP_to_SourceClipSP");
+    
 
 """
 )
