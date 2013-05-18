@@ -50,6 +50,8 @@ void Export_pyste_src_AxCreateInstance()
     AxCreateInstanceWrapper<IAAFOperationDef, AxOperationDef >().wrap("createAxOperationDef");
     AxCreateInstanceWrapper<IAAFOperationGroup, AxOperationGroup >().wrap("createAxOperationGroup");
     AxCreateInstanceWrapper<IAAFTransition, AxTransition >().wrap("createAxTransition");
+    AxCreateInstanceWrapper<IAAFSourceClip, AxSourceClip >().wrap("createAxSourceClip");
+    
     
     
 

@@ -38,6 +38,8 @@ module_code("""
     AxCreateInstanceWrapper<IAAFOperationDef, AxOperationDef >().wrap("createAxOperationDef");
     AxCreateInstanceWrapper<IAAFOperationGroup, AxOperationGroup >().wrap("createAxOperationGroup");
     AxCreateInstanceWrapper<IAAFTransition, AxTransition >().wrap("createAxTransition");
+    AxCreateInstanceWrapper<IAAFSourceClip, AxSourceClip >().wrap("createAxSourceClip");
+    
     
     
 
