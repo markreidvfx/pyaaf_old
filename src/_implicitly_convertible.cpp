@@ -6,6 +6,7 @@
 // Includes ====================================================================
 #include <AxComponent.h>
 #include <AxDefObject.h>
+#include <AxEssence.h>
 #include <AxHeader.h>
 #include <AxMob.h>
 #include <AxSmartPointer.h>
@@ -38,7 +39,9 @@ void Export_pyste_src_implicitly_convertible()
     implicitly_convertible<AxDataDef,IAAFDataDefSP > ();
     implicitly_convertible<AxOperationDef,IAAFOperationDefSP > ();
     implicitly_convertible<AxOperationGroup,IAAFOperationGroupSP > ();
-
+    
+    //AxEssence
+    implicitly_convertible<AxEssenceFormat,IAAFEssenceFormatSP > ();
 
 }
 

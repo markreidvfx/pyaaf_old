@@ -3,6 +3,7 @@ Include("AxHeader.h")
 Include("AxComponent.h")
 Include("AxMob.h")
 Include("AxDefObject.h")
+Include("AxEssence.h")
 
 module_code("""
     
@@ -26,7 +27,9 @@ module_code("""
     implicitly_convertible<AxDataDef,IAAFDataDefSP > ();
     implicitly_convertible<AxOperationDef,IAAFOperationDefSP > ();
     implicitly_convertible<AxOperationGroup,IAAFOperationGroupSP > ();
-
+    
+    //AxEssence
+    implicitly_convertible<AxEssenceFormat,IAAFEssenceFormatSP > ();
 
 """
 )
