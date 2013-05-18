@@ -45,7 +45,11 @@ void Export_pyste_src_AxCreateInstance()
 {
 
     
+    //Mobs
+    AxCreateInstanceWrapper<IAAFMasterMob, AxMasterMob >().wrap("createAxMasterMob");
     AxCreateInstanceWrapper<IAAFCompositionMob, AxCompositionMob >().wrap("createAxCompositionMob");
+    
+    //Components
     AxCreateInstanceWrapper<IAAFSequence, AxSequence >().wrap("createAxSequence");
     AxCreateInstanceWrapper<IAAFOperationDef, AxOperationDef >().wrap("createAxOperationDef");
     AxCreateInstanceWrapper<IAAFOperationGroup, AxOperationGroup >().wrap("createAxOperationGroup");

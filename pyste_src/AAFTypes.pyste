@@ -116,3 +116,6 @@ rename(obj, "aafRational_t")
 
 obj = Class("_aafSourceRef_t", "AAFTypes.h")
 rename(obj, "aafSourceRef_t")
+
+obj = Enum("_aafCompressEnable_e", "AAFTypes.h")
+rename(obj, "aafCompressEnable_e")

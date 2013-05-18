@@ -30,6 +30,8 @@ void Export_pyste_src_AxBaseObj();
 void Export_pyste_src_AAFTypes();
 void Export_pyste_src_AAFOperationDefs();
 void Export_pyste_src_AAFDataDefs();
+void Export_pyste_src_AAFContainerDefs();
+void Export_pyste_src_AAFCodecDefs();
 
 // Module ======================================================================
 BOOST_PYTHON_MODULE(pyaaf)
@@ -62,4 +64,6 @@ BOOST_PYTHON_MODULE(pyaaf)
     Export_pyste_src_AAFTypes();
     Export_pyste_src_AAFOperationDefs();
     Export_pyste_src_AAFDataDefs();
+    Export_pyste_src_AAFContainerDefs();
+    Export_pyste_src_AAFCodecDefs();
 }

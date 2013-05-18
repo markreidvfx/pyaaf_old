@@ -124,5 +124,10 @@ void Export_pyste_src_AAFTypes()
         .def_readwrite("startTime", &_aafSourceRef_t::startTime)
     ;
 
+    enum_< _aafCompressEnable_e >("aafCompressEnable_e")
+        .value("kAAFCompressionEnable", kAAFCompressionEnable)
+        .value("kAAFCompressionDisable", kAAFCompressionDisable)
+    ;
+
 }
 
