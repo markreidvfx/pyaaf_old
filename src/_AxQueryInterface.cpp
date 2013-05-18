@@ -47,6 +47,9 @@ void Export_pyste_src_AxQueryInterface()
     AxQueryInterfaceWrapper<IAAFMobSlot,IAAFTimelineMobSlot>().wrap("_MobSlotSP_to_TimelineMobSlotSP");
     AxQueryInterfaceWrapper<IAAFSegment,IAAFSourceClip>().wrap("_SegmentSP_to_SourceClipSP");
     
+    //Essence's
+    AxQueryInterfaceWrapper<IAAFEssenceDescriptor,IAAFWAVEDescriptor>().wrap("_EssenceDescriptorSP_to_WAVEDescriptorSP");
+    
 
 }
 
