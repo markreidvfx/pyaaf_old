@@ -20,6 +20,13 @@ void Export_pyste_src_implicitly_convertible()
     
     //Components
     implicitly_convertible<AxSequence,IAAFSmartPointer<IAAFSegment> > ();
+    implicitly_convertible<AxSequence,IAAFSmartPointer<IAAFComponent> > ();
+    implicitly_convertible<AxTransition,IAAFSmartPointer<IAAFTransition> > ();
+    implicitly_convertible<AxTransition,IAAFSmartPointer<IAAFComponent> > ();
+    implicitly_convertible<AxSourceClip,IAAFSmartPointer<IAAFSourceClip> > ();
+    implicitly_convertible<AxSourceClip,IAAFSmartPointer<IAAFComponent> > ();
+    
+    
     
     //Mobs
     implicitly_convertible<AxMob,IAAFSmartPointer<IAAFMob> > ();
