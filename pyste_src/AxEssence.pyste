@@ -27,3 +27,7 @@ obj = Class('AxAuxiliaryDescriptor', "AxEssence.h")
 exclude(obj.GetCodecDef)
 obj = Class('AxSoundDescriptor', "AxEssence.h")
 exclude(obj.GetCodecDef)
+
+obj = Class("AxEssenceFormat", "AxEssence.h")
+exclude(obj.AddFormatSpecifier)
+exclude(obj.GetFormatSpecifier)

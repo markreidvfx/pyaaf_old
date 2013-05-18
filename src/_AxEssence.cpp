@@ -232,5 +232,9 @@ void Export_pyste_src_AxEssence()
         .def("to_IAAFSoundDescriptorSP", &AxSoundDescriptor::operator IAAFSoundDescriptorSP)
     ;
 
+    class_< AxEssenceFormat, boost::noncopyable >("AxEssenceFormat", init< IAAFEssenceFormatSP >())
+        .def("to_IAAFEssenceFormatSP", &AxEssenceFormat::operator IAAFEssenceFormatSP)
+    ;
+
 }
 
