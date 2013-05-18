@@ -1,0 +1,2 @@
+AllFromHeader("AAFEssenceFormats.h")
+Include("AAFEssenceFormats.h")

@@ -28,6 +28,29 @@ exclude(obj.GetCodecDef)
 obj = Class('AxSoundDescriptor', "AxEssence.h")
 exclude(obj.GetCodecDef)
 
-obj = Class("AxEssenceFormat", "AxEssence.h")
-exclude(obj.AddFormatSpecifier)
-exclude(obj.GetFormatSpecifier)
+#obj = Class("AxEssenceFormat", "AxEssence.h")
+#exclude(obj.AddFormatSpecifier)
+#exclude(obj.GetFormatSpecifier)
+
+declaration_code("""
+
+void PyAddFormatSpecifier(AxEssenceFormat &axEssenceFormat,
+                          const aafUID_t essenceFormatCode,
+                          aafUInt32 sampleSize)
+{
+    axEssenceFormat.AddFormatSpecifier( essenceFormatCode, sizeof( sampleSize ),
+                                       reinterpret_cast<aafUInt8*>(&sampleSize) );
+}
+
+"""
+)
+
+module_code("""
+    class_< AxEssenceFormat, boost::noncopyable >("AxEssenceFormat", init< IAAFEssenceFormatSP >())
+        .def("to_IAAFEssenceFormatSP", &AxEssenceFormat::operator IAAFEssenceFormatSP)
+        .def("AddFormatSpecifier", PyAddFormatSpecifier)
+    ;
+
+"""
+)
+

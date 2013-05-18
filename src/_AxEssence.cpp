@@ -9,6 +9,19 @@
 // Using =======================================================================
 using namespace boost::python;
 
+// Declarations ================================================================
+
+
+void PyAddFormatSpecifier(AxEssenceFormat &axEssenceFormat,
+                          const aafUID_t essenceFormatCode,
+                          aafUInt32 sampleSize)
+{
+    axEssenceFormat.AddFormatSpecifier( essenceFormatCode, sizeof( sampleSize ),
+                                       reinterpret_cast<aafUInt8*>(&sampleSize) );
+}
+
+
+
 // Module ======================================================================
 void Export_pyste_src_AxEssence()
 {
@@ -232,8 +245,10 @@ void Export_pyste_src_AxEssence()
         .def("to_IAAFSoundDescriptorSP", &AxSoundDescriptor::operator IAAFSoundDescriptorSP)
     ;
 
+
     class_< AxEssenceFormat, boost::noncopyable >("AxEssenceFormat", init< IAAFEssenceFormatSP >())
         .def("to_IAAFEssenceFormatSP", &AxEssenceFormat::operator IAAFEssenceFormatSP)
+        .def("AddFormatSpecifier", PyAddFormatSpecifier)
     ;
 
 }
