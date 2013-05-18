@@ -117,5 +117,12 @@ void Export_pyste_src_AAFTypes()
         .def_readwrite("denominator", &_aafRational_t::denominator)
     ;
 
+    class_< _aafSourceRef_t >("aafSourceRef_t", init<  >())
+        .def(init< const _aafSourceRef_t& >())
+        .def_readwrite("sourceID", &_aafSourceRef_t::sourceID)
+        .def_readwrite("sourceSlotID", &_aafSourceRef_t::sourceSlotID)
+        .def_readwrite("startTime", &_aafSourceRef_t::startTime)
+    ;
+
 }
 

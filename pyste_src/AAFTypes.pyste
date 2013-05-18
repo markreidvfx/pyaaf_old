@@ -114,8 +114,5 @@ module_code("""
 obj = Class("_aafRational_t", "AAFTypes.h")
 rename(obj, "aafRational_t")
 
-
-#Class("aafSearchCrit_t","AAFTypes.h")
-
-#obj = Enum("_aafSearchTag_e","AAFTypes.h")
-#rename(obj._aafSearchTag_e, "aafSearchTag_e")
+obj = Class("_aafSourceRef_t", "AAFTypes.h")
+rename(obj, "aafSourceRef_t")
