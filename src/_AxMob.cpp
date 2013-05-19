@@ -5,6 +5,7 @@
 
 // Includes ====================================================================
 #include <AxMob.h>
+#include <create_instance.h>
 
 // Using =======================================================================
 using namespace boost::python;
@@ -51,11 +52,15 @@ void Export_pyste_src_AxMob()
         .def("SearchSource", &AxSearchSource::SearchSource)
         .def("to_IAAFMasterMobSP", &AxMasterMob::operator IAAFMasterMobSP)
         .def("to_IAAFMasterMob2SP", &AxMasterMob::operator IAAFMasterMob2SP)
+        .def("CreateInstance",create_instance<IAAFMasterMob,AxMasterMob>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxMasterMobEx, bases< AxMasterMob > , boost::noncopyable >("AxMasterMobEx", init< IAAFMasterMobExSP >())
         .def("ExtendEssence", &AxMasterMobEx::ExtendEssence)
         .def("to_IAAFMasterMobExSP", &AxMasterMobEx::operator IAAFMasterMobExSP)
+        .def("CreateInstance",create_instance<IAAFMasterMobEx,AxMasterMobEx>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxCompositionMob, bases< AxMob > , boost::noncopyable >("AxCompositionMob", init< IAAFCompositionMobSP >())
@@ -63,6 +68,8 @@ void Export_pyste_src_AxMob()
         .def("Initialize", &AxCompositionMob::Initialize)
         .def("to_IAAFCompositionMobSP", &AxCompositionMob::operator IAAFCompositionMobSP)
         .def("to_IAAFCompositionMob2SP", &AxCompositionMob::operator IAAFCompositionMob2SP)
+        .def("CreateInstance",create_instance<IAAFCompositionMob,AxCompositionMob>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxSourceMob, bases< AxMob > , boost::noncopyable >("AxSourceMob", init< IAAFSourceMobSP >())
@@ -72,6 +79,8 @@ void Export_pyste_src_AxMob()
         .def("AddNilReference", &AxSourceMob::AddNilReference)
         .def("SearchSource", &AxSearchSource::SearchSource)
         .def("to_IAAFSourceMobSP", &AxSourceMob::operator IAAFSourceMobSP)
+        .def("CreateInstance",create_instance<IAAFSourceMob,AxSourceMob>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
 
