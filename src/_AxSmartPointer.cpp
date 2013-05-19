@@ -58,6 +58,7 @@ class_< IAAFEssenceAccessSP > ("IAAFEssenceAccessSP")
 class_< IAAFEssenceDataSP > ("IAAFEssenceDataSP")
 ;
 class_< IAAFEssenceDescriptorSP > ("IAAFEssenceDescriptorSP")
+.def("to_WAVEDescriptorSP", query_interface<IAAFEssenceDescriptor, IAAFWAVEDescriptor > )
 ;
 class_< IAAFEventSP > ("IAAFEventSP")
 ;
@@ -109,6 +110,7 @@ class_< IAAFMobSP > ("IAAFMobSP")
 .def("to_CompositionMobSP", query_interface<IAAFMob, IAAFCompositionMob > )
 ;
 class_< IAAFMobSlotSP > ("IAAFMobSlotSP")
+.def("to_TimelineMobSlotSP", query_interface<IAAFMobSlot, IAAFTimelineMobSlot > )
 ;
 class_< IAAFNestedScopeSP > ("IAAFNestedScopeSP")
 ;
@@ -135,6 +137,7 @@ class_< IAAFRGBADescriptorSP > ("IAAFRGBADescriptorSP")
 class_< IAAFScopeReferenceSP > ("IAAFScopeReferenceSP")
 ;
 class_< IAAFSegmentSP > ("IAAFSegmentSP")
+.def("to_SourceClipSP", query_interface<IAAFSegment, IAAFSourceClip > )
 ;
 class_< IAAFSelectorSP > ("IAAFSelectorSP")
 ;
