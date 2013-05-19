@@ -5,6 +5,7 @@ s = f.read()
 f.close()
 
 pyste = 'Include("AxSmartPointer.h")\n'
+pyste = 'Include("query_interface.h")\n'
 
 pyste += 'declaration_code("""\n'
 
@@ -42,9 +43,21 @@ for line in s.splitlines():
             
             #print pointer_name
             
-            string =  'class_< %s > ("%s");\n' 
+            string =  'class_< %s > ("%s")\n' 
             string = string % (pointer_name,pointer_name)
             
+            
+            try:
+                queryInterfaces =  line.split(":")[1].strip().split(' ')
+                for q in queryInterfaces:
+                    
+                    string += '.def("to_%sSP", query_interface<IAAF%s, IAAF%s > )\n' % ( q, name, q)
+            except:
+                pass
+                
+            
+            
+            string += ';\n'
             pyste += string
     
         

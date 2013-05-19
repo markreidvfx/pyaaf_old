@@ -40,7 +40,7 @@ AXSP_TDEF_A( MasterMob )
 AXSP_TDEF_D( MasterMob2, MasterMob )
 AXSP_TDEF_B( MasterMobEx )
 AXSP_TDEF_A( MetaDefinition )
-AXSP_TDEF_A( Mob )
+AXSP_TDEF_A( Mob ) : MasterMob SourceMob CompositionMob
 AXSP_TDEF_A( MobSlot )
 AXSP_TDEF_A( NestedScope )
 AXSP_TDEF_A( NetworkLocator )
