@@ -37,6 +37,7 @@ include_directories(
     ${PYTHON_INCLUDE_DIRS}
     ${AAFSDK_ROOT}/examples2/axLib
     ${AAFSDK_ROOT}/AAF${AAF_PLATFORM}SDK/g++/include
+    include
 )
 
 LINK_DIRECTORIES(

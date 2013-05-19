@@ -4,24 +4,12 @@
 #include <boost/cstdint.hpp>
 
 // Includes ====================================================================
-#include <AAFTypes.h>
+#include <AAFDataBuffer.h>
 
 // Using =======================================================================
 using namespace boost::python;
 
 // Declarations ================================================================
-
-class AAFDataBuffer {
-
-public:
-    void fill_buffer(boost::python::list);
-    aafDataBuffer_t get_buffer();
-    inline operator aafDataBuffer_t (){return _buffer;}
-    int length(){return _length;}
-private:
-    aafDataBuffer_t _buffer;
-    int _length;
-};
 
 void AAFDataBuffer::fill_buffer(boost::python::list pybuff)
 {
@@ -40,6 +28,12 @@ aafDataBuffer_t AAFDataBuffer::get_buffer()
     return _buffer;
 }
 
+size_t AAFDataBuffer::size()
+{
+    aafUInt8 value = 0;
+    return sizeof(value) * _length;
+}
+
 
 
 // Module ======================================================================
@@ -48,8 +42,10 @@ void Export_pyste_src_AAFDataBuffer()
 
     class_<AAFDataBuffer >("AAFDataBuffer")
     .def("fill_buffer",&AAFDataBuffer::fill_buffer)
+    .def("sizeof",&AAFDataBuffer::size)
     ;
     
     implicitly_convertible<AAFDataBuffer,aafDataBuffer_t>();
+    implicitly_convertible<AAFDataBuffer,unsigned char*>();
 }
 
