@@ -1,2 +1,1 @@
-AllFromHeader("AAFEssenceFormats.h")
-Include("AAFEssenceFormats.h")
+AllFromHeader("AAFEssenceFormats_fix.h")

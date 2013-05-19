@@ -11,6 +11,7 @@ AAF_PLATFORM = os.environ.get('AAF_PLATFORM', "x86_64Darwin")
 
 aaf_include_dirs = [os.path.join(AAF_ROOT, 'AAF%sSDK' % AAF_PLATFORM, 'g++', 'include'),
                     os.path.join(AAF_ROOT,'examples2','axLib'),
+                    './include',
                     ]
                     
 
