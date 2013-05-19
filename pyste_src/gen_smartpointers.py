@@ -6,7 +6,14 @@ f.close()
 
 pyste = 'Include("AxSmartPointer.h")\n'
 
+pyste += 'declaration_code("""\n'
+
+pyste += 'class SmartPointers {};\n'
+
+pyste += '""")\n'
+
 pyste += 'module_code("""\n'
+pyste += 'scope smartpointers = class_<SmartPointers>("smartpointers");\n'
 
 for line in s.splitlines():
     

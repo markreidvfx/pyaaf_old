@@ -1,5 +1,9 @@
 Include("AxSmartPointer.h")
+declaration_code("""
+class SmartPointers {};
+""")
 module_code("""
+scope smartpointers = class_<SmartPointers>("smartpointers");
 class_< IAAFAIFCDescriptorSP > ("IAAFAIFCDescriptorSP");
 class_< IAAFClassDefSP > ("IAAFClassDefSP");
 class_< IAAFCodecDefSP > ("IAAFCodecDefSP");

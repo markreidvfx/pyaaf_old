@@ -9,10 +9,16 @@
 // Using =======================================================================
 using namespace boost::python;
 
+// Declarations ================================================================
+
+class SmartPointers {};
+
+
 // Module ======================================================================
 void Export_pyste_src_AxSmartPointer()
 {
 
+scope smartpointers = class_<SmartPointers>("smartpointers");
 class_< IAAFAIFCDescriptorSP > ("IAAFAIFCDescriptorSP");
 class_< IAAFClassDefSP > ("IAAFClassDefSP");
 class_< IAAFCodecDefSP > ("IAAFCodecDefSP");
