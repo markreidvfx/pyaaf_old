@@ -1,5 +1,26 @@
+
+Include("AAFTypes.h")
+Include("AAFDataBuffer.h")
+PyWriteSamples = Wrapper("PyWriteSamples", """
+AxEssenceAccess::WriteResult PyWriteSamples(AxEssenceAccess& axEssenceAccess, AAFDataBuffer& buff)
+{
+    aafUInt32 nSamples = buff.length();
+    aafUInt32 bufLength = buff.size();
+    
+    //std::cout << nSamples << " " << bufLength;
+    return axEssenceAccess.WriteSamples(nSamples,bufLength, buff);
+    
+}
+"""
+)
+
+
+
 Class('AxEssenceMultiAccess', "AxEssence.h")
-Class('AxEssenceAccess', "AxEssence.h")
+obj = Class('AxEssenceAccess', "AxEssence.h")
+
+set_wrapper(obj.WriteSamples,PyWriteSamples)
+
 Class('AxLocator', "AxEssence.h")
 Class('AxEssenceDescriptor', "AxEssence.h")
 #Class('AxFileDescriptor', "AxEssence.h")

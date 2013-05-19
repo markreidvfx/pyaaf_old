@@ -15,12 +15,17 @@ void AAFDataBuffer::fill_buffer(boost::python::list pybuff)
 {
     int values[boost::python::len(pybuff)];
     
+    unsigned int length = boost::python::len(pybuff);
+    
     for (int i=0; i < boost::python::len(pybuff); i++)
     {
         values[i] = boost::python::extract<int>(pybuff[i]);
     }
     _buffer = reinterpret_cast<aafDataBuffer_t>(values);
-    _length = boost::python::len(pybuff);
+
+    _length = length;
+    
+ 
 }
 
 aafDataBuffer_t AAFDataBuffer::get_buffer()
@@ -30,7 +35,7 @@ aafDataBuffer_t AAFDataBuffer::get_buffer()
 
 size_t AAFDataBuffer::size()
 {
-    aafUInt8 value = 0;
+    int value = 0;
     return sizeof(value) * _length;
 }
 

@@ -4,6 +4,8 @@
 #include <boost/cstdint.hpp>
 
 // Includes ====================================================================
+#include <AAFDataBuffer.h>
+#include <AAFTypes.h>
 #include <AxEssence.h>
 
 // Using =======================================================================
@@ -22,6 +24,23 @@ void PyAddFormatSpecifier(AxEssenceFormat &axEssenceFormat,
 
 
 
+namespace  {
+
+
+AxEssenceAccess::WriteResult PyWriteSamples(AxEssenceAccess& axEssenceAccess, AAFDataBuffer& buff)
+{
+    aafUInt32 nSamples = buff.length();
+    aafUInt32 bufLength = buff.size();
+    
+    //std::cout << nSamples << " " << bufLength;
+    return axEssenceAccess.WriteSamples(nSamples,bufLength, buff);
+    
+}
+
+
+}// namespace 
+
+
 // Module ======================================================================
 void Export_pyste_src_AxEssence()
 {
@@ -35,7 +54,7 @@ void Export_pyste_src_AxEssence()
         .def("GetFileFormatParameterList", &AxEssenceAccess::GetFileFormatParameterList)
         .def("PutFileFormat", &AxEssenceAccess::PutFileFormat)
         .def("CountSamples", &AxEssenceAccess::CountSamples)
-        .def("WriteSamples", &AxEssenceAccess::WriteSamples)
+        .def("WriteSamples", &PyWriteSamples)
         .def("CompleteWrite", &AxEssenceAccess::CompleteWrite)
         .def("GetCodecName", &AxEssenceAccess::GetCodecName)
         .def("GetLargestSampleSize", &AxEssenceAccess::GetLargestSampleSize)
