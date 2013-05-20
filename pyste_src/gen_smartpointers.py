@@ -1,4 +1,9 @@
 
+
+from hierarchy import get_hierachy
+
+h = get_hierachy()
+
 f = open("smart.txt", 'r')
 s = f.read()
 
@@ -48,10 +53,17 @@ for line in s.splitlines():
             
             
             try:
-                queryInterfaces =  line.split(":")[1].strip().split(' ')
-                for q in queryInterfaces:
+                
+                if name in h.keys():
+                    #print name, h[name].get_all_children()
+                    for q in h[name].get_all_children():
+                        string += '.def("to_%sSP", query_interface<IAAF%s, IAAF%s > )\n' % ( q, name, q)
+                
+                
+                #queryInterfaces =  line.split(":")[1].strip().split(' ')
+                #for q in queryInterfaces:
                     
-                    string += '.def("to_%sSP", query_interface<IAAF%s, IAAF%s > )\n' % ( q, name, q)
+                    
             except:
                 pass
                 

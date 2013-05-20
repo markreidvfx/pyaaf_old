@@ -18,6 +18,7 @@ Optional (for code generation)
 
 gccxml - https://github.com/gccxml/gccxml
 pyste (include in with boost libs/python/pyste)
+PyYAML - http://pyyaml.org/
 
 
 
