@@ -1,7 +1,7 @@
 
 
 from hierarchy import get_hierachy
-
+import traceback
 h = get_hierachy()
 
 f = open("smart.txt", 'r')
@@ -53,10 +53,11 @@ for line in s.splitlines():
             
             
             try:
-                
-                if name in h.keys():
+                key = name.replace("2",'').replace('3','')
+                if key in h.keys():
                     #print name, h[name].get_all_children()
-                    for q in h[name].get_all_children():
+                    
+                    for q in h[key].get_all_children(True):
                         string += '.def("to_%sSP", query_interface<IAAF%s, IAAF%s > )\n' % ( q, name, q)
                 
                 
@@ -65,7 +66,7 @@ for line in s.splitlines():
                     
                     
             except:
-                pass
+                print traceback.format_exc()
                 
             
             

@@ -9,7 +9,34 @@ class Node(object):
         self.parent = None
         self.name = "Root"
         self.children = []
+        self.alt_name = None
+        self.has_ver2 = False
+        self.has_ver3 = False
         
+    def set_name(self, name):
+        
+        self.name = name
+        
+        if name in ('KLVDataDefinition', 'TaggedValueDefinition', 'TypeDefObjectRef'):
+            self.alt_name = name.replace('Definition','Def').replace('Object','Obj')
+        
+        if name in ('CompositionMob','MasterMob'):
+            pass
+            
+        if name in ('CompositionMob',
+                    'MasterMob',
+                    'Component',
+                    'DataDef',
+                    'Dictionary',
+                    'Header',
+                    'Mob',
+                    'RGBADescriptor',
+                    'TimelineMobSlot',
+                    ):
+            self.has_ver2 = True
+            
+        if name in ('DataDef'):
+            self.has_ver3 = True
         
     def get_parent(self):
         
@@ -24,12 +51,12 @@ class Node(object):
         
         return path
     
-    def get_all_children(self):
+    def get_all_children(self,include_extra=False):
         
         children = []
         
         
-        walk_children(children,self)
+        walk_children(children,self,include_extra)
         
         return children
     
@@ -38,11 +65,17 @@ class Node(object):
 
 
 
-def walk_children(main_list, node):
+def walk_children(main_list, node,include_extra=False):
     
     for item in node.children:
         
         main_list.append(item.name)
+        
+        if include_extra:
+            if item.has_ver2:
+                main_list.append(item.name + "2")
+            if item.has_ver3:
+                main_list.append(item.name + "3")
         
         walk_children(main_list,item)
         
@@ -53,7 +86,7 @@ def walk_dict(registry,base,data):
         name = key.replace("Ax",'')
         n = Node()
         n.parent = base
-        n.name = name
+        n.set_name(name)
         base.children.append(n)
         
         registry[name] = n
