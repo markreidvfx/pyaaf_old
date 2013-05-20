@@ -46,6 +46,9 @@ def run_gen():
     print subprocess.list2cmdline(cmd)
     subprocess.check_call(cmd,cwd=working_dir)
     
+    cmd = ['python','gen_implicitly_convertible.py']
+    print subprocess.list2cmdline(cmd)
+    subprocess.check_call(cmd,cwd=working_dir)
   
 def run_pyste(pyste_files=None):
     

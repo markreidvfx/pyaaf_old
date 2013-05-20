@@ -38,7 +38,7 @@ class Node(object):
         if name in ('DataDef'):
             self.has_ver3 = True
         
-    def get_parent(self):
+    def get_parents(self,include_extra=False):
         
         path = []
         
@@ -47,6 +47,12 @@ class Node(object):
         while item:
             if item.name != "Root":
                 path.append(item.name)
+                if include_extra:
+                    if item.has_ver2:
+                        path.append(item.name + "2")
+                    if item.has_ver3:
+                        path.append(item.name + "3")
+                        
             item = item.parent
         
         return path
@@ -131,5 +137,5 @@ if __name__ == "__main__":
     
     for key,value in sorted(registry.items()):
         print "name:",key
-        print 'parents:', value.get_parent()
+        print 'parents:', value.get_parents()
         print 'children:',value.get_all_children()
