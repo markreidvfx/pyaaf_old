@@ -30,8 +30,8 @@ AxBaseObj:
             AxCodecDef:
             AxDataDef:
             AxOperationDef:
-#            AxKLVDataDef:
-#            AxTaggedValueDef:
+            AxKLVDataDefinition: #smartpointer named differently to AxObject AxKLVDataDef
+            AxTaggedValueDefinition: #smartpointer named differently to AxObject AxTaggedValueDef
         AxDescriptiveFramework:
         AxDictionary:
         AxLocator:
@@ -80,7 +80,7 @@ AxBaseObj:
             AxTypeDefStream:
             AxTypeDefString:
             AxTypeDefSet:
-#            AxTypeDefObjRef:
+            AxTypeDefObjectRef: #smartpointer named differently to AxObject AxTypeDefObjRef
             AxTypeDefWeakObjRef:
             AxTypeDefStrongObjRef:
             AxTypeDefVariableArrayEx:
