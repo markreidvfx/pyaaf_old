@@ -215,11 +215,44 @@ aafMobID_t aafMobID_fromString(AxString s)
     return id;
 }
 
+template <typename aafTYPE>
+class aafWrapper
+{
+public:
+    
+    aafWrapper(aafTYPE value){_value = value;}
+    aafTYPE value() {return _value;}
+    aafUInt32 size(){return sizeof(_value);}
+    inline operator aafTYPE () {return _value;}
+    
+private:
+    aafTYPE _value;
+};
+
 
 
 // Module ======================================================================
 void Export_pyste_src_AAFTypes()
 {
+
+
+    class_< aafWrapper<aafUInt8> > ("aafUInt8", init <aafUInt8>())
+    .def("sizeof",&aafWrapper<aafUInt8>::size)
+    .def("value",&aafWrapper<aafUInt8>::value);
+    
+    implicitly_convertible< int, aafUInt8>();
+    
+    class_< aafWrapper<aafUInt16> > ("aafUInt16", init <aafUInt16>())
+    .def("sizeof",&aafWrapper<aafUInt16>::size)
+    .def("value",&aafWrapper<aafUInt16>::value);
+    
+    implicitly_convertible< int, aafUInt16>();
+    
+    class_< aafWrapper<aafUInt32> > ("aafUInt32", init <aafUInt32>())
+    .def("sizeof",&aafWrapper<aafUInt32>::size)
+    .def("value",&aafWrapper<aafUInt32>::value);
+    
+    implicitly_convertible< int, aafUInt32>();
 
     class_< _aafUID_t >("aafUID", init<  >())
         .def(init< const _aafUID_t& >())
@@ -244,6 +277,8 @@ void Export_pyste_src_AAFTypes()
         .staticmethod("fromString")
         .def("__str__",modID_to_string)
     ;
+    
+
 
     class_< _aafRational_t >("aafRational_t", init<  >())
         .def(init< const _aafRational_t& >())

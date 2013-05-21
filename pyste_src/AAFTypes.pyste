@@ -205,6 +205,20 @@ aafMobID_t aafMobID_fromString(AxString s)
     return id;
 }
 
+template <typename aafTYPE>
+class aafWrapper
+{
+public:
+    
+    aafWrapper(aafTYPE value){_value = value;}
+    aafTYPE value() {return _value;}
+    aafUInt32 size(){return sizeof(_value);}
+    inline operator aafTYPE () {return _value;}
+    
+private:
+    aafTYPE _value;
+};
+
 """
 )
 #obj = Class("_aafUID_t", "AAFTypes.h")
@@ -213,6 +227,25 @@ aafMobID_t aafMobID_fromString(AxString s)
 #rename(obj, "aafUID_t")
 
 module_code("""
+
+    class_< aafWrapper<aafUInt8> > ("aafUInt8", init <aafUInt8>())
+    .def("sizeof",&aafWrapper<aafUInt8>::size)
+    .def("value",&aafWrapper<aafUInt8>::value);
+    
+    implicitly_convertible< int, aafUInt8>();
+    
+    class_< aafWrapper<aafUInt16> > ("aafUInt16", init <aafUInt16>())
+    .def("sizeof",&aafWrapper<aafUInt16>::size)
+    .def("value",&aafWrapper<aafUInt16>::value);
+    
+    implicitly_convertible< int, aafUInt16>();
+    
+    class_< aafWrapper<aafUInt32> > ("aafUInt32", init <aafUInt32>())
+    .def("sizeof",&aafWrapper<aafUInt32>::size)
+    .def("value",&aafWrapper<aafUInt32>::value);
+    
+    implicitly_convertible< int, aafUInt32>();
+
     class_< _aafUID_t >("aafUID", init<  >())
         .def(init< const _aafUID_t& >())
         .def_readwrite("Data1", &_aafUID_t::Data1)
@@ -236,6 +269,8 @@ module_code("""
         .staticmethod("fromString")
         .def("__str__",modID_to_string)
     ;
+    
+
 
 """
 )
