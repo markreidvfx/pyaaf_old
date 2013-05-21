@@ -39,6 +39,9 @@ struct iterator_wrappers
         ;
     }
 };
+
+class AxIter {};
+
 """
 pyste += '""")\n'
 
@@ -76,7 +79,7 @@ iters = [
 
 
 pyste += 'module_code("""\n\n'
-
+pyste += 'scope* AxIter_scope = new scope(class_<AxIter>("AxIter"));'
 for i in iters:
     
     if i in ('EssenceData','KLVData','CodecFlavours'):
@@ -108,10 +111,11 @@ for i in iters:
         
         
     
-    s = 'iterator_wrappers<const IAAF%sSP, IAAF%s, Ax%sIter, IEnumAAF%sSP>().wrap("Ax%sIter");\n'  % (i,i,AxName,IEnumAAF,AxName)
+    s = 'iterator_wrappers<const IAAF%sSP, IAAF%s, Ax%sIter, IEnumAAF%sSP>().wrap("%s");\n'  % (i,i,AxName,IEnumAAF,AxName)
     
     pyste += s
 
+pyste += 'delete AxIter_scope;'
 
 pyste += '\n""")\n'
 

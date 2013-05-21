@@ -43,32 +43,35 @@ struct iterator_wrappers
     }
 };
 
+class AxIter {};
+
+
 
 // Module ======================================================================
 void Export_pyste_src_AxIterator()
 {
 
 
-iterator_wrappers<const IAAFClassDefSP, IAAFClassDef, AxClassDefIter, IEnumAAFClassDefsSP>().wrap("AxClassDefIter");
-iterator_wrappers<const IAAFCodecDefSP, IAAFCodecDef, AxCodecDefsIter, IEnumAAFCodecDefsSP>().wrap("AxCodecDefsIter");
-iterator_wrappers<const IAAFComponentSP, IAAFComponent, AxComponentsIter, IEnumAAFComponentsSP>().wrap("AxComponentsIter");
-iterator_wrappers<const IAAFContainerDefSP, IAAFContainerDef, AxContainerDefsIter, IEnumAAFContainerDefsSP>().wrap("AxContainerDefsIter");
-iterator_wrappers<const IAAFControlPointSP, IAAFControlPoint, AxControlPointIter, IEnumAAFControlPointsSP>().wrap("AxControlPointIter");
-iterator_wrappers<const IAAFDataDefSP, IAAFDataDef, AxDataDefsIter, IEnumAAFDataDefsSP>().wrap("AxDataDefsIter");
-iterator_wrappers<const IAAFInterpolationDefSP, IAAFInterpolationDef, AxInterpolationDefsIter, IEnumAAFInterpolationDefsSP>().wrap("AxInterpolationDefsIter");
-iterator_wrappers<const IAAFOperationDefSP, IAAFOperationDef, AxOperationDefIter, IEnumAAFOperationDefsSP>().wrap("AxOperationDefIter");
-iterator_wrappers<const IAAFEssenceDataSP, IAAFEssenceData, AxEssenceIter, IEnumAAFEssenceDataSP>().wrap("AxEssenceIter");
-iterator_wrappers<const IAAFLocatorSP, IAAFLocator, AxLocatorIter, IEnumAAFLocatorsSP>().wrap("AxLocatorIter");
-iterator_wrappers<const IAAFMobSlotSP, IAAFMobSlot, AxMobSlotIter, IEnumAAFMobSlotsSP>().wrap("AxMobSlotIter");
-iterator_wrappers<const IAAFMobSP, IAAFMob, AxMobIter, IEnumAAFMobsSP>().wrap("AxMobIter");
-iterator_wrappers<const IAAFParameterDefSP, IAAFParameterDef, AxParameterDefsIter, IEnumAAFParameterDefsSP>().wrap("AxParameterDefsIter");
-iterator_wrappers<const IAAFParameterSP, IAAFParameter, AxParameterIter, IEnumAAFParametersSP>().wrap("AxParameterIter");
-iterator_wrappers<const IAAFPropertySP, IAAFProperty, AxPropertyIter, IEnumAAFPropertiesSP>().wrap("AxPropertyIter");
-iterator_wrappers<const IAAFPropertyDefSP, IAAFPropertyDef, AxPropertyDefIter, IEnumAAFPropertyDefsSP>().wrap("AxPropertyDefIter");
-iterator_wrappers<const IAAFPropertyValueSP, IAAFPropertyValue, AxPropertyValueIter, IEnumAAFPropertyValuesSP>().wrap("AxPropertyValueIter");
-iterator_wrappers<const IAAFPluginDefSP, IAAFPluginDef, AxPluginDefsIter, IEnumAAFPluginDefsSP>().wrap("AxPluginDefsIter");
-iterator_wrappers<const IAAFSegmentSP, IAAFSegment, AxSegmentsIter, IEnumAAFSegmentsSP>().wrap("AxSegmentsIter");
-iterator_wrappers<const IAAFTypeDefSP, IAAFTypeDef, AxTypeDefIter, IEnumAAFTypeDefsSP>().wrap("AxTypeDefIter");
-
+scope* AxIter_scope = new scope(class_<AxIter>("AxIter"));iterator_wrappers<const IAAFClassDefSP, IAAFClassDef, AxClassDefIter, IEnumAAFClassDefsSP>().wrap("ClassDef");
+iterator_wrappers<const IAAFCodecDefSP, IAAFCodecDef, AxCodecDefsIter, IEnumAAFCodecDefsSP>().wrap("CodecDefs");
+iterator_wrappers<const IAAFComponentSP, IAAFComponent, AxComponentsIter, IEnumAAFComponentsSP>().wrap("Components");
+iterator_wrappers<const IAAFContainerDefSP, IAAFContainerDef, AxContainerDefsIter, IEnumAAFContainerDefsSP>().wrap("ContainerDefs");
+iterator_wrappers<const IAAFControlPointSP, IAAFControlPoint, AxControlPointIter, IEnumAAFControlPointsSP>().wrap("ControlPoint");
+iterator_wrappers<const IAAFDataDefSP, IAAFDataDef, AxDataDefsIter, IEnumAAFDataDefsSP>().wrap("DataDefs");
+iterator_wrappers<const IAAFInterpolationDefSP, IAAFInterpolationDef, AxInterpolationDefsIter, IEnumAAFInterpolationDefsSP>().wrap("InterpolationDefs");
+iterator_wrappers<const IAAFOperationDefSP, IAAFOperationDef, AxOperationDefIter, IEnumAAFOperationDefsSP>().wrap("OperationDef");
+iterator_wrappers<const IAAFEssenceDataSP, IAAFEssenceData, AxEssenceIter, IEnumAAFEssenceDataSP>().wrap("Essence");
+iterator_wrappers<const IAAFLocatorSP, IAAFLocator, AxLocatorIter, IEnumAAFLocatorsSP>().wrap("Locator");
+iterator_wrappers<const IAAFMobSlotSP, IAAFMobSlot, AxMobSlotIter, IEnumAAFMobSlotsSP>().wrap("MobSlot");
+iterator_wrappers<const IAAFMobSP, IAAFMob, AxMobIter, IEnumAAFMobsSP>().wrap("Mob");
+iterator_wrappers<const IAAFParameterDefSP, IAAFParameterDef, AxParameterDefsIter, IEnumAAFParameterDefsSP>().wrap("ParameterDefs");
+iterator_wrappers<const IAAFParameterSP, IAAFParameter, AxParameterIter, IEnumAAFParametersSP>().wrap("Parameter");
+iterator_wrappers<const IAAFPropertySP, IAAFProperty, AxPropertyIter, IEnumAAFPropertiesSP>().wrap("Property");
+iterator_wrappers<const IAAFPropertyDefSP, IAAFPropertyDef, AxPropertyDefIter, IEnumAAFPropertyDefsSP>().wrap("PropertyDef");
+iterator_wrappers<const IAAFPropertyValueSP, IAAFPropertyValue, AxPropertyValueIter, IEnumAAFPropertyValuesSP>().wrap("PropertyValue");
+iterator_wrappers<const IAAFPluginDefSP, IAAFPluginDef, AxPluginDefsIter, IEnumAAFPluginDefsSP>().wrap("PluginDefs");
+iterator_wrappers<const IAAFSegmentSP, IAAFSegment, AxSegmentsIter, IEnumAAFSegmentsSP>().wrap("Segments");
+iterator_wrappers<const IAAFTypeDefSP, IAAFTypeDef, AxTypeDefIter, IEnumAAFTypeDefsSP>().wrap("TypeDef");
+delete AxIter_scope;
 }
 
