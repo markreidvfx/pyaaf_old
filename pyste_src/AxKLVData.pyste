@@ -1,0 +1,4 @@
+obj = Class("AxKLVData","AxKLVData.h")
+
+exclude(obj.GetValue)
+exclude(obj.SetValue)
