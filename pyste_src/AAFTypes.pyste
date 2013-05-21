@@ -124,6 +124,70 @@ void string_to_uid(_aafUID_t& id, AxString string)
     }
 }
 
+void string_to_mobId(aafMobID_t& mobId, AxString string)
+{
+    const wchar_t* uri = string.c_str();
+    
+    unsigned int bytes[32];
+    
+    int ret = swscanf(uri,
+                      L"urn:smpte:umid:%02x%02x%02x%02x.%02x%02x%02x%02x.%02x%02x%02x%02x."
+                      L"%02x"
+                      L"%02x%02x%02x."
+                      L"%02x%02x%02x%02x.%02x%02x%02x%02x.%02x%02x%02x%02x.%02x%02x%02x%02x",
+                      &bytes[0], &bytes[1], &bytes[2], &bytes[3],
+                      &bytes[4], &bytes[5], &bytes[6], &bytes[7],
+                      &bytes[8], &bytes[9], &bytes[10], &bytes[11],
+                      &bytes[12],
+                      &bytes[13], &bytes[14], &bytes[15],
+                      &bytes[16], &bytes[17], &bytes[18], &bytes[19],
+                      &bytes[20], &bytes[21],
+                      &bytes[22], &bytes[23],
+                      &bytes[24], &bytes[25], &bytes[26], &bytes[27],
+                      &bytes[28], &bytes[29], &bytes[30], &bytes[31]);
+    
+    if (ret != 32)
+    {
+        throw "Invalid MobId";
+    }
+    
+    unsigned int i;
+    for (i=0; i<12; i++)
+    {
+        mobId.SMPTELabel[i] = (aafInt8)bytes[i];
+    }
+    mobId.length = (aafInt8)bytes[12];
+    mobId.instanceHigh = (aafInt8)bytes[13];
+    mobId.instanceMid = (aafInt8)bytes[14];
+    mobId.instanceLow = (aafInt8)bytes[15];
+    
+    // handle special case of OMF UMIDs where the material number if half swapped
+    if (bytes[11] == 0x00 &&
+        bytes[16] == 0x06 && bytes[17] == 0x0E && bytes[18] == 0x2B &&
+        bytes[19] == 0x34 && bytes[20] == 0x7F && bytes[21] == 0x7F)
+    {
+        mobId.material.Data1 = ((aafInt32)bytes[24] << 24) + ((aafInt32)bytes[25] << 16) +
+        ((aafInt32)bytes[26] << 8) + (aafInt32)(bytes[27]);
+        mobId.material.Data2 = ((aafInt16)bytes[28] << 8) + (aafInt16)(bytes[29]);
+        mobId.material.Data3 = ((aafInt16)bytes[30] << 8) + (aafInt16)(bytes[31]);
+        for (i=0; i<8; i++)
+        {
+            mobId.material.Data4[i] = (aafInt8)bytes[i + 16];
+        }
+    }
+    else
+    {
+        mobId.material.Data1 = ((aafInt32)bytes[16] << 24) + ((aafInt32)bytes[17] << 16) +
+        ((aafInt32)bytes[18] << 8) + (aafInt32)(bytes[19]);
+        mobId.material.Data2 = ((aafInt16)bytes[20] << 8) + (aafInt16)(bytes[21]);
+        mobId.material.Data3 = ((aafInt16)bytes[22] << 8) + (aafInt16)(bytes[23]);
+        for (i=0; i<8; i++)
+        {
+            mobId.material.Data4[i] = (aafInt8)bytes[i + 24];
+        }
+    }
+}
+
 """
 )
 #obj = Class("_aafUID_t", "AAFTypes.h")
@@ -150,6 +214,7 @@ module_code("""
         .def_readwrite("instanceLow", &_aafMobID_t::instanceLow)
         .def_readwrite("material", &_aafMobID_t::material)
         .def("toString",modID_to_string)
+        .def("fromString",string_to_mobId)
         .def("__str__",modID_to_string)
     ;
 
