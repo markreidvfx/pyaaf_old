@@ -1,13 +1,36 @@
 
-Var("kAAFDataDef_Picture", "AAFDataDefs.h")
-Var("kAAFDataDef_LegacyPicture", "AAFDataDefs.h")
-Var("kAAFDataDef_Matte", "AAFDataDefs.h")
-Var("kAAFDataDef_PictureWithMatte", "AAFDataDefs.h")
-Var("kAAFDataDef_Sound", "AAFDataDefs.h")
-Var("kAAFDataDef_LegacySound", "AAFDataDefs.h")
-Var("kAAFDataDef_Timecode", "AAFDataDefs.h")
-Var("kAAFDataDef_LegacyTimecode", "AAFDataDefs.h")
-Var("kAAFDataDef_Edgecode", "AAFDataDefs.h")
-Var("kAAFDataDef_DescriptiveMetadata", "AAFDataDefs.h")
-Var("kAAFDataDef_Auxiliary", "AAFDataDefs.h")
-Var("kAAFDataDef_Unknown", "AAFDataDefs.h")
+#Var("kAAFDataDef_Picture", "AAFDataDefs.h")
+#Var("kAAFDataDef_LegacyPicture", "AAFDataDefs.h")
+#Var("kAAFDataDef_Matte", "AAFDataDefs.h")
+#Var("kAAFDataDef_PictureWithMatte", "AAFDataDefs.h")
+#Var("kAAFDataDef_Sound", "AAFDataDefs.h")
+#Var("kAAFDataDef_LegacySound", "AAFDataDefs.h")
+#Var("kAAFDataDef_Timecode", "AAFDataDefs.h")
+#Var("kAAFDataDef_LegacyTimecode", "AAFDataDefs.h")
+#Var("kAAFDataDef_Edgecode", "AAFDataDefs.h")
+#Var("kAAFDataDef_DescriptiveMetadata", "AAFDataDefs.h")
+#Var("kAAFDataDef_Auxiliary", "AAFDataDefs.h")
+#Var("kAAFDataDef_Unknown", "AAFDataDefs.h")
+
+
+Include("AAFDataDefs.h")
+
+declaration_code("""
+class DataDef {};
+""")
+
+module_code("""
+    scope DataDef_scope = class_<DataDef>("DataDef");
+    DataDef_scope.attr("Picture") = kAAFDataDef_Picture;
+    DataDef_scope.attr("LegacyPicture") = kAAFDataDef_LegacyPicture;
+    DataDef_scope.attr("Matte") = kAAFDataDef_Matte;
+    DataDef_scope.attr("PictureWithMatte") = kAAFDataDef_PictureWithMatte;
+    DataDef_scope.attr("Sound") = kAAFDataDef_Sound;
+    DataDef_scope.attr("LegacySound") = kAAFDataDef_LegacySound;
+    DataDef_scope.attr("Timecode") = kAAFDataDef_Timecode;
+    DataDef_scope.attr("LegacyTimecode") = kAAFDataDef_LegacyTimecode;
+    DataDef_scope.attr("Edgecode") = kAAFDataDef_Edgecode;
+    DataDef_scope.attr("DescriptiveMetadata") = kAAFDataDef_DescriptiveMetadata;
+    DataDef_scope.attr("Auxiliary") = kAAFDataDef_Auxiliary;
+    DataDef_scope.attr("Unknown") = kAAFDataDef_Unknown;
+""")
