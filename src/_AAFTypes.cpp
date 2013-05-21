@@ -14,6 +14,9 @@ using namespace boost::python;
 
 // Declarations ================================================================
 
+
+#include <exception>
+
 std::string uid_to_string(_aafUID_t& id)
 {
     if ((id.Data4[0] & 0x80) != 0 ) // bit 65 of a UUID is 1 for non-NCS UUIDs
@@ -105,7 +108,7 @@ void string_to_uid(_aafUID_t& id, AxString string)
         
         if (ret != 16)
         {
-            throw "Invalid AUID";
+            throw std::invalid_argument("Invalid AUID");
         }
     }
     else
@@ -120,7 +123,7 @@ void string_to_uid(_aafUID_t& id, AxString string)
         
         if (ret != 16)
         {
-            throw "Invalid AUID";
+            throw std::invalid_argument("Invalid AUID");
         }
     }
     
@@ -158,7 +161,7 @@ void string_to_mobId(aafMobID_t& mobId, AxString string)
     
     if (ret != 32)
     {
-        throw "Invalid MobId";
+        throw std::invalid_argument("Invalid MobId");
     }
     
     unsigned int i;
