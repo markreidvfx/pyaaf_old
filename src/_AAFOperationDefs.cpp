@@ -9,52 +9,59 @@
 // Using =======================================================================
 using namespace boost::python;
 
+// Declarations ================================================================
+
+class OperationDef {};
+
+
 // Module ======================================================================
 void Export_pyste_src_AAFOperationDefs()
 {
-    scope().attr("kAAFOperationDef_VideoSeparateAlphaKey") = kAAFOperationDef_VideoSeparateAlphaKey;
-    scope().attr("kAAFOperationUnknown") = kAAFOperationUnknown;
-    scope().attr("kAAFOperationDef_MonoAudioGain") = kAAFOperationDef_MonoAudioGain;
-    scope().attr("kAAFEffectMonoAudioPan") = kAAFEffectMonoAudioPan;
-    scope().attr("kAAFEffectMonoAudioDissolve") = kAAFEffectMonoAudioDissolve;
-    scope().attr("kAAFOperationDef_VideoPosition") = kAAFOperationDef_VideoPosition;
-    scope().attr("kAAFOperationDef_VideoScale") = kAAFOperationDef_VideoScale;
-    scope().attr("kAAFEffectVideoDissolve") = kAAFEffectVideoDissolve;
-    scope().attr("kAAFOperationDef_MonoAudioDissolve") = kAAFOperationDef_MonoAudioDissolve;
-    scope().attr("kAAFEffectStereoAudioDissolve") = kAAFEffectStereoAudioDissolve;
-    scope().attr("kAAFOperationDef_VideoCornerPinning") = kAAFOperationDef_VideoCornerPinning;
-    scope().attr("kAAFOperationDef_VideoDissolve") = kAAFOperationDef_VideoDissolve;
-    scope().attr("kAAFOperationDef_VideoRepeat") = kAAFOperationDef_VideoRepeat;
-    scope().attr("kAAFOperationDef_FlipFlop") = kAAFOperationDef_FlipFlop;
-    scope().attr("kAAFEffectVideoSpeedControl") = kAAFEffectVideoSpeedControl;
-    scope().attr("kAAFEffectMonoAudioGain") = kAAFEffectMonoAudioGain;
-    scope().attr("kAAFOperationDef_Flip") = kAAFOperationDef_Flip;
-    scope().attr("kAAFOperationDef_VideoRotate") = kAAFOperationDef_VideoRotate;
-    scope().attr("kAAFOperationDef_VideoSpeedControl") = kAAFOperationDef_VideoSpeedControl;
-    scope().attr("kAAFOperationDef_VideoTitle") = kAAFOperationDef_VideoTitle;
-    scope().attr("kAAFEffectVideoFadeToBlack") = kAAFEffectVideoFadeToBlack;
-    scope().attr("kAAFEffectVideoRepeat") = kAAFEffectVideoRepeat;
-    scope().attr("kAAFEffectVideoFrameToMask") = kAAFEffectVideoFrameToMask;
-    scope().attr("kAAFOperationDef_SMPTEVideoWipe") = kAAFOperationDef_SMPTEVideoWipe;
-    scope().attr("kAAFOperationDef_MonoAudioPan") = kAAFOperationDef_MonoAudioPan;
-    scope().attr("kAAFOperationDef_TwoParameterMonoAudioDissolve") = kAAFOperationDef_TwoParameterMonoAudioDissolve;
-    scope().attr("kAAFOperationDef_VideoFadeToBlack") = kAAFOperationDef_VideoFadeToBlack;
-    scope().attr("kAAFOperationDef_VideoChromaKey") = kAAFOperationDef_VideoChromaKey;
-    scope().attr("kAAFEffectStereoAudioGain") = kAAFEffectStereoAudioGain;
-    scope().attr("kAAFOperationDef_StereoAudioDissolve") = kAAFOperationDef_StereoAudioDissolve;
-    scope().attr("kAAFOperationDef_MonoAudioMixdown") = kAAFOperationDef_MonoAudioMixdown;
-    scope().attr("kAAFOperationDef_Flop") = kAAFOperationDef_Flop;
-    scope().attr("kAAFEffectMonoAudioMixdown") = kAAFEffectMonoAudioMixdown;
-    scope().attr("kAAFOperationDef_VideoLuminanceKey") = kAAFOperationDef_VideoLuminanceKey;
-    scope().attr("kAAFOperationDef_StereoAudioGain") = kAAFOperationDef_StereoAudioGain;
-    scope().attr("kAAFOperationDef_VideoCrop") = kAAFOperationDef_VideoCrop;
-    scope().attr("kAAFEffectSMPTEVideoWipe") = kAAFEffectSMPTEVideoWipe;
-    scope().attr("kAAFOperationDef_VideoFrameToMask") = kAAFOperationDef_VideoFrameToMask;
-    scope().attr("kAAFEffectPictureWithMate") = kAAFEffectPictureWithMate;
-    scope().attr("kAAFOperationDef_VideoAlphaWithinVideoKey") = kAAFOperationDef_VideoAlphaWithinVideoKey;
-    scope().attr("kAAFOperationDef_PictureWithMate") = kAAFOperationDef_PictureWithMate;
-    scope().attr("kAAFOperationDef_VideoColor") = kAAFOperationDef_VideoColor;
-    scope().attr("kAAFOperationDef_Unknown") = kAAFOperationDef_Unknown;
-    scope().attr("kAAFOperationDef_VideoOpacity") = kAAFOperationDef_VideoOpacity;
+
+    scope OperationDef_scope = class_<OperationDef>("OperationDef");
+    OperationDef_scope.attr("VideoSeparateAlphaKey") = kAAFOperationDef_VideoSeparateAlphaKey;
+    OperationDef_scope.attr("OperationUnknown") = kAAFOperationUnknown;
+    OperationDef_scope.attr("MonoAudioGain") = kAAFOperationDef_MonoAudioGain;
+    OperationDef_scope.attr("EffectMonoAudioPan") = kAAFEffectMonoAudioPan;
+    OperationDef_scope.attr("EffectMonoAudioDissolve") = kAAFEffectMonoAudioDissolve;
+    OperationDef_scope.attr("VideoPosition") = kAAFOperationDef_VideoPosition;
+    OperationDef_scope.attr("VideoScale") = kAAFOperationDef_VideoScale;
+    OperationDef_scope.attr("EffectVideoDissolve") = kAAFEffectVideoDissolve;
+    OperationDef_scope.attr("MonoAudioDissolve") = kAAFOperationDef_MonoAudioDissolve;
+    OperationDef_scope.attr("EffectStereoAudioDissolve") = kAAFEffectStereoAudioDissolve;
+    OperationDef_scope.attr("VideoCornerPinning") = kAAFOperationDef_VideoCornerPinning;
+    OperationDef_scope.attr("VideoDissolve") = kAAFOperationDef_VideoDissolve;
+    OperationDef_scope.attr("VideoRepeat") = kAAFOperationDef_VideoRepeat;
+    OperationDef_scope.attr("FlipFlop") = kAAFOperationDef_FlipFlop;
+    OperationDef_scope.attr("EffectVideoSpeedControl") = kAAFEffectVideoSpeedControl;
+    OperationDef_scope.attr("EffectMonoAudioGain") = kAAFEffectMonoAudioGain;
+    OperationDef_scope.attr("Flip") = kAAFOperationDef_Flip;
+    OperationDef_scope.attr("VideoRotate") = kAAFOperationDef_VideoRotate;
+    OperationDef_scope.attr("VideoSpeedControl") = kAAFOperationDef_VideoSpeedControl;
+    OperationDef_scope.attr("VideoTitle") = kAAFOperationDef_VideoTitle;
+    OperationDef_scope.attr("EffectVideoFadeToBlack") = kAAFEffectVideoFadeToBlack;
+    OperationDef_scope.attr("EffectVideoRepeat") = kAAFEffectVideoRepeat;
+    OperationDef_scope.attr("EffectVideoFrameToMask") = kAAFEffectVideoFrameToMask;
+    OperationDef_scope.attr("SMPTEVideoWipe") = kAAFOperationDef_SMPTEVideoWipe;
+    OperationDef_scope.attr("MonoAudioPan") = kAAFOperationDef_MonoAudioPan;
+    OperationDef_scope.attr("TwoParameterMonoAudioDissolve") = kAAFOperationDef_TwoParameterMonoAudioDissolve;
+    OperationDef_scope.attr("VideoFadeToBlack") = kAAFOperationDef_VideoFadeToBlack;
+    OperationDef_scope.attr("VideoChromaKey") = kAAFOperationDef_VideoChromaKey;
+    OperationDef_scope.attr("EffectStereoAudioGain") = kAAFEffectStereoAudioGain;
+    OperationDef_scope.attr("StereoAudioDissolve") = kAAFOperationDef_StereoAudioDissolve;
+    OperationDef_scope.attr("MonoAudioMixdown") = kAAFOperationDef_MonoAudioMixdown;
+    OperationDef_scope.attr("Flop") = kAAFOperationDef_Flop;
+    OperationDef_scope.attr("EffectMonoAudioMixdown") = kAAFEffectMonoAudioMixdown;
+    OperationDef_scope.attr("VideoLuminanceKey") = kAAFOperationDef_VideoLuminanceKey;
+    OperationDef_scope.attr("StereoAudioGain") = kAAFOperationDef_StereoAudioGain;
+    OperationDef_scope.attr("VideoCrop") = kAAFOperationDef_VideoCrop;
+    OperationDef_scope.attr("EffectSMPTEVideoWipe") = kAAFEffectSMPTEVideoWipe;
+    OperationDef_scope.attr("VideoFrameToMask") = kAAFOperationDef_VideoFrameToMask;
+    OperationDef_scope.attr("EffectPictureWithMate") = kAAFEffectPictureWithMate;
+    OperationDef_scope.attr("VideoAlphaWithinVideoKey") = kAAFOperationDef_VideoAlphaWithinVideoKey;
+    OperationDef_scope.attr("PictureWithMate") = kAAFOperationDef_PictureWithMate;
+    OperationDef_scope.attr("VideoColor") = kAAFOperationDef_VideoColor;
+    OperationDef_scope.attr("Unknown") = kAAFOperationDef_Unknown;
+    OperationDef_scope.attr("VideoOpacity") = kAAFOperationDef_VideoOpacity;
 }
 
