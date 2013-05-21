@@ -201,23 +201,38 @@ void string_to_mobId(aafMobID_t& mobId, AxString string)
     }
 }
 
+aafUID_t affUID_fromString(AxString s)
+{
+    aafUID_t id;
+    string_to_uid(id, s);
+    return id;
+}
+
+aafMobID_t aafMobID_fromString(AxString s)
+{
+    aafMobID_t id;
+    string_to_mobId(id, s);
+    return id;
+}
+
 
 
 // Module ======================================================================
 void Export_pyste_src_AAFTypes()
 {
 
-    class_< _aafUID_t >("aafUID_t", init<  >())
+    class_< _aafUID_t >("aafUID", init<  >())
         .def(init< const _aafUID_t& >())
         .def_readwrite("Data1", &_aafUID_t::Data1)
         .def_readwrite("Data2", &_aafUID_t::Data2)
         .def_readwrite("Data3", &_aafUID_t::Data3)
         .def("toString",uid_to_string)
-        .def("fromString",string_to_uid)
+        .def("fromString",affUID_fromString)
+        .staticmethod("fromString")
         .def("__str__",uid_to_string)
     ;
 
-    class_< _aafMobID_t >("aafMobID_t", init<  >())
+    class_< _aafMobID_t >("aafMobID", init<  >())
         .def(init< const _aafMobID_t& >())
         .def_readwrite("length", &_aafMobID_t::length)
         .def_readwrite("instanceHigh", &_aafMobID_t::instanceHigh)
@@ -225,7 +240,8 @@ void Export_pyste_src_AAFTypes()
         .def_readwrite("instanceLow", &_aafMobID_t::instanceLow)
         .def_readwrite("material", &_aafMobID_t::material)
         .def("toString",modID_to_string)
-        .def("fromString",string_to_mobId)
+        .def("fromString",aafMobID_fromString)
+        .staticmethod("fromString")
         .def("__str__",modID_to_string)
     ;
 
