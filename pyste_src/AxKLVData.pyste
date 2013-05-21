@@ -1,4 +1,22 @@
-obj = Class("AxKLVData","AxKLVData.h")
+#obj = Class("AxKLVData","AxKLVData.h")
 
-exclude(obj.GetValue)
-exclude(obj.SetValue)
+#exclude(obj.GetValue)
+#exclude(obj.SetValue)
+
+Include("AxKLVData.h")
+Include("create_instance.h")
+
+module_code("""
+
+    class_< AxKLVData, boost::noncopyable >("AxKLVData", init< IAAFKLVDataSP >())
+        .def("Initialize", &AxKLVData::Initialize)
+        .def("GetKey", &AxKLVData::GetKey)
+        .def("GetClassName", &AxObject::GetClassName)
+        .def("GetDictionary", &AxObject::GetDictionary)
+        .def("GetProperties", &AxObject::GetProperties)
+        .def("GetDefinition", &AxObject::GetDefinition)
+        .def("to_IAAFKLVDataSP", &AxKLVData::operator IAAFKLVDataSP)
+        .def("CreateInstance",create_instance<IAAFKLVData, AxKLVData>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
+    ;
+""")
