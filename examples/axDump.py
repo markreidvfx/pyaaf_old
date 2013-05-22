@@ -14,7 +14,7 @@ a = pyaaf.AxInit()
 f= pyaaf.AxFile()
 f.OpenExistingRead(args[0])
 
-headerSP = f.getHeader()
+headerSP = f.GetHeader()
 
 ObjectRecIter = pyaaf.BaseObjectRecIter(pyaaf.AxHeader(headerSP))
 

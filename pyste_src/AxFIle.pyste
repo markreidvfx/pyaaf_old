@@ -1,7 +1,16 @@
 #Import("AxBaseObj.pyste")
 
-PySaveAs = Wrapper("PySaveAs",
-    """
+Include("AxFile.h")
+Include("AxEx.h")
+Include("AxHrMap.h")
+Include("AxUtil.h")
+Include("AAF.h")
+Include("AAFFileKinds.h")
+Include("AAFResult.h")
+Include("sys/stat.h")
+
+declaration_code("""
+
 void PySaveAs(AxFile file, AxString path)
 {
 
@@ -10,19 +19,6 @@ newfile.OpenNewModify( path );
 file.SaveCopyAs(newfile);
 newfile.Close();
     }
-""")
-
-declaration_code("""
-
-#include "AxEx.h"
-#include "AxHrMap.h"
-#include "AxUtil.h"
-
-#include "AAF.h"
-#include "AAFFileKinds.h"
-#include "AAFResult.h"
-
-#include <sys/stat.h>
 
 using namespace std;
 
@@ -67,16 +63,40 @@ newfile.Close();
 }
 
 
+
+namespace  {
+
+BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(AxFile_OpenNewModify_overloads_1_3, OpenNewModify, 1, 3)
+
+BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(AxFile_OpenExistingModify_overloads_1_3, OpenExistingModify, 1, 3)
+
+BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(AxFile_OpenExistingRead_overloads_1_2, OpenExistingRead, 1, 2)
+
+BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(AxFile_OpenTransient_overloads_0_1, OpenTransient, 0, 1)
+ }
+
 """
 )
 
 
+module_code("""
 
+    class_< AxFile >("AxFile", init<  >())
+        .def(init< IAAFFileSP >())
+        .def(init< const AxFile& >())
+        .def("isAAFFile", &AxFile::isAAFFile)
+        .def("OpenNewModify", &AxFile::OpenNewModify, AxFile_OpenNewModify_overloads_1_3())
+        .def("OpenExistingModify", &AxFile::OpenExistingModify, AxFile_OpenExistingModify_overloads_1_3())
+        .def("OpenExistingRead", &AxFile::OpenExistingRead, AxFile_OpenExistingRead_overloads_1_2())
+        .def("OpenTransient", &AxFile::OpenTransient, AxFile_OpenTransient_overloads_0_1())
+        .def("Save", &AxFile::Save)
+        .def("SaveCopyAs", &PySaveAs)
+        .def("Close", &AxFile::Close)
+        .def("GetName", &AxFile::getName, return_value_policy< copy_const_reference >())
+        .def("GetHeader", &AxFile::getHeader)
+        .staticmethod("isAAFFile")
+        .def("to_IAAFFileSP", &AxFile::operator IAAFFileSP)
+        .def("toXml", pySaveAsXml)
+    ;
 
-
-axfile = Class("AxFile", "AxFile.h")
-exclude(axfile.dump)
-exclude(axfile.operator['<<'])
-set_wrapper(axfile.SaveCopyAs, PySaveAs)
-add_method(axfile, "pySaveAsXml")
-rename(axfile.pySaveAsXml, "toXml")
+""")

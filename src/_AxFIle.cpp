@@ -4,7 +4,14 @@
 #include <boost/cstdint.hpp>
 
 // Includes ====================================================================
+#include <AAF.h>
+#include <AAFFileKinds.h>
+#include <AAFResult.h>
+#include <AxEx.h>
 #include <AxFile.h>
+#include <AxHrMap.h>
+#include <AxUtil.h>
+#include <sys/stat.h>
 
 // Using =======================================================================
 using namespace boost::python;
@@ -12,16 +19,14 @@ using namespace boost::python;
 // Declarations ================================================================
 
 
-#include "AxEx.h"
-#include "AxHrMap.h"
-#include "AxUtil.h"
+void PySaveAs(AxFile file, AxString path)
+{
 
-#include "AAF.h"
-#include "AAFFileKinds.h"
-#include "AAFResult.h"
-
-#include <iostream>
-#include <sys/stat.h>
+AxFile newfile;
+newfile.OpenNewModify( path );
+file.SaveCopyAs(newfile);
+newfile.Close();
+    }
 
 using namespace std;
 
@@ -67,7 +72,6 @@ newfile.Close();
 
 
 
-
 namespace  {
 
 BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(AxFile_OpenNewModify_overloads_1_3, OpenNewModify, 1, 3)
@@ -77,24 +81,15 @@ BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(AxFile_OpenExistingModify_overloads_1_3, 
 BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(AxFile_OpenExistingRead_overloads_1_2, OpenExistingRead, 1, 2)
 
 BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(AxFile_OpenTransient_overloads_0_1, OpenTransient, 0, 1)
+ }
 
-
-void PySaveAs(AxFile file, AxString path)
-{
-
-AxFile newfile;
-newfile.OpenNewModify( path );
-file.SaveCopyAs(newfile);
-newfile.Close();
-    }
-
-
-}// namespace 
 
 
 // Module ======================================================================
 void Export_pyste_src_AxFIle()
 {
+
+
     class_< AxFile >("AxFile", init<  >())
         .def(init< IAAFFileSP >())
         .def(init< const AxFile& >())
@@ -106,8 +101,8 @@ void Export_pyste_src_AxFIle()
         .def("Save", &AxFile::Save)
         .def("SaveCopyAs", &PySaveAs)
         .def("Close", &AxFile::Close)
-        .def("getName", &AxFile::getName, return_value_policy< copy_const_reference >())
-        .def("getHeader", &AxFile::getHeader)
+        .def("GetName", &AxFile::getName, return_value_policy< copy_const_reference >())
+        .def("GetHeader", &AxFile::getHeader)
         .staticmethod("isAAFFile")
         .def("to_IAAFFileSP", &AxFile::operator IAAFFileSP)
         .def("toXml", pySaveAsXml)
