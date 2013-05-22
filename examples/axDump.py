@@ -1,6 +1,5 @@
 import pyaaf
 
-
 from optparse import OptionParser
     
 parser = OptionParser()
@@ -14,9 +13,7 @@ a = pyaaf.AxInit()
 f= pyaaf.AxFile()
 f.OpenExistingRead(args[0])
 
-headerSP = f.GetHeader()
-
-ObjectRecIter = pyaaf.BaseObjectRecIter(pyaaf.AxHeader(headerSP))
+ObjectRecIter = pyaaf.BaseObjectRecIter(f.GetHeader())
 
 for item in ObjectRecIter:
     
@@ -63,5 +60,7 @@ for item in ObjectRecIter:
 
     else:
         print "***",item
+        
+f.Close()
         
 
