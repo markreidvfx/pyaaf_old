@@ -34,7 +34,19 @@ AxHeader PyGetHeader(AxFile& file)
     return AxHeader(file.getHeader());
 
 }
+
+std::wstring AxFile_tostring(AxFile& o)
+{
+    std::wstringstream buffer;
+    std::wstreambuf * old = std::wcout.rdbuf(buffer.rdbuf());
     
+    o.dump( std::wcout );
+
+    std::wstring text = buffer.str();
+    std::wcout.rdbuf(old);
+    
+    return text;
+}
     
     
 
@@ -116,6 +128,7 @@ void Export_pyste_src_AxFIle()
         .staticmethod("isAAFFile")
         .def("to_IAAFFileSP", &AxFile::operator IAAFFileSP)
         .def("toXml", pySaveAsXml)
+        .def("__str__",AxFile_tostring)
     ;
 
 }
