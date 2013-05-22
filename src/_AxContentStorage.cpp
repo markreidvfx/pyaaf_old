@@ -12,6 +12,17 @@ using namespace boost::python;
 
 // Declarations ================================================================
 
+
+AxMobIter PyGetAllMobs(AxContentStorage* storage)
+    {
+        
+        aafSearchCrit_t criteria;
+        criteria.searchTag = kAAFByMobKind;
+        criteria.tags.mobKind = kAAFAllMob;
+        AxMobIter axMobIter( storage->GetMobs( &criteria ) );
+        return axMobIter;
+    }
+    
 AxMobIter PyGetMasterMobs(AxContentStorage* storage)
     {
         
@@ -21,13 +32,16 @@ AxMobIter PyGetMasterMobs(AxContentStorage* storage)
         AxMobIter axMobIter( storage->GetMobs( &criteria ) );
         return axMobIter;
     }
-
-namespace  {
-
-BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(AxContentStorage_GetMobs_overloads_0_1, GetMobs, 0, 1)
-
-
-}// namespace 
+    
+AxMobIter PyGetCompositionMobs(AxContentStorage* storage)
+    {
+        
+        aafSearchCrit_t criteria;
+        criteria.searchTag = kAAFByMobKind;
+        criteria.tags.mobKind = kAAFCompMob;
+        AxMobIter axMobIter( storage->GetMobs( &criteria ) );
+        return axMobIter;
+    }
 
 
 
@@ -41,13 +55,14 @@ void Export_pyste_src_AxContentStorage()
         .def("LookupEssenceData", &AxContentStorage::LookupEssenceData)
         .def("CountEssenceData", &AxContentStorage::CountEssenceData)
         .def("IsEssenceDataPresent", &AxContentStorage::IsEssenceDataPresent)
-        .def("GetMobs", &AxContentStorage::GetMobs, AxContentStorage_GetMobs_overloads_0_1())
+        .def("GetMobs",PyGetAllMobs)
         .def("EnumEssenceData", &AxContentStorage::EnumEssenceData)
         .def("GetClassName", &AxObject::GetClassName)
         .def("GetDictionary", &AxObject::GetDictionary)
         .def("GetProperties", &AxObject::GetProperties)
         .def("GetDefinition", &AxObject::GetDefinition)
         .def("GetMasterMobs",PyGetMasterMobs)
+        .def("GetCompositionMobs",PyGetCompositionMobs)
     ;
 
 
