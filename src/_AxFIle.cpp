@@ -9,6 +9,7 @@
 #include <AAFResult.h>
 #include <AxEx.h>
 #include <AxFile.h>
+#include <AxHeader.h>
 #include <AxHrMap.h>
 #include <AxUtil.h>
 #include <sys/stat.h>
@@ -26,7 +27,16 @@ AxFile newfile;
 newfile.OpenNewModify( path );
 file.SaveCopyAs(newfile);
 newfile.Close();
-    }
+}
+
+AxHeader PyGetHeader(AxFile& file)
+{
+    return AxHeader(file.getHeader());
+
+}
+    
+    
+    
 
 using namespace std;
 
@@ -102,7 +112,7 @@ void Export_pyste_src_AxFIle()
         .def("SaveCopyAs", &PySaveAs)
         .def("Close", &AxFile::Close)
         .def("GetName", &AxFile::getName, return_value_policy< copy_const_reference >())
-        .def("GetHeader", &AxFile::getHeader)
+        .def("GetHeader", PyGetHeader)
         .staticmethod("isAAFFile")
         .def("to_IAAFFileSP", &AxFile::operator IAAFFileSP)
         .def("toXml", pySaveAsXml)
