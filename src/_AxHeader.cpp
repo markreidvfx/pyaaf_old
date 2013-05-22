@@ -5,14 +5,27 @@
 
 // Includes ====================================================================
 #include <AxHeader.h>
-#include <AxSmartPointer.h>
 
 // Using =======================================================================
 using namespace boost::python;
 
+// Declarations ================================================================
+
+
+std::wstring Header_tostring(AxHeader& o)
+{
+    std::wostringstream s;
+    s << o;
+    return s.str();
+    
+}
+
+
+
 // Module ======================================================================
 void Export_pyste_src_AxHeader()
 {
+
     class_< AxHeader >("AxHeader", init< IAAFHeaderSP >())
         .def(init< IAAFHeader2SP >())
         .def(init< const AxHeader& >())
@@ -58,11 +71,8 @@ void Export_pyste_src_AxHeader()
         .def("GetDefinition", &AxObject::GetDefinition)
         .def("to_IAAFHeaderSP", &AxHeader::operator IAAFHeaderSP)
         .def("to_IAAFHeader2SP", &AxHeader::operator IAAFHeader2SP)
+        .def("__str__", Header_tostring)
     ;
-
-
-
-//class_<IAAFSmartPointer<IAAFHeader> >("IAAFHeader");
 
 }
 
