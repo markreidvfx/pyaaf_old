@@ -211,6 +211,12 @@ void Export_pyste_src_implicitly_convertible()
      implicitly_convertible<AxRecordingDescriptor, IAAFSmartPointer<IAAFEssenceDescriptor> > ();
      implicitly_convertible<AxRecordingDescriptor, IAAFSmartPointer<IAAFObject> > ();
 
+//AxKLVData
+
+     implicitly_convertible<AxKLVData, IAAFSmartPointer<IAAFKLVData> > ();
+
+     implicitly_convertible<AxKLVData, IAAFSmartPointer<IAAFObject> > ();
+
 //AxClassDef
 
      implicitly_convertible<AxClassDef, IAAFSmartPointer<IAAFClassDef> > ();

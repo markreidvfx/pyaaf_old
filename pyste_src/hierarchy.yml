@@ -51,6 +51,7 @@ AxBaseObj:
                 AxAuxiliaryDescriptor:
         AxHeader:
         AxIdentification:
+        AxKLVData:
         AxMob:
             AxMasterMob:
                 AxMasterMobEx:
