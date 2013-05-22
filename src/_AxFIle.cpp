@@ -20,7 +20,7 @@ using namespace boost::python;
 // Declarations ================================================================
 
 
-void PySaveAs(AxFile file, AxString path)
+void PySaveAs(AxFile& file, AxString path)
 {
 
 AxFile newfile;
@@ -50,7 +50,7 @@ bool fileExists(const string& filename)
     return false;
 }
 
-void pySaveAsXml(AxFile file, string path)
+void pySaveAsXml(AxFile& file, string path)
 {
 
 if (fileExists(path))
