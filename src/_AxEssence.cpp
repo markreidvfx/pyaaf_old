@@ -14,13 +14,14 @@ using namespace boost::python;
 // Declarations ================================================================
 
 
+template <typename T>
 void PyAddFormatSpecifier(AxEssenceFormat &axEssenceFormat,
                           const aafUID_t essenceFormatCode,
-                          aafUInt32 sampleSize)
+                          T sampleSize)
 {
     axEssenceFormat.AddFormatSpecifier( essenceFormatCode, sizeof( sampleSize ),
                                        reinterpret_cast<aafUInt8*>(&sampleSize) );
-}
+};
 
 
 
@@ -290,8 +291,9 @@ void Export_pyste_src_AxEssence()
 
     class_< AxEssenceFormat, boost::noncopyable >("AxEssenceFormat", init< IAAFEssenceFormatSP >())
         .def("to_IAAFEssenceFormatSP", &AxEssenceFormat::operator IAAFEssenceFormatSP)
-        .def("AddFormatSpecifier", PyAddFormatSpecifier)
-    ;
+        .def("AddFormatSpecifier", PyAddFormatSpecifier<aafUInt32>)
+        .def("AddFormatSpecifier", PyAddFormatSpecifier<aafRect_t>)
+        ;
 
 }
 
