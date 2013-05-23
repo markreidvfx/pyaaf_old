@@ -13,7 +13,10 @@ a = pyaaf.AxInit()
 f= pyaaf.AxFile()
 f.OpenExistingRead(args[0])
 
-ObjectRecIter = pyaaf.BaseObjectRecIter(f.GetHeader())
+header = f.GetHeader()
+
+print "renamePeskyOpaques", pyaaf.renamePeskyOpaques(header)
+ObjectRecIter = pyaaf.BaseObjectRecIter(header)
 
 for item in ObjectRecIter:
     

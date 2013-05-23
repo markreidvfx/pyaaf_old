@@ -4,8 +4,12 @@
 #include <boost/cstdint.hpp>
 
 // Includes ====================================================================
+#include <AAFTypeDefUIDs.h>
 #include <AxBaseObjIter.h>
+#include <AxDictionary.h>
 #include <AxHeader.h>
+#include <AxMetaDef.h>
+#include <AxPropertyValue.h>
 
 // Using =======================================================================
 using namespace boost::python;
@@ -86,6 +90,87 @@ int PyBaseObjectRecIter::GetLevel()
 
 inline boost::python::object pass_through(boost::python::object const& o) { return o; }
 
+class AxPropValueRenamePeskyOpaques : public AxPropertyValueNoopPrtcl {
+public:
+    
+    AxPropValueRenamePeskyOpaques( AxDictionary& axDict )
+    : _axDict( axDict ),
+    _count(0)
+    {}
+    
+    virtual ~AxPropValueRenamePeskyOpaques()
+    {}
+    
+    virtual void process( IAAFPropertyValueSP& spPropVal,
+                         IAAFTypeDefOpaqueSP& spTypeDefOpaque )
+    {
+        AxTypeDefOpaque axOpaque( spTypeDefOpaque );
+        
+        aafUID_t typeUid = axOpaque.GetActualTypeID( spPropVal );
+        
+        if ( !_axDict.isKnownTypeDef( typeUid ) ) {
+            
+            AxTypeDef axBaseTypeDef( _axDict.LookupTypeDef( kAAFTypeID_UInt8Array ) );
+            
+            AxTypeDefRename axTypeDefRename(
+                                            AxCreateMetaInstance<IAAFTypeDefRename>( _axDict ) );
+            
+            axTypeDefRename.Initialize( typeUid, axBaseTypeDef, AxString( L"Opaque Data" ) );
+            
+            _axDict.RegisterOpaqueTypeDef( axTypeDefRename );
+            
+            _count++;
+        }
+    }
+    
+    int GetCount()
+    {return _count;}
+    
+private:
+    AxDictionary& _axDict;
+    int _count;
+};
+
+
+
+int renamePeskyOpaques( AxHeader& axHeader)
+{
+    using namespace std;
+    
+    AxDictionary axDict(axHeader.GetDictionary());
+    
+    auto_ptr< AxBaseObjIterPrtcl > axHeaderIter(
+                                                new AxBaseSolitaryObjIter<AxHeader>(axHeader) );
+    
+    AxBaseObjRecIter recIter( axHeaderIter );
+    
+    bool nextExists;
+    auto_ptr<AxBaseObj> nextPtr;
+    Level level(0);
+    
+    int count = 0;
+    
+    for( nextExists = recIter.NextOne( nextPtr, level.getRef() );
+        nextExists;
+        nextExists = recIter.NextOne( nextPtr, level.getRef() ) ) {
+        
+        if ( dynamic_cast<AxPropertyValue*>( nextPtr.get() ) ) {
+            
+            auto_ptr<AxPropertyValue> propVal(
+                                              dynamic_cast<AxPropertyValue*>( nextPtr.release() ) );
+            
+            AxPropValueRenamePeskyOpaques axPropValueRenamePeskyOpaques( axDict );
+            
+            propVal->Process( axPropValueRenamePeskyOpaques );
+            
+            count += axPropValueRenamePeskyOpaques.GetCount();
+        }
+    }
+    
+    return count;
+}
+
+
 
 
 // Module ======================================================================
@@ -99,5 +184,6 @@ void Export_pyste_src_AxBaseObjIter()
            .def("GetLevel",&PyBaseObjectRecIter::GetLevel)
     ;
 
+    def("renamePeskyOpaques",renamePeskyOpaques);
 }
 
