@@ -229,6 +229,34 @@ private:
     aafTYPE _value;
 };
 
+class PyRate
+{
+public:
+    PyRate() {};
+    PyRate(int numerator_, int denominator_){
+        numerator = numerator_;
+        denominator = denominator_;
+    }
+    PyRate(_aafRational_t& rate){
+        numerator = rate.numerator;
+        denominator = rate.denominator;
+    }
+    int numerator;
+    int denominator;
+    inline operator _aafRational_t ()
+    {
+        _aafRational_t result = {numerator, denominator};
+        return result;
+    }
+    std::string toString()
+    {
+        std::string f = "%i/%i";
+        
+        return boost::str(boost::format(f) % numerator % denominator);
+    }
+    
+};
+
 
 
 // Module ======================================================================
@@ -278,7 +306,14 @@ void Export_pyste_src_AAFTypes()
         .def("__str__",modID_to_string)
     ;
     
-
+     class_<PyRate>("Rate", init < >())
+    .def(init<int,int>())
+    .def_readwrite("numerator", &PyRate::numerator)
+    .def_readwrite("denominator", &PyRate::denominator)
+    .def("__str__", &PyRate::toString )
+    ;
+    
+    implicitly_convertible< PyRate, _aafRational_t>();
 
     class_< _aafRational_t >("aafRational_t", init<  >())
         .def(init< const _aafRational_t& >())
