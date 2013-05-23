@@ -10,7 +10,7 @@ KLVKey_AxExampleData_B = pyaaf.aafUID.fromString(uuid.UUID("6def0b26-d055-41f9-8
 def metaCreate():
     
     dirname = os.path.dirname(__file__)
-    fileName = os.path.join(dirname,"metaCreate.aaf")
+    fileName = os.path.join(dirname,"meta_create.aaf")
 
     pyaaf.AxInit()
     
