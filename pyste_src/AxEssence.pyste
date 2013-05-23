@@ -2,14 +2,22 @@
 Include("AAFTypes.h")
 Include("AAFDataBuffer.h")
 PyWriteSamples = Wrapper("PyWriteSamples", """
-AxEssenceAccess::WriteResult PyWriteSamples(AxEssenceAccess& axEssenceAccess, AAFDataBuffer& buff)
+
+AxEssenceAccess::WriteResult PyWriteSamples(AxEssenceAccess& axEssenceAccess, boost::python::list l)
 {
-    aafUInt32 nSamples = buff.length();
-    aafUInt32 bufLength = buff.size();
     
-    //std::cout << nSamples << " " << bufLength;
-    return axEssenceAccess.WriteSamples(nSamples,bufLength, buff);
+    const int length = boost::python::len(l);
+    aafUInt16 values[length];
     
+    for (int i=0; i < length; i++)
+    {
+        values[i] = boost::python::extract<aafUInt16>(l[i]);
+    }
+    
+    
+    return axEssenceAccess.WriteSamples(length,
+                                        sizeof(values[0]) * length,
+                                        reinterpret_cast<aafDataBuffer_t>(&values));
 }
 """
 )
