@@ -318,6 +318,9 @@ module_code("""
 obj = Class("_aafRational_t", "AAFTypes.h")
 rename(obj, "aafRational_t")
 
+obj = Class("_aafRect_t", "AAFTypes.h")
+rename(obj, "aafRect_t")
+
 obj = Class("_aafSourceRef_t", "AAFTypes.h")
 rename(obj, "aafSourceRef_t")
 

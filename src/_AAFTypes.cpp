@@ -321,6 +321,14 @@ void Export_pyste_src_AAFTypes()
         .def_readwrite("denominator", &_aafRational_t::denominator)
     ;
 
+    class_< _aafRect_t >("aafRect_t", init<  >())
+        .def(init< const _aafRect_t& >())
+        .def_readwrite("xOffset", &_aafRect_t::xOffset)
+        .def_readwrite("yOffset", &_aafRect_t::yOffset)
+        .def_readwrite("xSize", &_aafRect_t::xSize)
+        .def_readwrite("ySize", &_aafRect_t::ySize)
+    ;
+
     class_< _aafSourceRef_t >("aafSourceRef_t", init<  >())
         .def(init< const _aafSourceRef_t& >())
         .def_readwrite("sourceID", &_aafSourceRef_t::sourceID)
