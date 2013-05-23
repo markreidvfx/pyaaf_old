@@ -4,6 +4,7 @@
 #include <boost/cstdint.hpp>
 
 // Includes ====================================================================
+#include <AxEx.h>
 #include <AxPropertyValue.h>
 #include <AxPropertyValueDump.h>
 
@@ -13,15 +14,23 @@ using namespace boost::python;
 // Declarations ================================================================
 
 
-std::wstring valueToString(AxPropertyValue* value)
+std::wstring valueToString(AxPropertyValue& value)
 {
     std::wstringstream buffer;
     std::wstreambuf * old = std::wcout.rdbuf(buffer.rdbuf());
+    std::wstring text;
 
-    AxPropertyValueDump axPropValueDump( std::wcout );
-    value->Process( axPropValueDump );
-    
-    std::wstring text = buffer.str();
+    try
+        {
+            AxPropertyValueDump axPropValueDump( std::wcout );
+            value.Process( axPropValueDump );
+            text = buffer.str();
+        }
+    catch (AxExHResult e)
+        {
+            text = L"Unregistered Data Type";
+        }
+
     std::wcout.rdbuf(old);
     
     return text;
