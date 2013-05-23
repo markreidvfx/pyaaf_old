@@ -341,5 +341,13 @@ void Export_pyste_src_AAFTypes()
         .value("kAAFCompressionDisable", kAAFCompressionDisable)
     ;
 
+    enum_< _aafFrameLayout_e >("aafFrameLayout_e")
+        .value("kAAFOneField", kAAFOneField)
+        .value("kAAFSegmentedFrame", kAAFSegmentedFrame)
+        .value("kAAFFullFrame", kAAFFullFrame)
+        .value("kAAFMixedFields", kAAFMixedFields)
+        .value("kAAFSeparateFields", kAAFSeparateFields)
+    ;
+
 }
 

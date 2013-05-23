@@ -46,6 +46,21 @@ AxEssenceAccess::WriteResult PyWriteSamples(AxEssenceAccess& axEssenceAccess, bo
 }
 
 
+void PySetVideoLineMap(AxDigitalImageDescriptor& a, boost::python::list l)
+{
+    
+    const int length = boost::python::len(l);
+    aafInt32 values[length];
+
+    for (int i=0; i < length; i++)
+    {
+        values[i] = boost::python::extract<aafUInt16>(l[i]);
+    }
+    a.SetVideoLineMap(length, values);
+    
+}
+
+
 }// namespace 
 
 
@@ -123,7 +138,7 @@ void Export_pyste_src_AxEssence()
         .def("SetSampledView", &AxDigitalImageDescriptor::SetSampledView)
         .def("SetDisplayView", &AxDigitalImageDescriptor::SetDisplayView)
         .def("SetFrameLayout", &AxDigitalImageDescriptor::SetFrameLayout)
-        .def("SetVideoLineMap", &AxDigitalImageDescriptor::SetVideoLineMap)
+        .def("SetVideoLineMap", &PySetVideoLineMap)
         .def("SetCompression", &AxDigitalImageDescriptor::SetCompression)
         .def("SetAlphaTransparency", &AxDigitalImageDescriptor::SetAlphaTransparency)
         .def("SetGamma", &AxDigitalImageDescriptor::SetGamma)

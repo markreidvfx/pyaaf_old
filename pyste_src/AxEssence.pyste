@@ -22,6 +22,23 @@ AxEssenceAccess::WriteResult PyWriteSamples(AxEssenceAccess& axEssenceAccess, bo
 """
 )
 
+PySetVideoLineMap = Wrapper("PySetVideoLineMap", """
+void PySetVideoLineMap(AxDigitalImageDescriptor& a, boost::python::list l)
+{
+    
+    const int length = boost::python::len(l);
+    aafInt32 values[length];
+
+    for (int i=0; i < length; i++)
+    {
+        values[i] = boost::python::extract<aafUInt16>(l[i]);
+    }
+    a.SetVideoLineMap(length, values);
+    
+}
+"""
+)
+
 
 
 Class('AxEssenceMultiAccess', "AxEssence.h")
@@ -37,6 +54,7 @@ exclude(obj.GetCodecDef)
 
 obj = Class('AxDigitalImageDescriptor', "AxEssence.h")
 exclude(obj.GetCodecDef)
+set_wrapper(obj.SetVideoLineMap, PySetVideoLineMap)
 obj = Class('AxCDCIDescriptor', "AxEssence.h")
 exclude(obj.GetCodecDef)
 obj = Class('AxRGBADescriptor', "AxEssence.h")
