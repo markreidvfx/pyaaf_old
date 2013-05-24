@@ -341,6 +341,17 @@ void Export_pyste_src_AAFTypes()
         .value("kAAFCompressionDisable", kAAFCompressionDisable)
     ;
 
+    enum_< _aafColorSpace_e >("aafColorSpace_e")
+        .value("kAAFColorSpaceYDrDb", kAAFColorSpaceYDrDb)
+        .value("kAAFColorSpaceYUV", kAAFColorSpaceYUV)
+        .value("kAAFColorSpaceCMYK", kAAFColorSpaceCMYK)
+        .value("kAAFColorSpaceHSV", kAAFColorSpaceHSV)
+        .value("kAAFColorSpaceHSI", kAAFColorSpaceHSI)
+        .value("kAAFColorSpaceYCrCb", kAAFColorSpaceYCrCb)
+        .value("kAAFColorSpaceRGB", kAAFColorSpaceRGB)
+        .value("kAAFColorSpaceYIQ", kAAFColorSpaceYIQ)
+    ;
+
     enum_< _aafFrameLayout_e >("aafFrameLayout_e")
         .value("kAAFOneField", kAAFOneField)
         .value("kAAFSegmentedFrame", kAAFSegmentedFrame)

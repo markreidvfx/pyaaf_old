@@ -327,5 +327,9 @@ rename(obj, "aafSourceRef_t")
 obj = Enum("_aafCompressEnable_e", "AAFTypes.h")
 rename(obj, "aafCompressEnable_e")
 
+obj = Enum("_aafColorSpace_e", "AAFTypes.h")
+rename(obj, "aafColorSpace_e")
+
 obj = Enum("_aafFrameLayout_e", "AAFTypes.h")
 rename(obj, "aafFrameLayout_e")
+
