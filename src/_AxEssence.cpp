@@ -4,7 +4,6 @@
 #include <boost/cstdint.hpp>
 
 // Includes ====================================================================
-#include <AAFDataBuffer.h>
 #include <AAFTypes.h>
 #include <AxEssence.h>
 
@@ -23,28 +22,23 @@ void PyAddFormatSpecifier(AxEssenceFormat &axEssenceFormat,
                                        reinterpret_cast<aafUInt8*>(&sampleSize) );
 };
 
-
-
-namespace  {
-
-
-
-AxEssenceAccess::WriteResult PyWriteSamples(AxEssenceAccess& axEssenceAccess, boost::python::list l)
+template <typename T>
+AxEssenceAccess::WriteResult PyWriteSamples(AxEssenceAccess& axEssenceAccess, int samples, boost::python::list l)
 {
     
     const int length = boost::python::len(l);
-    aafUInt16 values[length];
+    T values[length];
     
     for (int i=0; i < length; i++)
     {
-        values[i] = boost::python::extract<aafUInt16>(l[i]);
+        values[i] = boost::python::extract<T>(l[i]);
     }
     
     
-    return axEssenceAccess.WriteSamples(length,
+    return axEssenceAccess.WriteSamples(samples,
                                         sizeof(values[0]) * length,
                                         reinterpret_cast<aafDataBuffer_t>(&values));
-}
+};
 
 
 void PySetVideoLineMap(AxDigitalImageDescriptor& a, boost::python::list l)
@@ -62,12 +56,12 @@ void PySetVideoLineMap(AxDigitalImageDescriptor& a, boost::python::list l)
 }
 
 
-}// namespace 
-
 
 // Module ======================================================================
 void Export_pyste_src_AxEssence()
 {
+
+
     class_< AxEssenceMultiAccess, boost::noncopyable >("AxEssenceMultiAccess", init< IAAFEssenceMultiAccessSP >())
     ;
 
@@ -78,7 +72,8 @@ void Export_pyste_src_AxEssence()
         .def("GetFileFormatParameterList", &AxEssenceAccess::GetFileFormatParameterList)
         .def("PutFileFormat", &AxEssenceAccess::PutFileFormat)
         .def("CountSamples", &AxEssenceAccess::CountSamples)
-        .def("WriteSamples", &PyWriteSamples)
+        .def("WriteSamples_UInt16", &PyWriteSamples<aafUInt16>)
+        .def("WriteSamples_UInt8", &PyWriteSamples<aafUInt8>)
         .def("CompleteWrite", &AxEssenceAccess::CompleteWrite)
         .def("GetCodecName", &AxEssenceAccess::GetCodecName)
         .def("GetLargestSampleSize", &AxEssenceAccess::GetLargestSampleSize)
@@ -294,6 +289,5 @@ void Export_pyste_src_AxEssence()
         .def("AddFormatSpecifier", PyAddFormatSpecifier<aafUInt32>)
         .def("AddFormatSpecifier", PyAddFormatSpecifier<aafRect_t>)
         ;
-
 }
 
