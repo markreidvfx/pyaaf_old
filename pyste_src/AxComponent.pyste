@@ -1,4 +1,4 @@
-#obj = Class("AxComponent","AxComponent.h")
+obj = Class("AxComponent","AxComponent.h")
 obj = Class("AxSegment","AxComponent.h")
 obj = Class("AxTransition","AxComponent.h")
 obj = Class("AxSequence","AxComponent.h")
