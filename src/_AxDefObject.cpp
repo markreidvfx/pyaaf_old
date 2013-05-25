@@ -5,6 +5,7 @@
 
 // Includes ====================================================================
 #include <AxDefObject.h>
+#include <create_instance.h>
 
 // Using =======================================================================
 using namespace boost::python;
@@ -12,6 +13,7 @@ using namespace boost::python;
 // Module ======================================================================
 void Export_pyste_src_AxDefObject()
 {
+
     class_< AxDefObject, boost::noncopyable >("AxDefObject", init< IAAFDefObjectSP >())
         .def("GetAUID", &AxDefObject::GetAUID)
         .def("GetName", &AxDefObject::GetName)
@@ -21,16 +23,22 @@ void Export_pyste_src_AxDefObject()
         .def("GetProperties", &AxObject::GetProperties)
         .def("GetDefinition", &AxObject::GetDefinition)
         .def("to_IAAFDefObjectSP", &AxDefObject::operator IAAFDefObjectSP)
+        .def("CreateInstance",create_instance<IAAFDefObject, AxDefObject>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxContainerDef, bases< AxDefObject > , boost::noncopyable >("AxContainerDef", init< IAAFContainerDefSP >())
         .def("Initialize", &AxContainerDef::Initialize)
         .def("to_IAAFContainerDefSP", &AxContainerDef::operator IAAFContainerDefSP)
+        .def("CreateInstance",create_instance<IAAFContainerDef, AxContainerDef>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxInterpolationDef, bases< AxDefObject > , boost::noncopyable >("AxInterpolationDef", init< IAAFInterpolationDefSP >())
         .def("Initialize", &AxInterpolationDef::Initialize)
         .def("to_IAAFInterpolationDefSP", &AxInterpolationDef::operator IAAFInterpolationDefSP)
+        .def("CreateInstance",create_instance<IAAFInterpolationDef, AxInterpolationDef>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxParameterDef, bases< AxDefObject > , boost::noncopyable >("AxParameterDef", init< IAAFParameterDefSP >())
@@ -40,6 +48,8 @@ void Export_pyste_src_AxDefObject()
         .def("GetDisplayUnits", &AxParameterDef::GetDisplayUnits)
         .def("GetDisplayUnitsBufLen", &AxParameterDef::GetDisplayUnitsBufLen)
         .def("to_IAAFParameterDefSP", &AxParameterDef::operator IAAFParameterDefSP)
+        .def("CreateInstance",create_instance<IAAFParameterDef, AxParameterDef>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxPluginDef, bases< AxDefObject > , boost::noncopyable >("AxPluginDef", init< IAAFPluginDefSP >())
@@ -53,6 +63,8 @@ void Export_pyste_src_AxDefObject()
         .def("SetSupportsAuthentication", &AxPluginDef::SetSupportsAuthentication)
         .def("SetManufacturerInfo", &AxPluginDef::SetManufacturerInfo)
         .def("to_IAAFPluginDefSP", &AxPluginDef::operator IAAFPluginDefSP)
+        .def("CreateInstance",create_instance<IAAFPluginDef, AxPluginDef>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxCodecDef, bases< AxDefObject > , boost::noncopyable >("AxCodecDef", init< IAAFCodecDefSP >())
@@ -65,6 +77,8 @@ void Export_pyste_src_AxDefObject()
         .def("AreThereFlavours", &AxCodecDef::AreThereFlavours)
         .def("EnumCodecFlavours", &AxCodecDef::EnumCodecFlavours)
         .def("to_IAAFCodecDefSP", &AxCodecDef::operator IAAFCodecDefSP)
+        .def("CreateInstance",create_instance<IAAFCodecDef, AxCodecDef>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxDataDef, bases< AxDefObject > , boost::noncopyable >("AxDataDef", init< IAAFDataDefSP >())
@@ -85,6 +99,8 @@ void Export_pyste_src_AxDefObject()
         .def("to_IAAFDataDefSP", &AxDataDef::operator IAAFDataDefSP)
         .def("to_IAAFDataDef2SP", &AxDataDef::operator IAAFDataDef2SP)
         .def("to_IAAFDataDef3SP", &AxDataDef::operator IAAFDataDef3SP)
+        .def("CreateInstance",create_instance<IAAFDataDef, AxDataDef>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxOperationDef, bases< AxDefObject > , boost::noncopyable >("AxOperationDef", init< IAAFOperationDefSP >())
@@ -100,6 +116,8 @@ void Export_pyste_src_AxDefObject()
         .def("GetNumberInputs", &AxOperationDef::GetNumberInputs)
         .def("GetBypass", &AxOperationDef::GetBypass)
         .def("to_IAAFOperationDefSP", &AxOperationDef::operator IAAFOperationDefSP)
+        .def("CreateInstance",create_instance<IAAFOperationDef, AxOperationDef>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxKLVDataDef, bases< AxDefObject > , boost::noncopyable >("AxKLVDataDef", init< IAAFKLVDataDefinitionSP >())
@@ -111,6 +129,8 @@ void Export_pyste_src_AxDefObject()
         .def("CountParentProperties", &AxKLVDataDef::CountParentProperties)
         .def("GetKLVDataType", &AxKLVDataDef::GetKLVDataType)
         .def("to_IAAFKLVDataDefinitionSP", &AxKLVDataDef::operator IAAFKLVDataDefinitionSP)
+        .def("CreateInstance",create_instance<IAAFKLVDataDefinition, AxKLVDataDef>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxTaggedValueDef, bases< AxDefObject > , boost::noncopyable >("AxTaggedValueDef", init< IAAFTaggedValueDefinitionSP >())
@@ -120,7 +140,8 @@ void Export_pyste_src_AxDefObject()
         .def("GetParentProperties", &AxTaggedValueDef::GetParentProperties)
         .def("CountParentProperties", &AxTaggedValueDef::CountParentProperties)
         .def("to_IAAFTaggedValueDefinitionSP", &AxTaggedValueDef::operator IAAFTaggedValueDefinitionSP)
+        .def("CreateInstance",create_instance<IAAFTaggedValueDefinition, AxTaggedValueDef>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
-
 }
 
