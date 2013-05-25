@@ -5,6 +5,7 @@
 
 // Includes ====================================================================
 #include <AxComponent.h>
+#include <create_instance.h>
 
 // Using =======================================================================
 using namespace boost::python;
@@ -12,6 +13,7 @@ using namespace boost::python;
 // Module ======================================================================
 void Export_pyste_src_AxComponent()
 {
+
     class_< AxComponent, boost::noncopyable >("AxComponent", init< IAAFComponentSP >())
         .def(init< IAAFComponent2SP >())
         .def("GetLength", &AxComponent::GetLength)
@@ -37,10 +39,14 @@ void Export_pyste_src_AxComponent()
         .def("GetDefinition", &AxObject::GetDefinition)
         .def("to_IAAFComponentSP", &AxComponent::operator IAAFComponentSP)
         .def("to_IAAFComponent2SP", &AxComponent::operator IAAFComponent2SP)
+        .def("CreateInstance",create_instance<IAAFComponent, AxComponent>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxSegment, bases< AxComponent > , boost::noncopyable >("AxSegment", init< IAAFSegmentSP >())
         .def("to_IAAFSegmentSP", &AxSegment::operator IAAFSegmentSP)
+        .def("CreateInstance",create_instance<IAAFSegment,AxSegment>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxTransition, bases< AxComponent > , boost::noncopyable >("AxTransition", init< IAAFTransitionSP >())
@@ -50,6 +56,8 @@ void Export_pyste_src_AxComponent()
         .def("GetOperationGroup", &AxTransition::GetOperationGroup)
         .def("SetOperationGroup", &AxTransition::SetOperationGroup)
         .def("to_IAAFTransitionSP", &AxTransition::operator IAAFTransitionSP)
+        .def("CreateInstance",create_instance<IAAFTransition, AxTransition>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxSequence, bases< AxSegment > , boost::noncopyable >("AxSequence", init< IAAFSequenceSP >())
@@ -61,16 +69,22 @@ void Export_pyste_src_AxComponent()
         .def("InsertComponentAt", &AxSequence::InsertComponentAt)
         .def("RemoveComponentAt", &AxSequence::RemoveComponentAt)
         .def("CountComponents", &AxSequence::CountComponents)
+        .def("CreateInstance",create_instance<IAAFSequence, AxSequence>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxTimecode, bases< AxSegment > , boost::noncopyable >("AxTimecode", init< IAAFTimecodeSP >())
         .def("Initialize", &AxTimecode::Initialize)
         .def("GetTimecode", &AxTimecode::GetTimecode)
         .def("SetTimecode", &AxTimecode::SetTimecode)
+        .def("CreateInstance",create_instance<IAAFTimecode, AxTimecode>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxFiller, bases< AxSegment > , boost::noncopyable >("AxFiller", init< IAAFFillerSP >())
         .def("Initialize", &AxFiller::Initialize)
+        .def("CreateInstance",create_instance<IAAFFiller, AxFiller>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxPulldown, bases< AxSegment > , boost::noncopyable >("AxPulldown", init< IAAFPulldownSP >())
@@ -83,6 +97,8 @@ void Export_pyste_src_AxComponent()
         .def("SetPulldownDirection", &AxPulldown::SetPulldownDirection)
         .def("SetPhaseFrame", &AxPulldown::SetPhaseFrame)
         .def("to_IAAFPulldownSP", &AxPulldown::operator IAAFPulldownSP)
+        .def("CreateInstance",create_instance<IAAFPulldown, AxPulldown>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxSourceReference, bases< AxSegment > , boost::noncopyable >("AxSourceReference", init< IAAFSourceReferenceSP >())
@@ -91,6 +107,8 @@ void Export_pyste_src_AxComponent()
         .def("GetSourceMobSlotID", &AxSourceReference::GetSourceMobSlotID)
         .def("SetSourceMobSlotID", &AxSourceReference::SetSourceMobSlotID)
         .def("to_IAAFSourceReferenceSP", &AxSourceReference::operator IAAFSourceReferenceSP)
+        .def("CreateInstance",create_instance<IAAFSourceReference, AxSourceReference>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxSourceClip, bases< AxSourceReference > , boost::noncopyable >("AxSourceClip", init< IAAFSourceClipSP >())
@@ -99,6 +117,8 @@ void Export_pyste_src_AxComponent()
         .def("GetSourceReference", &AxSourceClip::GetSourceReference)
         .def("ResolveRef", &AxSourceClip::ResolveRef)
         .def("to_IAAFSourceClipSP", &AxSourceClip::operator IAAFSourceClipSP)
+        .def("CreateInstance",create_instance<IAAFSourceClip, AxSourceClip>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxOperationGroup, bases< AxSegment > , boost::noncopyable >("AxOperationGroup", init< IAAFOperationGroupSP >())
@@ -122,6 +142,8 @@ void Export_pyste_src_AxComponent()
         .def("GetParameters", &AxOperationGroup::GetParameters)
         .def("LookupParameter", &AxOperationGroup::LookupParameter)
         .def("to_IAAFOperationGroupSP", &AxOperationGroup::operator IAAFOperationGroupSP)
+        .def("CreateInstance",create_instance<IAAFOperationGroup, AxOperationGroup>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxNestedScope, bases< AxSegment > , boost::noncopyable >("AxNestedScope", init< IAAFNestedScopeSP >())
@@ -133,6 +155,8 @@ void Export_pyste_src_AxComponent()
         .def("GetSegmentAt", &AxNestedScope::GetSegmentAt)
         .def("GetSegments", &AxNestedScope::GetSegments)
         .def("to_IAAFNestedScopeSP", &AxNestedScope::operator IAAFNestedScopeSP)
+        .def("CreateInstance",create_instance<IAAFNestedScope, AxNestedScope>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxScopeReference, bases< AxSegment > , boost::noncopyable >("AxScopeReference", init< IAAFScopeReferenceSP >())
@@ -140,6 +164,8 @@ void Export_pyste_src_AxComponent()
         .def("GetRelativeScope", &AxScopeReference::GetRelativeScope)
         .def("GetRelativeSlot", &AxScopeReference::GetRelativeSlot)
         .def("to_IAAFScopeReferenceSP", &AxScopeReference::operator IAAFScopeReferenceSP)
+        .def("CreateInstance",create_instance<IAAFScopeReference, AxScopeReference>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxEssenceGroup, bases< AxSegment > , boost::noncopyable >("AxEssenceGroup", init< IAAFEssenceGroupSP >())
@@ -147,18 +173,24 @@ void Export_pyste_src_AxComponent()
         .def("CountChoices", &AxEssenceGroup::CountChoices)
         .def("GetChoiceAt", &AxEssenceGroup::GetChoiceAt)
         .def("to_IAAFEssenceGroupSP", &AxEssenceGroup::operator IAAFEssenceGroupSP)
+        .def("CreateInstance",create_instance<IAAFEssenceGroup, AxEssenceGroup>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxSelector, bases< AxSegment > , boost::noncopyable >("AxSelector", init< IAAFSelectorSP >())
         .def("GetSelectedSegment", &AxSelector::GetSelectedSegment)
         .def("EnumAlternateSegments", &AxSelector::EnumAlternateSegments)
         .def("to_IAAFSelectorSP", &AxSelector::operator IAAFSelectorSP)
+        .def("CreateInstance",create_instance<IAAFSelector, AxSelector>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxEdgecode, bases< AxSegment > , boost::noncopyable >("AxEdgecode", init< IAAFEdgecodeSP >())
         .def("Initialize", &AxEdgecode::Initialize)
         .def("GetEdgecode", &AxEdgecode::GetEdgecode)
         .def("to_IAAFEdgecodeSP", &AxEdgecode::operator IAAFEdgecodeSP)
+        .def("CreateInstance",create_instance<IAAFEdgecode, AxEdgecode>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxEvent, bases< AxSegment > , boost::noncopyable >("AxEvent", init< IAAFEventSP >())
@@ -166,16 +198,22 @@ void Export_pyste_src_AxComponent()
         .def("SetPosition", &AxEvent::SetPosition)
         .def("SetComment", &AxEvent::SetComment)
         .def("GetComment", &AxEvent::GetComment)
+        .def("CreateInstance",create_instance<IAAFEvent, AxEvent>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxCommentMarker, bases< AxEvent > , boost::noncopyable >("AxCommentMarker", init< IAAFCommentMarkerSP >())
         .def("GetAnnotation", &AxCommentMarker::GetAnnotation)
         .def("SetAnnotation", &AxCommentMarker::SetAnnotation)
+        .def("CreateInstance",create_instance<IAAFCommentMarker, AxCommentMarker>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxGPITrigger, bases< AxEvent > , boost::noncopyable >("AxGPITrigger", init< IAAFGPITriggerSP >())
         .def("GetActiveState", &AxGPITrigger::GetActiveState)
         .def("SetActiveState", &AxGPITrigger::SetActiveState)
+        .def("CreateInstance",create_instance<IAAFGPITrigger, AxGPITrigger>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxTimecodeStream, bases< AxSegment > , boost::noncopyable >("AxTimecodeStream", init< IAAFTimecodeStreamSP >())
@@ -193,10 +231,14 @@ void Export_pyste_src_AxComponent()
         .def("SetSourceType", &AxTimecodeStream::SetSourceType)
         .def("SetSource", &AxTimecodeStream::SetSource)
         .def("to_IAAFTimecodeStreamSP", &AxTimecodeStream::operator IAAFTimecodeStreamSP)
+        .def("CreateInstance",create_instance<IAAFTimecodeStream, AxTimecodeStream>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxTimecodeStream12M, bases< AxTimecodeStream > , boost::noncopyable >("AxTimecodeStream12M", init< IAAFTimecodeStream12MSP >())
         .def("to_IAAFTimecodeStream12MSP", &AxTimecodeStream12M::operator IAAFTimecodeStream12MSP)
+        .def("CreateInstance",create_instance<IAAFTimecodeStream12M, AxTimecodeStream12M>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
 
     class_< AxDescriptiveMarker, bases< AxCommentMarker > , boost::noncopyable >("AxDescriptiveMarker", init< IAAFDescriptiveMarkerSP >())
@@ -206,7 +248,8 @@ void Export_pyste_src_AxComponent()
         .def("SetDescribedSlotIDs", &AxDescriptiveMarker::SetDescribedSlotIDs)
         .def("SetDescriptiveFramework", &AxDescriptiveMarker::SetDescriptiveFramework)
         .def("to_IAAFDescriptiveMarkerSP", &AxDescriptiveMarker::operator IAAFDescriptiveMarkerSP)
+        .def("CreateInstance",create_instance<IAAFDescriptiveMarker, AxDescriptiveMarker>, return_value_policy<manage_new_object>() )
+        .staticmethod("CreateInstance")
     ;
-
 }
 
