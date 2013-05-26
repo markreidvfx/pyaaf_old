@@ -87,7 +87,8 @@ for key,value in h.items():
             "MetaDefinition",
             "EssenceAccess",
             "Parameter",
-            "Event")
+            "Event",
+            "Init")
 
     if name in sp:
         pyste += implicitSP % (name,key)

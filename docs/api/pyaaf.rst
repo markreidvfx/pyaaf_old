@@ -6,7 +6,8 @@ Api Class documentation
 	
 .. toctree::
     :maxdepth: 15
-   
+    
+    AxInit
     AxBaseObj
     AxEssenceMultiAccess
     AxEssenceFormat

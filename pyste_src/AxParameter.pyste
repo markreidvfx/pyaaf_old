@@ -1,0 +1,5 @@
+obj = Class("AxParameter","AxParameter.h")
+obj = Class("AxConstantValue","AxParameter.h")
+exclude(obj.GetValue)
+obj = Class("AxVaryingValue","AxParameter.h")
+obj = Class("AxControlPoint","AxParameter.h")
