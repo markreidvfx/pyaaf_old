@@ -14,6 +14,7 @@ AxFileDescriptor
     .. autoclass:: AxFileDescriptor
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::
@@ -31,6 +32,7 @@ AxPhysicalDescriptor
     .. autoclass:: AxPhysicalDescriptor
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::
@@ -48,6 +50,7 @@ AxTapeDescriptor
     .. autoclass:: AxTapeDescriptor
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxFilmDescriptor
@@ -56,4 +59,5 @@ AxFilmDescriptor
     .. autoclass:: AxFilmDescriptor
        :members:
        :undoc-members:
+       :show-inheritance:
             

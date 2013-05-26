@@ -14,6 +14,7 @@ AxSoundDescriptor
     .. autoclass:: AxSoundDescriptor
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxWAVEDescriptor
@@ -22,6 +23,7 @@ AxWAVEDescriptor
     .. autoclass:: AxWAVEDescriptor
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxDigitalImageDescriptor
@@ -30,6 +32,7 @@ AxDigitalImageDescriptor
     .. autoclass:: AxDigitalImageDescriptor
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::

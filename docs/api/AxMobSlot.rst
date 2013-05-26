@@ -14,6 +14,7 @@ AxTimelineMobSlot
     .. autoclass:: AxTimelineMobSlot
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxStaticMobSlot
@@ -22,6 +23,7 @@ AxStaticMobSlot
     .. autoclass:: AxStaticMobSlot
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxEventMobSlot
@@ -30,4 +32,5 @@ AxEventMobSlot
     .. autoclass:: AxEventMobSlot
        :members:
        :undoc-members:
+       :show-inheritance:
             

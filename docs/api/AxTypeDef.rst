@@ -14,6 +14,7 @@ AxTypeDefObjectRef
     .. autoclass:: AxTypeDefObjectRef
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxTypeDefRecord
@@ -22,6 +23,7 @@ AxTypeDefRecord
     .. autoclass:: AxTypeDefRecord
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxTypeDefVariableArray
@@ -30,6 +32,7 @@ AxTypeDefVariableArray
     .. autoclass:: AxTypeDefVariableArray
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxTypeDefFixedArray
@@ -38,6 +41,7 @@ AxTypeDefFixedArray
     .. autoclass:: AxTypeDefFixedArray
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxTypeDefStrongObjRef
@@ -46,6 +50,7 @@ AxTypeDefStrongObjRef
     .. autoclass:: AxTypeDefStrongObjRef
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxTypeDefVariableArrayEx
@@ -54,6 +59,7 @@ AxTypeDefVariableArrayEx
     .. autoclass:: AxTypeDefVariableArrayEx
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxTypeDefEnum
@@ -62,6 +68,7 @@ AxTypeDefEnum
     .. autoclass:: AxTypeDefEnum
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxTypeDefIndirect
@@ -70,6 +77,7 @@ AxTypeDefIndirect
     .. autoclass:: AxTypeDefIndirect
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::
@@ -85,6 +93,7 @@ AxTypeDefInt
     .. autoclass:: AxTypeDefInt
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxTypeDefRename
@@ -93,6 +102,7 @@ AxTypeDefRename
     .. autoclass:: AxTypeDefRename
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxTypeDefString
@@ -101,6 +111,7 @@ AxTypeDefString
     .. autoclass:: AxTypeDefString
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxTypeDefSet
@@ -109,6 +120,7 @@ AxTypeDefSet
     .. autoclass:: AxTypeDefSet
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxTypeDefWeakObjRef
@@ -117,6 +129,7 @@ AxTypeDefWeakObjRef
     .. autoclass:: AxTypeDefWeakObjRef
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxTypeDefExtEnum
@@ -125,6 +138,7 @@ AxTypeDefExtEnum
     .. autoclass:: AxTypeDefExtEnum
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxTypeDefStream
@@ -133,4 +147,5 @@ AxTypeDefStream
     .. autoclass:: AxTypeDefStream
        :members:
        :undoc-members:
+       :show-inheritance:
             

@@ -14,6 +14,7 @@ AxContentStorage
     .. autoclass:: AxContentStorage
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxLocator
@@ -22,6 +23,7 @@ AxLocator
     .. autoclass:: AxLocator
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::
@@ -37,6 +39,7 @@ AxHeader
     .. autoclass:: AxHeader
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxMob
@@ -45,6 +48,7 @@ AxMob
     .. autoclass:: AxMob
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::
@@ -62,6 +66,7 @@ AxEssenceDescriptor
     .. autoclass:: AxEssenceDescriptor
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::
@@ -80,6 +85,7 @@ AxDescriptiveFramework
     .. autoclass:: AxDescriptiveFramework
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxIdentification
@@ -88,6 +94,7 @@ AxIdentification
     .. autoclass:: AxIdentification
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxDictionary
@@ -96,6 +103,7 @@ AxDictionary
     .. autoclass:: AxDictionary
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxParameter
@@ -104,6 +112,7 @@ AxParameter
     .. autoclass:: AxParameter
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::
@@ -121,6 +130,7 @@ AxMobSlot
     .. autoclass:: AxMobSlot
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::
@@ -138,6 +148,7 @@ AxTaggedValue
     .. autoclass:: AxTaggedValue
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxKLVData
@@ -146,6 +157,7 @@ AxKLVData
     .. autoclass:: AxKLVData
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxDefObject
@@ -154,6 +166,7 @@ AxDefObject
     .. autoclass:: AxDefObject
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::
@@ -177,6 +190,7 @@ AxComponent
     .. autoclass:: AxComponent
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::

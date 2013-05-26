@@ -14,6 +14,7 @@ AxTimecode
     .. autoclass:: AxTimecode
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxSourceReference
@@ -22,6 +23,7 @@ AxSourceReference
     .. autoclass:: AxSourceReference
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::
@@ -37,6 +39,7 @@ AxEvent
     .. autoclass:: AxEvent
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::
@@ -54,6 +57,7 @@ AxFiller
     .. autoclass:: AxFiller
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxNestedScope
@@ -62,6 +66,7 @@ AxNestedScope
     .. autoclass:: AxNestedScope
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxPulldown
@@ -70,6 +75,7 @@ AxPulldown
     .. autoclass:: AxPulldown
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxSequence
@@ -78,6 +84,7 @@ AxSequence
     .. autoclass:: AxSequence
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxEssenceGroup
@@ -86,6 +93,7 @@ AxEssenceGroup
     .. autoclass:: AxEssenceGroup
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxOperationGroup
@@ -94,6 +102,7 @@ AxOperationGroup
     .. autoclass:: AxOperationGroup
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxScopeReference
@@ -102,6 +111,7 @@ AxScopeReference
     .. autoclass:: AxScopeReference
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxSelector
@@ -110,6 +120,7 @@ AxSelector
     .. autoclass:: AxSelector
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxEdgecode
@@ -118,4 +129,5 @@ AxEdgecode
     .. autoclass:: AxEdgecode
        :members:
        :undoc-members:
+       :show-inheritance:
             

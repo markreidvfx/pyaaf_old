@@ -14,6 +14,7 @@ AxTransition
     .. autoclass:: AxTransition
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxSegment
@@ -22,6 +23,7 @@ AxSegment
     .. autoclass:: AxSegment
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::

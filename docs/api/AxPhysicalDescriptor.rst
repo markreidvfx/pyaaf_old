@@ -14,6 +14,7 @@ AxImportDescriptor
     .. autoclass:: AxImportDescriptor
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxRecordingDescriptor
@@ -22,6 +23,7 @@ AxRecordingDescriptor
     .. autoclass:: AxRecordingDescriptor
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxAuxiliaryDescriptor
@@ -30,4 +32,5 @@ AxAuxiliaryDescriptor
     .. autoclass:: AxAuxiliaryDescriptor
        :members:
        :undoc-members:
+       :show-inheritance:
             

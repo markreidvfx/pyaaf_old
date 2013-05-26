@@ -14,6 +14,7 @@ AxControlPoint
     .. autoclass:: AxControlPoint
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxVaryingValue
@@ -22,6 +23,7 @@ AxVaryingValue
     .. autoclass:: AxVaryingValue
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxConstantValue
@@ -30,4 +32,5 @@ AxConstantValue
     .. autoclass:: AxConstantValue
        :members:
        :undoc-members:
+       :show-inheritance:
             

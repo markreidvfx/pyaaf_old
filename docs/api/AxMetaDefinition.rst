@@ -14,6 +14,7 @@ AxClassDef
     .. autoclass:: AxClassDef
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxPropertyDef
@@ -22,6 +23,7 @@ AxPropertyDef
     .. autoclass:: AxPropertyDef
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxTypeDef
@@ -30,6 +32,7 @@ AxTypeDef
     .. autoclass:: AxTypeDef
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::

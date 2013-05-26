@@ -14,6 +14,7 @@ AxPropertyValue
     .. autoclass:: AxPropertyValue
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxObject
@@ -22,6 +23,7 @@ AxObject
     .. autoclass:: AxObject
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::
@@ -50,6 +52,7 @@ AxFile
     .. autoclass:: AxFile
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::
@@ -65,6 +68,7 @@ AxProperty
     .. autoclass:: AxProperty
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxMetaDefinition
@@ -73,6 +77,7 @@ AxMetaDefinition
     .. autoclass:: AxMetaDefinition
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::

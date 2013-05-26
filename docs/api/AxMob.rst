@@ -14,6 +14,7 @@ AxMasterMob
     .. autoclass:: AxMasterMob
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::
@@ -29,6 +30,7 @@ AxSourceMob
     .. autoclass:: AxSourceMob
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxCompositionMob
@@ -37,4 +39,5 @@ AxCompositionMob
     .. autoclass:: AxCompositionMob
        :members:
        :undoc-members:
+       :show-inheritance:
             

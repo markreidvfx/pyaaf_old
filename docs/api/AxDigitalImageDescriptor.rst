@@ -14,6 +14,7 @@ AxCDCIDescriptor
     .. autoclass:: AxCDCIDescriptor
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxRGBADescriptor
@@ -22,4 +23,5 @@ AxRGBADescriptor
     .. autoclass:: AxRGBADescriptor
        :members:
        :undoc-members:
+       :show-inheritance:
             

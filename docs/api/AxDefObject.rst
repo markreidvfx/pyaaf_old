@@ -14,6 +14,7 @@ AxCodecDef
     .. autoclass:: AxCodecDef
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxPluginDef
@@ -22,6 +23,7 @@ AxPluginDef
     .. autoclass:: AxPluginDef
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxContainerDef
@@ -30,6 +32,7 @@ AxContainerDef
     .. autoclass:: AxContainerDef
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxInterpolationDef
@@ -38,6 +41,7 @@ AxInterpolationDef
     .. autoclass:: AxInterpolationDef
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxTaggedValueDef
@@ -46,6 +50,7 @@ AxTaggedValueDef
     .. autoclass:: AxTaggedValueDef
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxOperationDef
@@ -54,6 +59,7 @@ AxOperationDef
     .. autoclass:: AxOperationDef
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxDataDef
@@ -62,6 +68,7 @@ AxDataDef
     .. autoclass:: AxDataDef
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxParameterDef
@@ -70,6 +77,7 @@ AxParameterDef
     .. autoclass:: AxParameterDef
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxKLVDataDef
@@ -78,4 +86,5 @@ AxKLVDataDef
     .. autoclass:: AxKLVDataDef
        :members:
        :undoc-members:
+       :show-inheritance:
             

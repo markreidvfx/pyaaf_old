@@ -14,6 +14,7 @@ AxCommentMarker
     .. autoclass:: AxCommentMarker
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::
@@ -29,6 +30,7 @@ AxGPITrigger
     .. autoclass:: AxGPITrigger
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 AxTimecodeStream
@@ -37,6 +39,7 @@ AxTimecodeStream
     .. autoclass:: AxTimecodeStream
        :members:
        :undoc-members:
+       :show-inheritance:
             
             
 .. toctree::
