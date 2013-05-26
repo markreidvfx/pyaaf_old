@@ -9,5 +9,15 @@ Api Class documentation
    
     AxBaseObj
     AxEssenceMultiAccess
-    AxEssenceFormat.rst
+    AxEssenceFormat
+	 
+Others
+------
+.. toctree::
+    :maxdepth: 15
+
+    iterators
+    smartpointers
+    definitions
+
    
