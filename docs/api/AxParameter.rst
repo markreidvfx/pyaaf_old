@@ -1,36 +1,20 @@
 
-AxParameter
-===========
-
-This is documentation for AxParameter.
 
 .. automodule:: pyaaf
 
 
             
-AxControlPoint
---------------
+AxParameter
+-----------
             
-    .. autoclass:: AxControlPoint
+    .. autoclass:: AxParameter
        :members:
        :undoc-members:
        :show-inheritance:
             
-            
-AxVaryingValue
---------------
-            
-    .. autoclass:: AxVaryingValue
-       :members:
-       :undoc-members:
-       :show-inheritance:
-            
-            
-AxConstantValue
----------------
-            
-    .. autoclass:: AxConstantValue
-       :members:
-       :undoc-members:
-       :show-inheritance:
-            
+.. toctree::
+   :maxdepth: 8
+   
+   AxControlPoint
+   AxVaryingValue
+   AxConstantValue

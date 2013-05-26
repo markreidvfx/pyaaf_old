@@ -1,36 +1,20 @@
 
-AxMobSlot
-=========
-
-This is documentation for AxMobSlot.
 
 .. automodule:: pyaaf
 
 
             
-AxTimelineMobSlot
------------------
+AxMobSlot
+---------
             
-    .. autoclass:: AxTimelineMobSlot
+    .. autoclass:: AxMobSlot
        :members:
        :undoc-members:
        :show-inheritance:
             
-            
-AxStaticMobSlot
----------------
-            
-    .. autoclass:: AxStaticMobSlot
-       :members:
-       :undoc-members:
-       :show-inheritance:
-            
-            
-AxEventMobSlot
---------------
-            
-    .. autoclass:: AxEventMobSlot
-       :members:
-       :undoc-members:
-       :show-inheritance:
-            
+.. toctree::
+   :maxdepth: 8
+   
+   AxTimelineMobSlot
+   AxStaticMobSlot
+   AxEventMobSlot

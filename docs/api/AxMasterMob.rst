@@ -1,18 +1,18 @@
 
-AxMasterMob
-===========
-
-This is documentation for AxMasterMob.
 
 .. automodule:: pyaaf
 
 
             
-AxMasterMobEx
--------------
+AxMasterMob
+-----------
             
-    .. autoclass:: AxMasterMobEx
+    .. autoclass:: AxMasterMob
        :members:
        :undoc-members:
        :show-inheritance:
             
+.. toctree::
+   :maxdepth: 8
+   
+   AxMasterMobEx

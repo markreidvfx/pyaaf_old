@@ -1,18 +1,18 @@
 
-AxTimecodeStream
-================
-
-This is documentation for AxTimecodeStream.
 
 .. automodule:: pyaaf
 
 
             
-AxTimecodeStream12M
--------------------
+AxTimecodeStream
+----------------
             
-    .. autoclass:: AxTimecodeStream12M
+    .. autoclass:: AxTimecodeStream
        :members:
        :undoc-members:
        :show-inheritance:
             
+.. toctree::
+   :maxdepth: 8
+   
+   AxTimecodeStream12M

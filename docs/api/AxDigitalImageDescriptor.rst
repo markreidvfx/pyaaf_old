@@ -1,27 +1,19 @@
 
-AxDigitalImageDescriptor
-========================
-
-This is documentation for AxDigitalImageDescriptor.
 
 .. automodule:: pyaaf
 
 
             
-AxCDCIDescriptor
-----------------
+AxDigitalImageDescriptor
+------------------------
             
-    .. autoclass:: AxCDCIDescriptor
+    .. autoclass:: AxDigitalImageDescriptor
        :members:
        :undoc-members:
        :show-inheritance:
             
-            
-AxRGBADescriptor
-----------------
-            
-    .. autoclass:: AxRGBADescriptor
-       :members:
-       :undoc-members:
-       :show-inheritance:
-            
+.. toctree::
+   :maxdepth: 8
+   
+   AxCDCIDescriptor
+   AxRGBADescriptor

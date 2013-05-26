@@ -1,50 +1,20 @@
 
-AxEvent
-=======
-
-This is documentation for AxEvent.
 
 .. automodule:: pyaaf
 
 
             
-AxCommentMarker
----------------
+AxEvent
+-------
             
-    .. autoclass:: AxCommentMarker
+    .. autoclass:: AxEvent
        :members:
        :undoc-members:
        :show-inheritance:
-            
             
 .. toctree::
-    :maxdepth: 2
-
-    AxDescriptiveMarker
+   :maxdepth: 8
    
-            
-            
-AxGPITrigger
-------------
-            
-    .. autoclass:: AxGPITrigger
-       :members:
-       :undoc-members:
-       :show-inheritance:
-            
-            
-AxTimecodeStream
-----------------
-            
-    .. autoclass:: AxTimecodeStream
-       :members:
-       :undoc-members:
-       :show-inheritance:
-            
-            
-.. toctree::
-    :maxdepth: 2
-
-    AxTimecodeStream12M
-   
-            
+   AxCommentMarker
+   AxGPITrigger
+   AxTimecodeStream

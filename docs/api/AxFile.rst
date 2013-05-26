@@ -1,18 +1,18 @@
 
-AxFile
-======
-
-This is documentation for AxFile.
 
 .. automodule:: pyaaf
 
 
             
-AxRandomFile
-------------
+AxFile
+------
             
-    .. autoclass:: AxRandomFile
+    .. autoclass:: AxFile
        :members:
        :undoc-members:
        :show-inheritance:
             
+.. toctree::
+   :maxdepth: 8
+   
+   AxRandomFile

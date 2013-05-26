@@ -1,90 +1,22 @@
 
-AxBaseObj
-=========
-
-This is documentation for AxBaseObj.
 
 .. automodule:: pyaaf
 
 
             
-AxPropertyValue
----------------
+AxBaseObj
+---------
             
-    .. autoclass:: AxPropertyValue
+    .. autoclass:: AxBaseObj
        :members:
        :undoc-members:
        :show-inheritance:
-            
-            
-AxObject
---------
-            
-    .. autoclass:: AxObject
-       :members:
-       :undoc-members:
-       :show-inheritance:
-            
             
 .. toctree::
-    :maxdepth: 2
-
-    AxContentStorage
-    AxLocator
-    AxHeader
-    AxMob
-    AxEssenceDescriptor
-    AxDescriptiveFramework
-    AxIdentification
-    AxDictionary
-    AxParameter
-    AxMobSlot
-    AxTaggedValue
-    AxKLVData
-    AxDefObject
-    AxComponent
+   :maxdepth: 8
    
-            
-            
-AxFile
-------
-            
-    .. autoclass:: AxFile
-       :members:
-       :undoc-members:
-       :show-inheritance:
-            
-            
-.. toctree::
-    :maxdepth: 2
-
-    AxRandomFile
-   
-            
-            
-AxProperty
-----------
-            
-    .. autoclass:: AxProperty
-       :members:
-       :undoc-members:
-       :show-inheritance:
-            
-            
-AxMetaDefinition
-----------------
-            
-    .. autoclass:: AxMetaDefinition
-       :members:
-       :undoc-members:
-       :show-inheritance:
-            
-            
-.. toctree::
-    :maxdepth: 2
-
-    AxClassDef
-    AxPropertyDef
-    AxTypeDef
-   
-            
+   AxPropertyValue
+   AxObject
+   AxFile
+   AxProperty
+   AxMetaDefinition

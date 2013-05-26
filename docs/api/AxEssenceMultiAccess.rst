@@ -1,18 +1,18 @@
 
-AxEssenceMultiAccess
-====================
-
-This is documentation for AxEssenceMultiAccess.
 
 .. automodule:: pyaaf
 
 
             
-AxEssenceAccess
----------------
+AxEssenceMultiAccess
+--------------------
             
-    .. autoclass:: AxEssenceAccess
+    .. autoclass:: AxEssenceMultiAccess
        :members:
        :undoc-members:
        :show-inheritance:
             
+.. toctree::
+   :maxdepth: 8
+   
+   AxEssenceAccess

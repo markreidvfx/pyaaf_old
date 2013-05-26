@@ -1,36 +1,20 @@
 
-AxPhysicalDescriptor
-====================
-
-This is documentation for AxPhysicalDescriptor.
 
 .. automodule:: pyaaf
 
 
             
-AxImportDescriptor
-------------------
+AxPhysicalDescriptor
+--------------------
             
-    .. autoclass:: AxImportDescriptor
+    .. autoclass:: AxPhysicalDescriptor
        :members:
        :undoc-members:
        :show-inheritance:
             
-            
-AxRecordingDescriptor
----------------------
-            
-    .. autoclass:: AxRecordingDescriptor
-       :members:
-       :undoc-members:
-       :show-inheritance:
-            
-            
-AxAuxiliaryDescriptor
----------------------
-            
-    .. autoclass:: AxAuxiliaryDescriptor
-       :members:
-       :undoc-members:
-       :show-inheritance:
-            
+.. toctree::
+   :maxdepth: 8
+   
+   AxImportDescriptor
+   AxRecordingDescriptor
+   AxAuxiliaryDescriptor

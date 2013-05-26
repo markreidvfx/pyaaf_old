@@ -1,18 +1,18 @@
 
-AxLocator
-=========
-
-This is documentation for AxLocator.
 
 .. automodule:: pyaaf
 
 
             
-AxNetworkLocator
-----------------
+AxLocator
+---------
             
-    .. autoclass:: AxNetworkLocator
+    .. autoclass:: AxLocator
        :members:
        :undoc-members:
        :show-inheritance:
             
+.. toctree::
+   :maxdepth: 8
+   
+   AxNetworkLocator
