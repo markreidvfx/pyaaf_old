@@ -64,7 +64,7 @@ AxBaseObj:
         AxParameter:
             AxConstantValue:
             AxVaryingValue:
-            AxControlPoint:
+        AxControlPoint:
         AxTaggedValue:
     AxFile:
         AxRandomFile:

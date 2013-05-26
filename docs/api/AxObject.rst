@@ -27,5 +27,6 @@ AxObject
    AxMobSlot
    AxTaggedValue
    AxKLVData
+   AxControlPoint
    AxDefObject
    AxComponent

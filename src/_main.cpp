@@ -10,6 +10,7 @@ void Export_pyste_src_AxTypes();
 void Export_pyste_src_AxSmartPointer();
 void Export_pyste_src_AxPropertyValue();
 void Export_pyste_src_AxProperty();
+void Export_pyste_src_AxParameter();
 void Export_pyste_src_AxObject();
 void Export_pyste_src_AxMobSlot();
 void Export_pyste_src_AxMob();
@@ -46,6 +47,7 @@ BOOST_PYTHON_MODULE(pyaaf)
     Export_pyste_src_AxSmartPointer();
     Export_pyste_src_AxPropertyValue();
     Export_pyste_src_AxProperty();
+    Export_pyste_src_AxParameter();
     Export_pyste_src_AxObject();
     Export_pyste_src_AxMobSlot();
     Export_pyste_src_AxMob();
