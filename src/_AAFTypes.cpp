@@ -290,6 +290,7 @@ void Export_pyste_src_AAFTypes()
         .def("toString",uid_to_string)
         .def("fromString",affUID_fromString)
         .staticmethod("fromString")
+        .def("__repr__",uid_to_string)
         .def("__str__",uid_to_string)
     ;
 
@@ -304,6 +305,7 @@ void Export_pyste_src_AAFTypes()
         .def("fromString",aafMobID_fromString)
         .staticmethod("fromString")
         .def("__str__",modID_to_string)
+        .def("__repr__",modID_to_string)
     ;
     
      class_<PyRate>("Rate", init < >())
