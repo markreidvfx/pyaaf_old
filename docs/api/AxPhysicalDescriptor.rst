@@ -15,6 +15,6 @@ AxPhysicalDescriptor
 .. toctree::
    :maxdepth: 8
    
+   AxAuxiliaryDescriptor
    AxImportDescriptor
    AxRecordingDescriptor
-   AxAuxiliaryDescriptor

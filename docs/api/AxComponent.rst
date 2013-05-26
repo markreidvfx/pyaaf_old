@@ -15,5 +15,5 @@ AxComponent
 .. toctree::
    :maxdepth: 8
    
-   AxTransition
    AxSegment
+   AxTransition

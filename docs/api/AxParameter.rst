@@ -15,5 +15,5 @@ AxParameter
 .. toctree::
    :maxdepth: 8
    
-   AxVaryingValue
    AxConstantValue
+   AxVaryingValue

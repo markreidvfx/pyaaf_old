@@ -15,15 +15,15 @@ AxSegment
 .. toctree::
    :maxdepth: 8
    
-   AxTimecode
-   AxSourceReference
+   AxEdgecode
+   AxEssenceGroup
    AxEvent
    AxFiller
    AxNestedScope
-   AxPulldown
-   AxSequence
-   AxEssenceGroup
    AxOperationGroup
+   AxPulldown
    AxScopeReference
    AxSelector
-   AxEdgecode
+   AxSequence
+   AxSourceReference
+   AxTimecode

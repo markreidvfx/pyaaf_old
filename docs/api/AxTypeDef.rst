@@ -15,18 +15,18 @@ AxTypeDef
 .. toctree::
    :maxdepth: 8
    
-   AxTypeDefRecord
-   AxTypeDefObjRef
-   AxTypeDefFixedArray
-   AxTypeDefStrongObjRef
-   AxTypeDefVariableArrayEx
    AxTypeDefEnum
+   AxTypeDefExtEnum
+   AxTypeDefFixedArray
    AxTypeDefIndirect
    AxTypeDefInt
+   AxTypeDefObjRef
+   AxTypeDefRecord
    AxTypeDefRename
-   AxTypeDefVariableArray
-   AxTypeDefString
    AxTypeDefSet
-   AxTypeDefWeakObjRef
-   AxTypeDefExtEnum
    AxTypeDefStream
+   AxTypeDefString
+   AxTypeDefStrongObjRef
+   AxTypeDefVariableArray
+   AxTypeDefVariableArrayEx
+   AxTypeDefWeakObjRef

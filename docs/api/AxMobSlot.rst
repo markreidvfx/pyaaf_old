@@ -15,6 +15,6 @@ AxMobSlot
 .. toctree::
    :maxdepth: 8
    
-   AxTimelineMobSlot
-   AxStaticMobSlot
    AxEventMobSlot
+   AxStaticMobSlot
+   AxTimelineMobSlot

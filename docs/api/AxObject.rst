@@ -15,18 +15,18 @@ AxObject
 .. toctree::
    :maxdepth: 8
    
+   AxComponent
    AxContentStorage
-   AxLocator
-   AxHeader
-   AxMob
-   AxEssenceDescriptor
-   AxDescriptiveFramework
-   AxIdentification
-   AxDictionary
-   AxParameter
-   AxMobSlot
-   AxTaggedValue
-   AxKLVData
    AxControlPoint
    AxDefObject
-   AxComponent
+   AxDescriptiveFramework
+   AxDictionary
+   AxEssenceDescriptor
+   AxHeader
+   AxIdentification
+   AxKLVData
+   AxLocator
+   AxMob
+   AxMobSlot
+   AxParameter
+   AxTaggedValue

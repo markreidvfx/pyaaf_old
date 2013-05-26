@@ -15,8 +15,8 @@ AxBaseObj
 .. toctree::
    :maxdepth: 8
    
-   AxPropertyValue
-   AxObject
    AxFile
-   AxProperty
    AxMetaDefinition
+   AxObject
+   AxProperty
+   AxPropertyValue

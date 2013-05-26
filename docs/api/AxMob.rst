@@ -15,6 +15,6 @@ AxMob
 .. toctree::
    :maxdepth: 8
    
+   AxCompositionMob
    AxMasterMob
    AxSourceMob
-   AxCompositionMob

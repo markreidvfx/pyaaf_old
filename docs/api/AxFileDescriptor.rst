@@ -15,6 +15,6 @@ AxFileDescriptor
 .. toctree::
    :maxdepth: 8
    
+   AxDigitalImageDescriptor
    AxSoundDescriptor
    AxWAVEDescriptor
-   AxDigitalImageDescriptor

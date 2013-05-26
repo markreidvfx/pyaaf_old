@@ -16,11 +16,11 @@ AxDefObject
    :maxdepth: 8
    
    AxCodecDef
-   AxPluginDef
    AxContainerDef
-   AxInterpolationDef
-   AxTaggedValueDef
-   AxOperationDef
    AxDataDef
-   AxParameterDef
+   AxInterpolationDef
    AxKLVDataDef
+   AxOperationDef
+   AxParameterDef
+   AxPluginDef
+   AxTaggedValueDef
