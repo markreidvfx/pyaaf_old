@@ -10,4 +10,4 @@ mkdir build
 cd build
 cmake ../
 make -j 8
-cp pyaaf.so ../
+cp core.so ../pyaaf

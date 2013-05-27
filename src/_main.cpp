@@ -45,7 +45,7 @@ void Export_pyste_src_AAFCodecDefs();
 void Export_pyste_src_AAFClassDefUIDs();
 
 // Module ======================================================================
-BOOST_PYTHON_MODULE(pyaaf)
+BOOST_PYTHON_MODULE(core)
 {
     Export_pyste_src_implicitly_convertible();
     Export_pyste_src_PyRecord();

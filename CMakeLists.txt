@@ -48,10 +48,10 @@ LINK_DIRECTORIES(
 
 FILE(GLOB Souces src/*.cpp)
 SET(CMAKE_SHARED_LIBRARY_PREFIX "")
-ADD_LIBRARY(pyaaf SHARED ${Souces})
+ADD_LIBRARY(core SHARED ${Souces})
 
 
-target_link_libraries(pyaaf
+target_link_libraries(core
     ${Boost_LIBRARIES}
     ${PYTHON_LIBRARIES}
     aaflib

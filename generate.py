@@ -64,14 +64,14 @@ def run_pyste(pyste_files=None):
     for item in aaf_include_dirs:
         includes.extend(['-I',item])
         
-    cmd = ['pyste.py', '--module=pyaaf', '--multiple', '--generate-main', '--out=./src']
+    cmd = ['pyste.py', '--module=core', '--multiple', '--generate-main', '--out=./src']
     cmd.extend(includes)
     cmd.extend(all_pyste_files)
     
     commands.append(cmd)
     
     for item in pyste_files:
-        cmd = ['pyste.py', '--module=pyaaf', '--multiple' ,'--out=./src']
+        cmd = ['pyste.py', '--module=core', '--multiple' ,'--out=./src']
         cmd.extend(includes) 
         cmd.append(item)
         
