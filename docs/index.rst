@@ -11,7 +11,7 @@ Contents:
 .. toctree::
    :maxdepth: 10
    
-   api/pyaaf
+   core/core
 
 
 
