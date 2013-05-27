@@ -13,13 +13,6 @@ else()
     message(FATAL_ERROR "No AAFSDK_ROOT set")
 endif()
 
-if (DEFINED ENV{AAF_PLATFORM})
-    SET(AAF_PLATFORM $ENV{AAF_PLATFORM})
-    message("AAF_PLATFORM: " ${AAF_PLATFORM})
-else()
-    message(FATAL_ERROR "No AAF_PLATFORM set")
-endif()
-
 find_package(Boost COMPONENTS python REQUIRED)
 message("Include dirs of boost: " ${Boost_INCLUDE_DIRS} )
 message("Libs of boost: " ${Boost_LIBRARIES} )
@@ -36,19 +29,31 @@ include_directories(
     ${Boost_INCLUDE_DIRS}
     ${PYTHON_INCLUDE_DIRS}
     ${AAFSDK_ROOT}/examples2/axLib
-    ${AAFSDK_ROOT}/AAF${AAF_PLATFORM}SDK/g++/include
+    ${AAFSDK_ROOT}/include
     include
+    axLib
 )
 
-LINK_DIRECTORIES(
-    ${AAFSDK_ROOT}/AAF${AAF_PLATFORM}SDK/g++/lib/debug
-    ${AAFSDK_ROOT}/AAF${AAF_PLATFORM}SDK/g++/bin/debug
-    ${AAFSDK_ROOT}/AAF${AAF_PLATFORM}SDK/g++/axExamples/debug
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    message("debug mode")
+    LINK_DIRECTORIES(
+    ${AAFSDK_ROOT}/lib/debug
+    ${AAFSDK_ROOT}/bin/debug
     )
+else()
+    LINK_DIRECTORIES(
+    ${AAFSDK_ROOT}/lib
+    ${AAFSDK_ROOT}/bin
+    )
+endif()
+
+
 
 FILE(GLOB Souces src/*.cpp)
+FILE(GLOB AxLibSouces axLib/*.cpp)
 SET(CMAKE_SHARED_LIBRARY_PREFIX "")
-ADD_LIBRARY(core SHARED ${Souces})
+ADD_LIBRARY(core SHARED ${Souces} ${AxLibSouces})
 
 
 target_link_libraries(core
@@ -57,6 +62,5 @@ target_link_libraries(core
     aaflib
     aafiid
     com-api
-    axLib
 )
 

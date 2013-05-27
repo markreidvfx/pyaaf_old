@@ -25,4 +25,8 @@ PyYAML - http://pyyaml.org/
 Licensing
 ---------
 
+axLib is Licensed under the AAF SDK Public Source License
+For axLib see the file called axLib/LEGAL/AAFSDKPSL.TXT
+
+For PyAAF (everything else)
 Please see the file called LICENSE.txt
