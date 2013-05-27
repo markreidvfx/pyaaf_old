@@ -47,6 +47,13 @@ EssenceFormatDef
    :members:
    :undoc-members:
    
+FileKindDef
+-----------
+
+.. autoclass:: pyaaf.FileKindDef
+   :members:
+   :undoc-members:
+   
 InterpolationDef
 ----------------
 
