@@ -1,0 +1,24 @@
+#AllFromHeader("AAFInterpolatorDefs.h")
+
+
+Include("AAFInterpolatorDefs.h")
+
+declaration_code("""
+class InterpolationDef {};
+""")
+
+module_code("""
+    scope InterpolationDef_scope = class_<InterpolationDef>("InterpolationDef");
+    InterpolationDef_scope.attr("Constant") = kAAFInterpolationDef_Constant;
+    InterpolationDef_scope.attr("Power") = kAAFInterpolationDef_Power;
+    InterpolationDef_scope.attr("ConstantInterpolator") = ConstantInterpolator;
+    InterpolationDef_scope.attr("Linear") = kAAFInterpolationDef_Linear;
+    InterpolationDef_scope.attr("PowerInterpolator") = PowerInterpolator;
+    InterpolationDef_scope.attr("NoInterpolator") = NoInterpolator;
+    InterpolationDef_scope.attr("LinearInterpolator") = LinearInterpolator;
+    InterpolationDef_scope.attr("None_") = kAAFInterpolationDef_None;
+    InterpolationDef_scope.attr("BSplineInterpolator") = BSplineInterpolator;
+    InterpolationDef_scope.attr("LogInterpolator") = LogInterpolator;
+    InterpolationDef_scope.attr("BSpline") = kAAFInterpolationDef_BSpline;
+    InterpolationDef_scope.attr("Log") = kAAFInterpolationDef_Log;
+""")

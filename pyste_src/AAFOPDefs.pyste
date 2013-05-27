@@ -1,0 +1,14 @@
+#AllFromHeader("AAFOPDefs.h")
+
+Include("AAFOPDefs.h")
+
+declaration_code("""
+class OPDef {};
+""")
+
+
+module_code("""
+    scope OPDef_scope = class_<OPDef>("OPDef");
+    OPDef_scope.attr("Unconstrained") = kAAFOPDef_Unconstrained;
+    OPDef_scope.attr("EditProtocol") = kAAFOPDef_EditProtocol;
+""")

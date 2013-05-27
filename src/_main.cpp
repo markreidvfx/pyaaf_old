@@ -23,18 +23,25 @@ void Export_pyste_src_AxFIle();
 void Export_pyste_src_AxEssence();
 void Export_pyste_src_AxDictionary();
 void Export_pyste_src_AxDefObject();
+void Export_pyste_src_AxCreateInstance();
 void Export_pyste_src_AxContentStorage();
 void Export_pyste_src_AxComponent();
 void Export_pyste_src_AxBaseObjIter();
 void Export_pyste_src_AxBaseObj();
 void Export_pyste_src_AAFTypes();
 void Export_pyste_src_AAFTypeDefUIDs();
+void Export_pyste_src_AAFPropertyDefs();
+void Export_pyste_src_AAFParameterDefs();
 void Export_pyste_src_AAFOperationDefs();
+void Export_pyste_src_AAFOPDefs();
+void Export_pyste_src_AAFInterpolatorDefs();
 void Export_pyste_src_AAFEssenceFormats();
 void Export_pyste_src_AAFDataDefs();
 void Export_pyste_src_AAFDataBuffer();
 void Export_pyste_src_AAFContainerDefs();
+void Export_pyste_src_AAFCompressionDefs();
 void Export_pyste_src_AAFCodecDefs();
+void Export_pyste_src_AAFClassDefUIDs();
 
 // Module ======================================================================
 BOOST_PYTHON_MODULE(pyaaf)
@@ -60,16 +67,23 @@ BOOST_PYTHON_MODULE(pyaaf)
     Export_pyste_src_AxEssence();
     Export_pyste_src_AxDictionary();
     Export_pyste_src_AxDefObject();
+    Export_pyste_src_AxCreateInstance();
     Export_pyste_src_AxContentStorage();
     Export_pyste_src_AxComponent();
     Export_pyste_src_AxBaseObjIter();
     Export_pyste_src_AxBaseObj();
     Export_pyste_src_AAFTypes();
     Export_pyste_src_AAFTypeDefUIDs();
+    Export_pyste_src_AAFPropertyDefs();
+    Export_pyste_src_AAFParameterDefs();
     Export_pyste_src_AAFOperationDefs();
+    Export_pyste_src_AAFOPDefs();
+    Export_pyste_src_AAFInterpolatorDefs();
     Export_pyste_src_AAFEssenceFormats();
     Export_pyste_src_AAFDataDefs();
     Export_pyste_src_AAFDataBuffer();
     Export_pyste_src_AAFContainerDefs();
+    Export_pyste_src_AAFCompressionDefs();
     Export_pyste_src_AAFCodecDefs();
+    Export_pyste_src_AAFClassDefUIDs();
 }
