@@ -27,5 +27,10 @@ cmake -DCMAKE_BUILD_TYPE=Debug ../
 #For Release
 #cmake ../
 
-make -j 8
-cp core.so ../pyaaf
+make -j 8 VERBOSE=1
+
+cp -v core.so ../pyaaf
+
+#fix linking on mac osx
+cd ..
+sh ./tools/fixup_bundle.sh ./pyaaf/core.so
