@@ -48,7 +48,7 @@ else()
     )
 endif()
 
-
+#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/pyaaf)
 
 FILE(GLOB Souces src/*.cpp)
 FILE(GLOB AxLibSouces axLib/*.cpp)
