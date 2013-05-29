@@ -8,8 +8,6 @@ parser = OptionParser()
 if not args:
     parser.error("not enough argements")
 
-
-a = pyaaf.AxInit()
 f= pyaaf.AxFile()
 f.OpenExistingRead(args[0])
 

@@ -203,8 +203,7 @@ def essence_create():
     dirname = os.path.dirname(__file__)
     fileName = os.path.join(dirname,"essence_create.aaf")
     xmlfile = os.path.join(dirname,"essence_create.xml")
-    pyaaf.AxInit()
-    
+
     axFile = pyaaf.AxFile()
     axFile.OpenNewModify( fileName )
     

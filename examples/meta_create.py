@@ -11,8 +11,6 @@ def metaCreate():
     
     dirname = os.path.dirname(__file__)
     fileName = os.path.join(dirname,"meta_create.aaf")
-
-    pyaaf.AxInit()
     
     axFile = pyaaf.AxFile()
     axFile.OpenNewModify( fileName )
