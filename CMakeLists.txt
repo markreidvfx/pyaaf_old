@@ -31,12 +31,11 @@ message("Include dirs of Python: " ${PYTHON_INCLUDE_DIRS} )
 message("Libs of Python: " ${PYTHON_LIBRARIES} )
 
 include_directories(
-    ${Boost_INCLUDE_DIRS}
-    ${PYTHON_INCLUDE_DIRS}
-    ${AAFSDK_ROOT}/examples2/axLib
-    ${AAFSDK_ROOT}/include
     include
     axLib
+    ${Boost_INCLUDE_DIRS}
+    ${PYTHON_INCLUDE_DIRS}
+    ${AAFSDK_ROOT}/include
 )
 
 

@@ -5,13 +5,11 @@ from multiprocessing import Pool
 import traceback
 
 
-AAF_ROOT = os.environ.get('AAFSDK_ROOT','/Users/mark/Dev/aaf/aaf-git')
-AAF_PLATFORM = os.environ.get('AAF_PLATFORM', "x86_64Darwin")
+AAF_ROOT = os.environ.get('AAFSDK_ROOT','/Users/mark/Dev/aaf/aaf-git/AAFx86_64DarwinSDK/g++')
 
-
-aaf_include_dirs = [os.path.join(AAF_ROOT, 'AAF%sSDK' % AAF_PLATFORM, 'g++', 'include'),
-                    os.path.join(AAF_ROOT,'examples2','axLib'),
-                    './include',
+aaf_include_dirs = ['./include',
+                    './axLib',
+                    os.path.join(AAF_ROOT, 'include'),
                     ]
                     
 
