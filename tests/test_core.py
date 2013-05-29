@@ -61,7 +61,9 @@ class TestGeneral(unittest.TestCase):
         with self.assertRaises(IOError):
             with pyaaf.open("this/path/does/not/exists.aaf",'r') as f: 
                 pass
-            
+        with self.assertRaises(IOError):   
+            with pyaaf.open("this path/does/not exist.aaf", 'w') as f:
+                pass
 
 if __name__ == '__main__':
     unittest.main()

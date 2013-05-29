@@ -14,6 +14,10 @@ def open(path,mode=None):
     try:
         
         if mode == 'w':
+            
+            dirname = os.path.dirname(os.path.dirname(os.path.abspath(path)))
+            if not os.path.exists(dirname):
+                raise IOError(" No such directory: %s" % str(path))
             axfile.OpenNewModify(path)
             o = True
         elif mode is None or mode == 'r' or mode == 'ro':
