@@ -607,6 +607,7 @@ class_< IAAFImportDescriptorSP > ("IAAFImportDescriptorSP")
 .def("GetClassName",PyGetClassName<IAAFImportDescriptor, AxImportDescriptor> )
 ;
 class_< IAAFKLVDataDefinitionSP > ("IAAFKLVDataDefinitionSP")
+.def("GetClassName",PyGetClassName<IAAFKLVDataDefinition, AxKLVDataDef> )
 ;
 class_< IAAFMob2SP > ("IAAFMob2SP")
 .def("to_MasterMobSP", query_interface<IAAFMob2, IAAFMasterMob > )
@@ -637,6 +638,7 @@ class_< IAAFSoundDescriptorSP > ("IAAFSoundDescriptorSP")
 .def("GetClassName",PyGetClassName<IAAFSoundDescriptor, AxSoundDescriptor> )
 ;
 class_< IAAFTaggedValueDefinitionSP > ("IAAFTaggedValueDefinitionSP")
+.def("GetClassName",PyGetClassName<IAAFTaggedValueDefinition, AxTaggedValueDef> )
 ;
 class_< IAAFTimelineMobSlot2SP > ("IAAFTimelineMobSlot2SP")
 .def("GetClassName",PyGetClassName<IAAFTimelineMobSlot2, AxTimelineMobSlot> )

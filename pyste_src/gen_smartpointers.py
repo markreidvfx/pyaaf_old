@@ -93,12 +93,8 @@ for line in s.splitlines():
                         string += '.def("to_%sSP", query_interface<IAAF%s, IAAF%s > )\n' % ( q, name, q)
                         
                     if "Object" in node.get_parents():
-                        
-                        if key in ('KLVDataDefinition','TaggedValueDefinition'):
-                            pass
-                        else:
-                        
-                            string += '.def("GetClassName",PyGetClassName<IAAF%s, Ax%s> )\n' %(name,key)
+                        axname = node.alt_name or key
+                        string += '.def("GetClassName",PyGetClassName<IAAF%s, Ax%s> )\n' %(name,axname)
                 #queryInterfaces =  line.split(":")[1].strip().split(' ')
                 #for q in queryInterfaces:
                     
