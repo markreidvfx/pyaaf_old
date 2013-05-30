@@ -12,6 +12,38 @@ f.close()
 pyste = 'Include("AxSmartPointer.h")\n'
 pyste = 'Include("query_interface.h")\n'
 
+pyste +="""
+Include("AxBaseObj.h")
+Include("AxBaseObjIter.h")
+Include("AxComponent.h")
+Include("AxContentStorage.h")
+Include("AxDefObject.h")
+Include("AxDescriptiveFramework.h")
+Include("AxDictionary.h")
+Include("AxEssence.h")
+Include("AxEx.h")
+Include("AxFile.h")
+Include("AxHeader.h")
+Include("AxHrMap.h")
+Include("AxInit.h")
+Include("AxIterator.h")
+Include("AxKLVData.h")
+Include("AxMetaDef.h")
+Include("AxMob.h")
+Include("AxMobSlot.h")
+Include("AxObject.h")
+Include("AxParameter.h")
+Include("AxPluginMgr.h")
+Include("AxProperty.h")
+Include("AxPropertyValue.h")
+Include("AxPropertyValueDump.h")
+Include("AxStorageErrors.h")
+Include("AxTaggedValue.h")
+Include("AxTypes.h")
+Include("AxUtil.h")
+
+"""
+
 pyste += 'declaration_code("""\n'
 
 pyste += 'class SmartPointers {};\n'
@@ -56,11 +88,17 @@ for line in s.splitlines():
                 key = name.replace("2",'').replace('3','')
                 if key in h.keys():
                     #print name, h[name].get_all_children()
-                    
-                    for q in h[key].get_all_children(True):
+                    node = h[key]
+                    for q in node.get_all_children(True):
                         string += '.def("to_%sSP", query_interface<IAAF%s, IAAF%s > )\n' % ( q, name, q)
-                
-                
+                        
+                    if "Object" in node.get_parents():
+                        
+                        if key in ('KLVDataDefinition','TaggedValueDefinition'):
+                            pass
+                        else:
+                        
+                            string += '.def("GetClassName",PyGetClassName<IAAF%s, Ax%s> )\n' %(name,key)
                 #queryInterfaces =  line.split(":")[1].strip().split(' ')
                 #for q in queryInterfaces:
                     
