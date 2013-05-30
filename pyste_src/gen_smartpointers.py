@@ -83,7 +83,8 @@ for line in s.splitlines():
             string =  'class_< %s > ("%s")\n' 
             string = string % (pointer_name,pointer_name)
             
-            
+            string += '.def("to_%sSP", query_interface_pass_through<%s > )\n' % ( name, pointer_name)
+
             try:
                 key = name.replace("2",'').replace('3','')
                 if key in h.keys():
@@ -91,6 +92,8 @@ for line in s.splitlines():
                     node = h[key]
                     for q in node.get_all_children(True):
                         string += '.def("to_%sSP", query_interface<IAAF%s, IAAF%s > )\n' % ( q, name, q)
+                        
+                        
                         
                     if "Object" in node.get_parents():
                         axname = node.alt_name or key

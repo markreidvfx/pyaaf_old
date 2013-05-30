@@ -8,7 +8,14 @@ IAAFSmartPointer<TypeDst> query_interface( IAAFSmartPointer<TypeSrc> spSrc)
     {
         return AxQueryInterface<TypeSrc,TypeDst>( spSrc );
     };
-    
+
+template <class TypeSrc>
+
+TypeSrc query_interface_pass_through( TypeSrc spSrc)
+{
+    return spSrc;
+};
+
 template <typename Type, typename AxType>
 
 AxString PyGetClassName(IAAFSmartPointer< Type >& sp)
