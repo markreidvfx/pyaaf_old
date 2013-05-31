@@ -40,6 +40,34 @@ using namespace boost::python;
 // Declarations ================================================================
 
 class SmartPointers {};
+extern const char classname_ClassDef[] = "ClassDef";
+extern const char classname_EssenceAccess[] = "EssenceAccess";
+extern const char classname_File[] = "File";
+extern const char classname_EssenceFormat[] = "EssenceFormat";
+extern const char classname_MetaDefinition[] = "MetaDefinition";
+extern const char classname_Object[] = "Object";
+extern const char classname_Property[] = "Property";
+extern const char classname_PropertyDef[] = "PropertyDef";
+extern const char classname_PropertyValue[] = "PropertyValue";
+extern const char classname_TypeDef[] = "TypeDef";
+extern const char classname_TypeDefIndirect[] = "TypeDefIndirect";
+extern const char classname_TypeDefInt[] = "TypeDefInt";
+extern const char classname_TypeDefRename[] = "TypeDefRename";
+extern const char classname_TypeDefEnum[] = "TypeDefEnum";
+extern const char classname_TypeDefExtEnum[] = "TypeDefExtEnum";
+extern const char classname_TypeDefFixedArray[] = "TypeDefFixedArray";
+extern const char classname_TypeDefRecord[] = "TypeDefRecord";
+extern const char classname_TypeDefSet[] = "TypeDefSet";
+extern const char classname_TypeDefStream[] = "TypeDefStream";
+extern const char classname_TypeDefString[] = "TypeDefString";
+extern const char classname_TypeDefStrongObjRef[] = "TypeDefStrongObjRef";
+extern const char classname_TypeDefWeakObjRef[] = "TypeDefWeakObjRef";
+extern const char classname_TypeDefObjectRef[] = "TypeDefObjectRef";
+extern const char classname_TypeDefOpaque[] = "TypeDefOpaque";
+extern const char classname_TypeDefVariableArray[] = "TypeDefVariableArray";
+extern const char classname_RandomFile[] = "RandomFile";
+extern const char classname_EssenceMultiAccess[] = "EssenceMultiAccess";
+extern const char classname_TypeDefVariableArrayEx[] = "TypeDefVariableArrayEx";
 
 
 // Module ======================================================================
@@ -52,6 +80,7 @@ class_< IAAFAIFCDescriptorSP > ("IAAFAIFCDescriptorSP")
 ;
 class_< IAAFClassDefSP > ("IAAFClassDefSP")
 .def("to_ClassDefSP", query_interface_pass_through<IAAFClassDefSP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFClassDef, classname_ClassDef> )
 ;
 class_< IAAFCodecDefSP > ("IAAFCodecDefSP")
 .def("to_CodecDefSP", query_interface_pass_through<IAAFCodecDefSP > )
@@ -147,6 +176,7 @@ class_< IAAFOperationDefSP > ("IAAFOperationDefSP")
 ;
 class_< IAAFEssenceAccessSP > ("IAAFEssenceAccessSP")
 .def("to_EssenceAccessSP", query_interface_pass_through<IAAFEssenceAccessSP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFEssenceAccess, classname_EssenceAccess> )
 ;
 class_< IAAFEssenceDataSP > ("IAAFEssenceDataSP")
 .def("to_EssenceDataSP", query_interface_pass_through<IAAFEssenceDataSP > )
@@ -183,6 +213,7 @@ class_< IAAFEventMobSlotSP > ("IAAFEventMobSlotSP")
 class_< IAAFFileSP > ("IAAFFileSP")
 .def("to_FileSP", query_interface_pass_through<IAAFFileSP > )
 .def("to_RandomFileSP", query_interface<IAAFFile, IAAFRandomFile > )
+.def("GetClassName",PyGetClassName_from_string<IAAFFile, classname_File> )
 ;
 class_< IAAFFileDescriptorSP > ("IAAFFileDescriptorSP")
 .def("to_FileDescriptorSP", query_interface_pass_through<IAAFFileDescriptorSP > )
@@ -210,6 +241,7 @@ class_< IAAFCDCIDescriptorSP > ("IAAFCDCIDescriptorSP")
 ;
 class_< IAAFEssenceFormatSP > ("IAAFEssenceFormatSP")
 .def("to_EssenceFormatSP", query_interface_pass_through<IAAFEssenceFormatSP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFEssenceFormat, classname_EssenceFormat> )
 ;
 class_< IAAFEssenceGroupSP > ("IAAFEssenceGroupSP")
 .def("to_EssenceGroupSP", query_interface_pass_through<IAAFEssenceGroupSP > )
@@ -286,6 +318,7 @@ class_< IAAFMetaDefinitionSP > ("IAAFMetaDefinitionSP")
 .def("to_TypeDefWeakObjRefSP", query_interface<IAAFMetaDefinition, IAAFTypeDefWeakObjRef > )
 .def("to_TypeDefExtEnumSP", query_interface<IAAFMetaDefinition, IAAFTypeDefExtEnum > )
 .def("to_TypeDefStreamSP", query_interface<IAAFMetaDefinition, IAAFTypeDefStream > )
+.def("GetClassName",PyGetClassName_from_string<IAAFMetaDefinition, classname_MetaDefinition> )
 ;
 class_< IAAFMobSP > ("IAAFMobSP")
 .def("to_MobSP", query_interface_pass_through<IAAFMobSP > )
@@ -385,6 +418,7 @@ class_< IAAFObjectSP > ("IAAFObjectSP")
 .def("to_ScopeReferenceSP", query_interface<IAAFObject, IAAFScopeReference > )
 .def("to_SelectorSP", query_interface<IAAFObject, IAAFSelector > )
 .def("to_EdgecodeSP", query_interface<IAAFObject, IAAFEdgecode > )
+.def("GetClassName",PyGetClassName_from_string<IAAFObject, classname_Object> )
 ;
 class_< IAAFParameterSP > ("IAAFParameterSP")
 .def("to_ParameterSP", query_interface_pass_through<IAAFParameterSP > )
@@ -398,12 +432,15 @@ class_< IAAFParameterDefSP > ("IAAFParameterDefSP")
 ;
 class_< IAAFPropertySP > ("IAAFPropertySP")
 .def("to_PropertySP", query_interface_pass_through<IAAFPropertySP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFProperty, classname_Property> )
 ;
 class_< IAAFPropertyDefSP > ("IAAFPropertyDefSP")
 .def("to_PropertyDefSP", query_interface_pass_through<IAAFPropertyDefSP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFPropertyDef, classname_PropertyDef> )
 ;
 class_< IAAFPropertyValueSP > ("IAAFPropertyValueSP")
 .def("to_PropertyValueSP", query_interface_pass_through<IAAFPropertyValueSP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFPropertyValue, classname_PropertyValue> )
 ;
 class_< IAAFPluginManagerSP > ("IAAFPluginManagerSP")
 .def("to_PluginManagerSP", query_interface_pass_through<IAAFPluginManagerSP > )
@@ -519,6 +556,7 @@ class_< IAAFTypeDefSP > ("IAAFTypeDefSP")
 .def("to_TypeDefWeakObjRefSP", query_interface<IAAFTypeDef, IAAFTypeDefWeakObjRef > )
 .def("to_TypeDefExtEnumSP", query_interface<IAAFTypeDef, IAAFTypeDefExtEnum > )
 .def("to_TypeDefStreamSP", query_interface<IAAFTypeDef, IAAFTypeDefStream > )
+.def("GetClassName",PyGetClassName_from_string<IAAFTypeDef, classname_TypeDef> )
 ;
 class_< IAAFTypeDefCharacterSP > ("IAAFTypeDefCharacterSP")
 .def("to_TypeDefCharacterSP", query_interface_pass_through<IAAFTypeDefCharacterSP > )
@@ -526,48 +564,63 @@ class_< IAAFTypeDefCharacterSP > ("IAAFTypeDefCharacterSP")
 class_< IAAFTypeDefIndirectSP > ("IAAFTypeDefIndirectSP")
 .def("to_TypeDefIndirectSP", query_interface_pass_through<IAAFTypeDefIndirectSP > )
 .def("to_TypeDefOpaqueSP", query_interface<IAAFTypeDefIndirect, IAAFTypeDefOpaque > )
+.def("GetClassName",PyGetClassName_from_string<IAAFTypeDefIndirect, classname_TypeDefIndirect> )
 ;
 class_< IAAFTypeDefIntSP > ("IAAFTypeDefIntSP")
 .def("to_TypeDefIntSP", query_interface_pass_through<IAAFTypeDefIntSP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFTypeDefInt, classname_TypeDefInt> )
 ;
 class_< IAAFTypeDefRenameSP > ("IAAFTypeDefRenameSP")
 .def("to_TypeDefRenameSP", query_interface_pass_through<IAAFTypeDefRenameSP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFTypeDefRename, classname_TypeDefRename> )
 ;
 class_< IAAFTypeDefEnumSP > ("IAAFTypeDefEnumSP")
 .def("to_TypeDefEnumSP", query_interface_pass_through<IAAFTypeDefEnumSP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFTypeDefEnum, classname_TypeDefEnum> )
 ;
 class_< IAAFTypeDefExtEnumSP > ("IAAFTypeDefExtEnumSP")
 .def("to_TypeDefExtEnumSP", query_interface_pass_through<IAAFTypeDefExtEnumSP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFTypeDefExtEnum, classname_TypeDefExtEnum> )
 ;
 class_< IAAFTypeDefFixedArraySP > ("IAAFTypeDefFixedArraySP")
 .def("to_TypeDefFixedArraySP", query_interface_pass_through<IAAFTypeDefFixedArraySP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFTypeDefFixedArray, classname_TypeDefFixedArray> )
 ;
 class_< IAAFTypeDefRecordSP > ("IAAFTypeDefRecordSP")
 .def("to_TypeDefRecordSP", query_interface_pass_through<IAAFTypeDefRecordSP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFTypeDefRecord, classname_TypeDefRecord> )
 ;
 class_< IAAFTypeDefSetSP > ("IAAFTypeDefSetSP")
 .def("to_TypeDefSetSP", query_interface_pass_through<IAAFTypeDefSetSP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFTypeDefSet, classname_TypeDefSet> )
 ;
 class_< IAAFTypeDefStreamSP > ("IAAFTypeDefStreamSP")
 .def("to_TypeDefStreamSP", query_interface_pass_through<IAAFTypeDefStreamSP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFTypeDefStream, classname_TypeDefStream> )
 ;
 class_< IAAFTypeDefStringSP > ("IAAFTypeDefStringSP")
 .def("to_TypeDefStringSP", query_interface_pass_through<IAAFTypeDefStringSP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFTypeDefString, classname_TypeDefString> )
 ;
 class_< IAAFTypeDefStrongObjRefSP > ("IAAFTypeDefStrongObjRefSP")
 .def("to_TypeDefStrongObjRefSP", query_interface_pass_through<IAAFTypeDefStrongObjRefSP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFTypeDefStrongObjRef, classname_TypeDefStrongObjRef> )
 ;
 class_< IAAFTypeDefWeakObjRefSP > ("IAAFTypeDefWeakObjRefSP")
 .def("to_TypeDefWeakObjRefSP", query_interface_pass_through<IAAFTypeDefWeakObjRefSP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFTypeDefWeakObjRef, classname_TypeDefWeakObjRef> )
 ;
 class_< IAAFTypeDefObjectRefSP > ("IAAFTypeDefObjectRefSP")
 .def("to_TypeDefObjectRefSP", query_interface_pass_through<IAAFTypeDefObjectRefSP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFTypeDefObjectRef, classname_TypeDefObjectRef> )
 ;
 class_< IAAFTypeDefOpaqueSP > ("IAAFTypeDefOpaqueSP")
 .def("to_TypeDefOpaqueSP", query_interface_pass_through<IAAFTypeDefOpaqueSP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFTypeDefOpaque, classname_TypeDefOpaque> )
 ;
 class_< IAAFTypeDefVariableArraySP > ("IAAFTypeDefVariableArraySP")
 .def("to_TypeDefVariableArraySP", query_interface_pass_through<IAAFTypeDefVariableArraySP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFTypeDefVariableArray, classname_TypeDefVariableArray> )
 ;
 class_< IAAFVaryingValueSP > ("IAAFVaryingValueSP")
 .def("to_VaryingValueSP", query_interface_pass_through<IAAFVaryingValueSP > )
@@ -669,6 +722,7 @@ class_< IAAFSetFileBitsSP > ("IAAFSetFileBitsSP")
 ;
 class_< IAAFRandomFileSP > ("IAAFRandomFileSP")
 .def("to_RandomFileSP", query_interface_pass_through<IAAFRandomFileSP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFRandomFile, classname_RandomFile> )
 ;
 class_< IAAFEndianSP > ("IAAFEndianSP")
 .def("to_EndianSP", query_interface_pass_through<IAAFEndianSP > )
@@ -679,9 +733,11 @@ class_< IAAFSearchSourceSP > ("IAAFSearchSourceSP")
 class_< IAAFEssenceMultiAccessSP > ("IAAFEssenceMultiAccessSP")
 .def("to_EssenceMultiAccessSP", query_interface_pass_through<IAAFEssenceMultiAccessSP > )
 .def("to_EssenceAccessSP", query_interface<IAAFEssenceMultiAccess, IAAFEssenceAccess > )
+.def("GetClassName",PyGetClassName_from_string<IAAFEssenceMultiAccess, classname_EssenceMultiAccess> )
 ;
 class_< IAAFTypeDefVariableArrayExSP > ("IAAFTypeDefVariableArrayExSP")
 .def("to_TypeDefVariableArrayExSP", query_interface_pass_through<IAAFTypeDefVariableArrayExSP > )
+.def("GetClassName",PyGetClassName_from_string<IAAFTypeDefVariableArrayEx, classname_TypeDefVariableArrayEx> )
 ;
 class_< IAAFAES3PCMDescriptorSP > ("IAAFAES3PCMDescriptorSP")
 .def("to_AES3PCMDescriptorSP", query_interface_pass_through<IAAFAES3PCMDescriptorSP > )

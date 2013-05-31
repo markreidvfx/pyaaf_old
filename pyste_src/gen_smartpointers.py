@@ -44,11 +44,10 @@ Include("AxUtil.h")
 
 """
 
-pyste += 'declaration_code("""\n'
+declaration_code = 'declaration_code("""\n'
 
-pyste += 'class SmartPointers {};\n'
+declaration_code += 'class SmartPointers {};\n'
 
-pyste += '""")\n'
 
 pyste += 'module_code("""\n'
 pyste += 'scope smartpointers = class_<SmartPointers>("smartpointers");\n'
@@ -98,9 +97,11 @@ for line in s.splitlines():
                     if "Object" in node.get_parents():
                         axname = node.alt_name or key
                         string += '.def("GetClassName",PyGetClassName<IAAF%s, Ax%s> )\n' %(name,axname)
-                #queryInterfaces =  line.split(":")[1].strip().split(' ')
-                #for q in queryInterfaces:
-                    
+                        
+                    else:
+                        declaration_code += 'extern const char classname_%s[] = "%s";\n'  % (name,name)
+                        string += '.def("GetClassName",PyGetClassName_from_string<IAAF%s, classname_%s> )\n' %(name, name)
+
                     
             except:
                 print traceback.format_exc()
@@ -116,6 +117,10 @@ for line in s.splitlines():
 
 pyste += '""")\n'
 
+
+declaration_code += '""")\n'
+
+pyste += declaration_code
 
 #print pyste
 

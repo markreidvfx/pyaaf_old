@@ -1,5 +1,6 @@
 
 #include <AxSmartPointer.h>
+#include <AxTypes.h>
 
 
 template <class TypeSrc, class TypeDst>
@@ -25,5 +26,13 @@ AxString PyGetClassName(IAAFSmartPointer< Type >& sp)
     
     
     return item.GetClassName();
+    
+};
+
+template <typename Type, char const * name>
+char const * PyGetClassName_from_string(IAAFSmartPointer< Type >& sp)
+{
+    
+    return name;
     
 };
