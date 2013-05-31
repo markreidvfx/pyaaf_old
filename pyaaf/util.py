@@ -8,9 +8,6 @@ def Ax(sp):
     """
     
     class_name = sp.GetClassName()
-    
-    if class_name == 'EdgeCode':
-        class_name = 'Edgecode'
 
     if class_name.count("IEnumAAF"):
        iterator_name = class_name.replace('IEnumAAF', '')
@@ -27,7 +24,12 @@ def Ax(sp):
            raise ValueError(class_name)
    
     else:
-        
-        class_object = core.__dict__['Ax%s' % class_name]
-        methodToCall = getattr(sp, 'to_%sSP' % class_name)
+        name = class_name
+        for old, new in (("Definition","Def"),('EdgeCode','Edgecode')):
+            name = name.replace(old,new)
+        ax_name = 'Ax%s' % name
+
+        class_object = core.__dict__[ax_name]
+
+        methodToCall = getattr(sp, 'to_%sSP' % name)
         return class_object(methodToCall())

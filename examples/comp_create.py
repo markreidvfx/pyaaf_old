@@ -11,14 +11,11 @@ def CreateSourceClipToAppendToSequence(axDictionary, sourceMob,sequenceToAppendT
     # Search for the first slot in the source mob that matches the
     # data def of the sequenceToAppendTo.
     
-    sequenceDataDef = pyaaf.AxDataDef(sequenceToAppendTo.GetDataDef())
+    sequenceDataDef = Ax(sequenceToAppendTo.GetDataDef())
     sequenceDataDefAUID = sequenceDataDef.GetAUID()    
-    
-    #create a mobslot iterator
-    axSourceMobIter = pyaaf.AxIter.MobSlot(sourceMob.GetSlots())
-    
+        
     spSourceSlot = None
-    for item in axSourceMobIter:
+    for item in Ax(sourceMob.GetSlots()):
         
         #create a AxTimelineMobSlot and get datadef
         axTimelineMobSlot = pyaaf.AxTimelineMobSlot(item.to_TimelineMobSlotSP())
