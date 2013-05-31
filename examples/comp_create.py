@@ -15,10 +15,8 @@ def CreateSourceClipToAppendToSequence(axDictionary, sourceMob,sequenceToAppendT
     sequenceDataDefAUID = sequenceDataDef.GetAUID()    
         
     spSourceSlot = None
-    for item in Ax(sourceMob.GetSlots()):
-        
-        #create a AxTimelineMobSlot and get datadef
-        axTimelineMobSlot = pyaaf.AxTimelineMobSlot(item.to_TimelineMobSlotSP())
+    for axTimelineMobSlot in Ax(sourceMob.GetSlots()):
+
         axDataDef = pyaaf.AxDataDef(axTimelineMobSlot.GetDataDef())
         
         #Does it match the sequence's data def
@@ -68,9 +66,7 @@ def comp_create():
 
     #get master mobs
     master_mobs = {}
-    for mob in Ax(axContentStorage.GetMasterMobs()):
-        
-        mastermob = pyaaf.AxMasterMob(mob.to_MasterMobSP())
+    for mastermob in Ax(axContentStorage.GetMasterMobs()):
         
         name = mastermob.GetName()
         master_mobs[name] = mastermob

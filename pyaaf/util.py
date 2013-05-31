@@ -12,16 +12,22 @@ def Ax(sp):
     if class_name.count("IEnumAAF"):
        iterator_name = class_name.replace('IEnumAAF', '')
        if core.AxIter.__dict__.has_key(iterator_name):
-           return core.AxIter.__dict__[iterator_name](sp)
+           class_object = core.AxIter.__dict__[iterator_name]
+           return AxIterWraper(class_object(sp))
+           
        iterator_name = iterator_name.rstrip("s")
        if core.AxIter.__dict__.has_key(iterator_name):
-           return core.AxIter.__dict__[iterator_name](sp)
+           class_object = core.AxIter.__dict__[iterator_name]
+           return AxIterWraper(class_object(sp))
+       
        iterator_name = class_name.replace('IEnumAAF', '').replace('ies', 'y')
        if core.AxIter.__dict__.has_key(iterator_name):
-           return core.AxIter.__dict__[iterator_name](sp)
+           class_object = core.AxIter.__dict__[iterator_name]
+           return AxIterWraper(class_object(sp))
        
        else:
            raise ValueError(class_name)
+        
    
     else:
         name = class_name
@@ -33,3 +39,15 @@ def Ax(sp):
 
         methodToCall = getattr(sp, 'to_%sSP' % name)
         return class_object(methodToCall())
+    
+    
+
+class AxIterWraper(object):
+    def __init__(self, ax_iter):
+        self.ax_iter = ax_iter
+        
+    def __iter__(self):
+        return self
+    
+    def next(self):
+        return Ax(self.ax_iter.next())
