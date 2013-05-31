@@ -41,6 +41,7 @@ Include("AxStorageErrors.h")
 Include("AxTaggedValue.h")
 Include("AxTypes.h")
 Include("AxUtil.h")
+Include("AAFTypes.h")
 
 """
 
@@ -99,8 +100,11 @@ for line in s.splitlines():
                         string += '.def("GetClassName",PyGetClassName<IAAF%s, Ax%s> )\n' %(name,axname)
                         
                     else:
-                        declaration_code += 'extern const char classname_%s[] = "%s";\n'  % (name,name)
-                        string += '.def("GetClassName",PyGetClassName_from_string<IAAF%s, classname_%s> )\n' %(name, name)
+                        declaration_code += 'extern const char classname_%s[] = "%s";\n'  % (name,key)
+                        string += '.def("GetClassName",PyGetClassName_from_string<IAAF%sSP, classname_%s> )\n' %(name, key)
+                elif key.count("IEnumAAF"):
+                    declaration_code += 'extern const char classname_%s[] = "%s";\n'  % (name,key)
+                    string += '.def("GetClassName",PyGetClassName_from_string<%sSP, classname_%s> )\n' %(name, key)
 
                     
             except:
