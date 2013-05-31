@@ -1,6 +1,7 @@
 
 import os
 import pyaaf
+from pyaaf import Ax
 import essence_create
 
 
@@ -70,7 +71,7 @@ def comp_create():
 
     #get master mobs
     master_mobs = {}
-    for mob in axContentStorage.GetMasterMobs():
+    for mob in Ax(axContentStorage.GetMasterMobs()):
         
         mastermob = pyaaf.AxMasterMob(mob.to_MasterMobSP())
         

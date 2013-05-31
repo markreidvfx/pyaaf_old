@@ -6,6 +6,7 @@
 // Includes ====================================================================
 #include <AxContentStorage.h>
 #include <AxIterator.h>
+#include <AxSmartPointer.h>
 
 // Using =======================================================================
 using namespace boost::python;
@@ -13,34 +14,32 @@ using namespace boost::python;
 // Declarations ================================================================
 
 
-AxMobIter PyGetAllMobs(AxContentStorage* storage)
+IEnumAAFMobsSP PyGetAllMobs(AxContentStorage& storage)
     {
         
         aafSearchCrit_t criteria;
         criteria.searchTag = kAAFByMobKind;
         criteria.tags.mobKind = kAAFAllMob;
-        AxMobIter axMobIter( storage->GetMobs( &criteria ) );
-        return axMobIter;
+        return storage.GetMobs( &criteria );
     }
     
-AxMobIter PyGetMasterMobs(AxContentStorage* storage)
+IEnumAAFMobsSP PyGetMasterMobs(AxContentStorage& storage)
     {
         
         aafSearchCrit_t criteria;
         criteria.searchTag = kAAFByMobKind;
         criteria.tags.mobKind = kAAFMasterMob;
-        AxMobIter axMobIter( storage->GetMobs( &criteria ) );
-        return axMobIter;
+        return storage.GetMobs( &criteria );
     }
     
-AxMobIter PyGetCompositionMobs(AxContentStorage* storage)
+IEnumAAFMobsSP PyGetCompositionMobs(AxContentStorage& storage)
     {
         
         aafSearchCrit_t criteria;
         criteria.searchTag = kAAFByMobKind;
         criteria.tags.mobKind = kAAFCompMob;
-        AxMobIter axMobIter( storage->GetMobs( &criteria ) );
-        return axMobIter;
+        return storage.GetMobs( &criteria );
+
     }
 
 
