@@ -1,5 +1,6 @@
 import pyaaf
 import os
+from pyaaf import Ax
 
 def chunks(l, n):
     """ Yield successive n-sized chunks from l.
@@ -209,8 +210,8 @@ def essence_create():
     
     #get header dictionary and content storage
     axHeader = pyaaf.AxHeader(axFile.GetHeader())
-    axDictionary = pyaaf.AxDictionary(axHeader.GetDictionary())
-    axContentStorage = pyaaf.AxContentStorage(axHeader.GetContentStorage())
+    axDictionary = Ax(axHeader.GetDictionary())
+    axContentStorage = Ax(axHeader.GetContentStorage())
 
     #create some master mob
     

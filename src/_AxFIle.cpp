@@ -29,12 +29,6 @@ file.SaveCopyAs(newfile);
 newfile.Close();
 }
 
-AxHeader PyGetHeader(AxFile& file)
-{
-    return AxHeader(file.getHeader());
-
-}
-
 std::wstring AxFile_tostring(AxFile& o)
 {
     std::wstringstream buffer;
@@ -124,7 +118,7 @@ void Export_pyste_src_AxFIle()
         .def("SaveCopyAs", &PySaveAs)
         .def("Close", &AxFile::Close)
         .def("GetName", &AxFile::getName, return_value_policy< copy_const_reference >())
-        .def("GetHeader", PyGetHeader)
+        .def("GetHeader", &AxFile::getHeader)
         .staticmethod("isAAFFile")
         .def("to_IAAFFileSP", &AxFile::operator IAAFFileSP)
         .def("toXml", pySaveAsXml)

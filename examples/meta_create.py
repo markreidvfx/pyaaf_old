@@ -2,6 +2,8 @@ import pyaaf
 import uuid
 import os
 
+from pyaaf import Ax
+
 
 KLVKey_AxExampleData_A = pyaaf.aafUID.fromString(uuid.UUID("4353dc46-5a56-42f0-a4d8-9516dd98335f").urn)
 KLVKey_AxExampleData_B = pyaaf.aafUID.fromString(uuid.UUID("6def0b26-d055-41f9-892b-c7528fdae103").urn)
@@ -15,8 +17,8 @@ def metaCreate():
     axFile = pyaaf.AxFile()
     axFile.OpenNewModify( fileName )
     
-    axHeader = axFile.GetHeader()
-    axDictionary = pyaaf.AxDictionary(axHeader.GetDictionary())
+    axHeader = Ax(axFile.GetHeader())
+    axDictionary = Ax(axHeader.GetDictionary())
     
     axDictionary.RegisterKLVDataKey(KLVKey_AxExampleData_A,
                                     axDictionary.LookupTypeDef( pyaaf.TypeDefUID.UInt8Array ) )

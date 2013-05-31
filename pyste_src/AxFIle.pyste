@@ -21,12 +21,6 @@ file.SaveCopyAs(newfile);
 newfile.Close();
 }
 
-AxHeader PyGetHeader(AxFile& file)
-{
-    return AxHeader(file.getHeader());
-
-}
-
 std::wstring AxFile_tostring(AxFile& o)
 {
     std::wstringstream buffer;
@@ -115,7 +109,7 @@ module_code("""
         .def("SaveCopyAs", &PySaveAs)
         .def("Close", &AxFile::Close)
         .def("GetName", &AxFile::getName, return_value_policy< copy_const_reference >())
-        .def("GetHeader", PyGetHeader)
+        .def("GetHeader", &AxFile::getHeader)
         .staticmethod("isAAFFile")
         .def("to_IAAFFileSP", &AxFile::operator IAAFFileSP)
         .def("toXml", pySaveAsXml)

@@ -11,7 +11,7 @@ if not args:
 f= pyaaf.AxFile()
 f.OpenExistingRead(args[0])
 
-header = f.GetHeader()
+header = pyaaf.Ax(f.GetHeader())
 
 print "renamePeskyOpaques", pyaaf.renamePeskyOpaques(header)
 ObjectRecIter = pyaaf.BaseObjectRecIter(header)
