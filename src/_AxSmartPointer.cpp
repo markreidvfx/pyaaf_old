@@ -46,7 +46,6 @@ extern const char classname_EssenceAccess[] = "EssenceAccess";
 extern const char classname_File[] = "File";
 extern const char classname_EssenceFormat[] = "EssenceFormat";
 extern const char classname_MetaDefinition[] = "MetaDefinition";
-extern const char classname_Object[] = "Object";
 extern const char classname_Property[] = "Property";
 extern const char classname_PropertyDef[] = "PropertyDef";
 extern const char classname_PropertyValue[] = "PropertyValue";
@@ -430,7 +429,7 @@ class_< IAAFObjectSP > ("IAAFObjectSP")
 .def("to_ScopeReferenceSP", query_interface<IAAFObject, IAAFScopeReference > )
 .def("to_SelectorSP", query_interface<IAAFObject, IAAFSelector > )
 .def("to_EdgecodeSP", query_interface<IAAFObject, IAAFEdgecode > )
-.def("GetClassName",PyGetClassName_from_string<IAAFObjectSP, classname_Object> )
+.def("GetClassName",PyGetClassName<IAAFObject, AxObject> )
 ;
 class_< IAAFParameterSP > ("IAAFParameterSP")
 .def("to_ParameterSP", query_interface_pass_through<IAAFParameterSP > )

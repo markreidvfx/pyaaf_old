@@ -95,7 +95,7 @@ for line in s.splitlines():
                         
                         
                         
-                    if "Object" in node.get_parents():
+                    if "Object" in node.get_parents() or key == 'Object':
                         axname = node.alt_name or key
                         string += '.def("GetClassName",PyGetClassName<IAAF%s, Ax%s> )\n' %(name,axname)
                     elif 'TypeDef' in node.get_parents() or key == 'TypeDef':
