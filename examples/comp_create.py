@@ -39,7 +39,7 @@ def CreateSourceClipToAppendToSequence(axDictionary, sourceMob,sequenceToAppendT
     sourceRef.sourceSlotID = spSourceSlot.GetSlotID()
     sourceRef.startTime =  spSourceSlot.GetOrigin()
     
-    axSegment = pyaaf.AxSegment(spSourceSlot.GetSegment())
+    axSegment = Ax(spSourceSlot.GetSegment())
     
     axSourceClip = pyaaf.AxSourceClip.CreateInstance(axDictionary)
     
@@ -60,9 +60,9 @@ def comp_create():
     axFile.OpenExistingModify( fileName )
     
     #get header dictionary and content storage
-    axHeader = pyaaf.AxHeader(axFile.GetHeader())
-    axDictionary = pyaaf.AxDictionary(axHeader.GetDictionary())
-    axContentStorage = pyaaf.AxContentStorage(axHeader.GetContentStorage())
+    axHeader = Ax(axFile.GetHeader())
+    axDictionary = Ax(axHeader.GetDictionary())
+    axContentStorage = Ax(axHeader.GetContentStorage())
 
     #get master mobs
     master_mobs = {}
@@ -87,11 +87,11 @@ def comp_create():
     audioSlotID = 2
     audioSlotName = "Audio Timeline" 
     
-    audioDataDef = pyaaf.AxDataDef(axDictionary.LookupDataDef(pyaaf.DataDef.Sound))
+    audioDataDef = Ax(axDictionary.LookupDataDef(pyaaf.DataDef.Sound))
     audioSequence = pyaaf.AxSequence.CreateInstance(axDictionary)
     audioSequence.Initialize(audioDataDef)
     
-    videoDataDef = pyaaf.AxDataDef(axDictionary.LookupDataDef(pyaaf.DataDef.Picture))
+    videoDataDef = Ax(axDictionary.LookupDataDef(pyaaf.DataDef.Picture))
     videoSequence = pyaaf.AxSequence.CreateInstance(axDictionary)
     videoSequence.Initialize(videoDataDef)
     
@@ -139,8 +139,7 @@ def comp_create():
         axDictionary.RegisterOperationDef( axOpDef)
     
     
-    MonoAudioDissolveDef = axDictionary.LookupOperationDef(pyaaf.OperationDef.EffectMonoAudioDissolve)
-        
+    MonoAudioDissolveDef = Ax(axDictionary.LookupOperationDef(pyaaf.OperationDef.EffectMonoAudioDissolve))
     axMonoAudioDslvOpGroup = pyaaf.AxOperationGroup.CreateInstance(axDictionary)
     
     
@@ -182,7 +181,7 @@ def comp_create():
         axDictionary.RegisterOperationDef( axOpDef )
         
     
-    axVideoDslvOpDef = pyaaf.AxOperationDef(axDictionary.LookupOperationDef(pyaaf.OperationDef.EffectVideoDissolve))
+    axVideoDslvOpDef = Ax(axDictionary.LookupOperationDef(pyaaf.OperationDef.EffectVideoDissolve))
     
     axVideoDslvOpGroup = pyaaf.AxOperationGroup.CreateInstance(axDictionary)
     
