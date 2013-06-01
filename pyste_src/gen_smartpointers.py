@@ -98,9 +98,13 @@ for line in s.splitlines():
                     if "Object" in node.get_parents():
                         axname = node.alt_name or key
                         string += '.def("GetClassName",PyGetClassName<IAAF%s, Ax%s> )\n' %(name,axname)
-                        
+                    elif 'TypeDef' in node.get_parents() or key == 'TypeDef':
+                        axname = node.alt_name or key
+                        string += '.def("GetClassName",PyGetTypeCategory<IAAF%sSP, Ax%s> )\n' %(name,axname)
+                        pass
                     else:
                         declaration_code += 'extern const char classname_%s[] = "%s";\n'  % (name,key)
+                        
                         string += '.def("GetClassName",PyGetClassName_from_string<IAAF%sSP, classname_%s> )\n' %(name, key)
                 elif key.count("IEnumAAF"):
                     declaration_code += 'extern const char classname_%s[] = "%s";\n'  % (name,key)

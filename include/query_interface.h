@@ -36,3 +36,16 @@ char const * PyGetClassName_from_string(Type spSrc)
     return name;
     
 };
+
+template <typename Type, typename AxType>
+AxString PyGetTypeCategory(Type SP)
+{
+    
+    AxType ax(SP);
+    
+    AxString s = AxTypeCatMap::getInstance().getStr( ax.GetTypeCategory() );
+    
+    s.replace(s.find(L"IAAF"), 4, L"");
+    return s;
+    
+};
