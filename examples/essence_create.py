@@ -9,8 +9,8 @@ def chunks(l, n):
         yield l[i:i+n]
         
 def AddImageEssence(masterMob, axHeader):
-    axContentStorage = pyaaf.AxContentStorage(axHeader.GetContentStorage())
-    axDictionary = pyaaf.AxDictionary(axHeader.GetDictionary())
+    axContentStorage = Ax(axHeader.GetContentStorage())
+    axDictionary = Ax(axHeader.GetDictionary())
     
     axPictureDef = pyaaf.AxDataDef(axDictionary.LookupDataDef(pyaaf.DataDef.Picture))
     
@@ -22,7 +22,7 @@ def AddImageEssence(masterMob, axHeader):
     nullLocator = pyaaf.smartpointers.IAAFLocatorSP()
     
     
-    axEssenceAccessSP = masterMob.CreateEssence(1,
+    axEssenceAccess = Ax(masterMob.CreateEssence(1,
                                                 axPictureDef,
                                                 codec,
                                                 editRate,
@@ -30,22 +30,15 @@ def AddImageEssence(masterMob, axHeader):
                                                 pyaaf.aafCompressEnable_e.kAAFCompressionEnable,
                                                 nullLocator,
                                                 pyaaf.ContainerDef.ContainerAAF
-                                                )
+                                                ))
     
-    axEssenceAccess = pyaaf.AxEssenceAccess(axEssenceAccessSP)
+    axMobSlot = list(Ax(masterMob.GetSlots()))[0]
     
-    slot = list(pyaaf.AxIter.MobSlot(masterMob.GetSlots()))[0]
-    axMobSlot = pyaaf.AxMobSlot(slot)
+    axSourceClip = Ax(axMobSlot.GetSegment())
     
-    axSourceClipSP = axMobSlot.GetSegment().to_SourceClipSP()
-    axSourceClip = pyaaf.AxSourceClip(axSourceClipSP)
-
-    mobSP = axContentStorage.LookupMob(axSourceClip.GetSourceID())
-    sourceMobSP = mobSP.to_SourceMobSP()
-    sourceMob = pyaaf.AxSourceMob(sourceMobSP)
+    sourceMob = Ax(axContentStorage.LookupMob(axSourceClip.GetSourceID()))
     
-    AxCDCIDescriptorSP = sourceMob.GetEssenceDescriptor().to_CDCIDescriptorSP()
-    cdciDesc = pyaaf.AxCDCIDescriptor(AxCDCIDescriptorSP)
+    cdciDesc = Ax(sourceMob.GetEssenceDescriptor())
     
     #loads of parameters to set...
     rect = pyaaf.aafRect_t()
@@ -120,9 +113,9 @@ def AddImageEssence(masterMob, axHeader):
                                                 
 def AddAudioEssence(masterMob, axHeader):
     
-    axContentStorage = pyaaf.AxContentStorage(axHeader.GetContentStorage())
-    axDictionary = pyaaf.AxDictionary(axHeader.GetDictionary())
-    axSoundDef = pyaaf.AxDataDef(axDictionary.LookupDataDef(pyaaf.DataDef.Sound))
+    axContentStorage = Ax(axHeader.GetContentStorage())
+    axDictionary = Ax(axHeader.GetDictionary())
+    axSoundDef = Ax(axDictionary.LookupDataDef(pyaaf.DataDef.Sound))
     
     rateHz = 44100
     editRate = pyaaf.Rate(rateHz,1)
@@ -131,7 +124,7 @@ def AddAudioEssence(masterMob, axHeader):
     #We will use ContainerAAF, hence no locator is required.
     nullLocator = pyaaf.smartpointers.IAAFLocatorSP()
     
-    axEssenceAccessSP = masterMob.CreateEssence(1,
+    axEssenceAccess = Ax(masterMob.CreateEssence(1,
                                                 axSoundDef, 
                                                 pyaaf.CodecDef.WAVE,
                                                 editRate,
@@ -139,27 +132,20 @@ def AddAudioEssence(masterMob, axHeader):
                                                 pyaaf.aafCompressEnable_e.kAAFCompressionDisable,
                                                 nullLocator,
                                                 pyaaf.ContainerDef.ContainerAAF
-                                                )
-    
-    axEssenceAccess = pyaaf.AxEssenceAccess(axEssenceAccessSP)
+                                                ))
      
-    slot = list(pyaaf.AxIter.MobSlot(masterMob.GetSlots()))[0]
-    axMobSlot = pyaaf.AxMobSlot(slot)
+    axMobSlot = list(Ax(masterMob.GetSlots()))[0]
 
     # The AxMobSlot::GetSegment() method will return a segment interface.  We know
     # that this is really a source clip, so cast to source clip.
  
-    axSourceClipSP = axMobSlot.GetSegment().to_SourceClipSP()
-    axSourceClip = pyaaf.AxSourceClip(axSourceClipSP)
+    axSourceClip = Ax(axMobSlot.GetSegment())
 
-    mobSP = axContentStorage.LookupMob(axSourceClip.GetSourceID())
-    sourceMobSP = mobSP.to_SourceMobSP()
-    sourceMob = pyaaf.AxSourceMob(sourceMobSP)
+    sourceMob = Ax(axContentStorage.LookupMob(axSourceClip.GetSourceID()))
     
     #Get the essence descriptor, and cast to the WAVEDescriptor.
     
-    WAVEDescriptorSP = sourceMob.GetEssenceDescriptor().to_WAVEDescriptorSP()
-    wavDesc = pyaaf.AxWAVEDescriptor(WAVEDescriptorSP)
+    wavDesc = Ax(sourceMob.GetEssenceDescriptor())
     
     # At this point, one must call wavDesc.SetSummary( size, pBuf ). A file
     # dump indicates this is a UInt8[36].  This is the header information
@@ -209,7 +195,7 @@ def essence_create():
     axFile.OpenNewModify( fileName )
     
     #get header dictionary and content storage
-    axHeader = pyaaf.AxHeader(axFile.GetHeader())
+    axHeader = Ax(axFile.GetHeader())
     axDictionary = Ax(axHeader.GetDictionary())
     axContentStorage = Ax(axHeader.GetContentStorage())
 
