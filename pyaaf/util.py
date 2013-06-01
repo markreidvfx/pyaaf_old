@@ -4,11 +4,16 @@ import core
 
 def Ax(sp):
     """
-    converts smartpointer(SP) object to corresponding AxObject
+    converts smartpointer(SP) object to corresponding AxObject.
+    if sp does not have the a method named GetClassName the object is returned as is
     """
     
+    if not hasattr(sp,"GetClassName"):
+        return sp
+    
     class_name = sp.GetClassName()
-
+    
+    #iterators are wrap in a AxIterWraper 
     if class_name.count("IEnumAAF"):
        iterator_name = class_name.replace('IEnumAAF', '')
        if core.AxIter.__dict__.has_key(iterator_name):
@@ -36,6 +41,10 @@ def Ax(sp):
         ax_name = 'Ax%s' % name
 
         class_object = core.__dict__[ax_name]
+        
+        #if sp is already a AxObject simple return it
+        if isinstance(sp, class_object):
+            return sp
 
         methodToCall = getattr(sp, 'to_%sSP' % name)
         return class_object(methodToCall())
