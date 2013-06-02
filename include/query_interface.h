@@ -49,3 +49,37 @@ AxString PyGetTypeCategory(Type SP)
     return s;
     
 };
+
+template <class TypeDst>
+inline bool PyAxIsA( IUnknownSP sp )
+{
+    
+    try
+    {
+        
+        HRESULT hr;
+        TypeDst* dummy = NULL;
+        IAAFSmartPointer<TypeDst> spDst;
+        
+        hr = sp->QueryInterface( AxIID( dummy ),
+                                reinterpret_cast<void**>(&spDst) );
+        
+        
+        if ( SUCCEEDED(hr) ) {
+            return true;
+        }
+        else if ( hr == E_NOINTERFACE ) {
+            return false;
+        }
+        
+        CHECK_HRESULT( hr );
+    }
+    catch( const AxExSmartPointer& ex ) {
+        std::wcout << ex.what() << L"\n";
+        return false;
+    }
+    
+	
+	// Never reached;
+	return false;
+}

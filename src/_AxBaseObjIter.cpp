@@ -10,6 +10,7 @@
 #include <AxHeader.h>
 #include <AxMetaDef.h>
 #include <AxPropertyValue.h>
+#include <query_interface.h>
 
 // Using =======================================================================
 using namespace boost::python;
@@ -97,7 +98,35 @@ boost::python::tuple PyBaseObjectRecIter::next()
     AxString text = L"";
     IUnknownSP sp = *nextPtr.get();
         
+        
+        if ( PyAxIsA<IAAFObject>(sp) )
+        {
+            
+            IAAFObjectSP obj = query_interface<IUnknown, IAAFObject>(sp);
+            
+            return boost::python::make_tuple(text, obj);
+        }
+        
+        
+        else if ( PyAxIsA<IAAFProperty>(sp) )
+        {
+            
+            IAAFPropertySP obj = query_interface<IUnknown, IAAFProperty>(sp);
+            
+            return boost::python::make_tuple(text, obj);
+
+        }
+        
+        else if ( PyAxIsA<IAAFPropertyValue>(sp) )
+        {
+            
+            IAAFPropertyValueSP obj = query_interface<IUnknown, IAAFPropertyValue>(sp);
+            
+            return boost::python::make_tuple(text, obj);
+        }
+        
     return boost::python::make_tuple(text, sp);
+    
     }
 
 }
