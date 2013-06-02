@@ -79,6 +79,7 @@ extern const char classname_RandomFile[] = "RandomFile";
 extern const char classname_EssenceMultiAccess[] = "EssenceMultiAccess";
 extern const char classname_IEnumAAFKLVDataDefs[] = "IEnumAAFKLVDataDefs";
 extern const char classname_IEnumAAFTaggedValueDefs[] = "IEnumAAFTaggedValueDefs";
+extern const char classname_IUnknown[] = "IUnknown";
 
 
 // Module ======================================================================
@@ -939,6 +940,7 @@ class_< IAAFInterpolatorSP > ("IAAFInterpolatorSP")
 ;
 class_< IUnknownSP > ("IUnknownSP")
 .def("to_IUnknownSP", query_interface_pass_through<IUnknownSP > )
+.def("GetClassName",PyGetClassName_from_string<IUnknownSP, classname_IUnknown> )
 ;
 }
 

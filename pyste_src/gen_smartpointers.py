@@ -109,6 +109,10 @@ for line in s.splitlines():
                 elif key.count("IEnumAAF"):
                     declaration_code += 'extern const char classname_%s[] = "%s";\n'  % (name,key)
                     string += '.def("GetClassName",PyGetClassName_from_string<%sSP, classname_%s> )\n' %(name, key)
+                    
+                elif key in ("IUnknown"):
+                    declaration_code += 'extern const char classname_%s[] = "%s";\n'  % (key,key)
+                    string += '.def("GetClassName",PyGetClassName_from_string<%sSP, classname_%s> )\n' %(key, key)
 
                     
             except:
