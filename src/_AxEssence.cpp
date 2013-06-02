@@ -292,5 +292,8 @@ void Export_pyste_src_AxEssence()
         .def("AddFormatSpecifier", PyAddFormatSpecifier<aafUInt32>)
         .def("AddFormatSpecifier", PyAddFormatSpecifier<aafRect_t>)
         ;
+        
+    class_<AxPCMDescriptor, bases<AxSoundDescriptor> ,  boost::noncopyable >("AxPCMDescriptor", init< IAAFPCMDescriptorSP >())
+    ;
 }
 

@@ -396,6 +396,14 @@ void Export_pyste_src_implicitly_convertible()
      implicitly_convertible<AxPulldown, IAAFSmartPointer<IAAFComponent> > ();
      implicitly_convertible<AxPulldown, IAAFSmartPointer<IAAFObject> > ();
 
+//AxPCMDescriptor
+
+     implicitly_convertible<AxPCMDescriptor, IAAFSmartPointer<IAAFPCMDescriptor> > ();
+
+     implicitly_convertible<AxPCMDescriptor, IAAFSmartPointer<IAAFSoundDescriptor> > ();
+     implicitly_convertible<AxPCMDescriptor, IAAFSmartPointer<IAAFEssenceDescriptor> > ();
+     implicitly_convertible<AxPCMDescriptor, IAAFSmartPointer<IAAFObject> > ();
+
 //AxVaryingValue
 
      implicitly_convertible<AxVaryingValue, IAAFSmartPointer<IAAFVaryingValue> > ();

@@ -43,6 +43,7 @@ AxBaseObj:
                     AxCDCIDescriptor:
                     AxRGBADescriptor:
                 AxSoundDescriptor:
+                    AxPCMDescriptor:
             AxTapeDescriptor:
             AxFilmDescriptor:
             AxPhysicalDescriptor:
