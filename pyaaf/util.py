@@ -39,14 +39,19 @@ def Ax(sp):
         for old, new in (("Definition","Def"),('EdgeCode','Edgecode')):
             name = name.replace(old,new)
         ax_name = 'Ax%s' % name
-
         class_object = core.__dict__[ax_name]
         
         #if sp is already a AxObject simple return it
         if isinstance(sp, class_object):
             return sp
-
-        methodToCall = getattr(sp, 'to_%sSP' % name)
+        methodToCall = None
+        
+        for n in (name,class_name):
+            method = 'to_%sSP' % n
+            if hasattr(sp,method):
+                methodToCall = getattr(sp, method)
+                
+                
         return class_object(methodToCall())
     
     

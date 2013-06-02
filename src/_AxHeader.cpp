@@ -73,6 +73,10 @@ void Export_pyste_src_AxHeader()
         .def("to_IAAFHeader2SP", &AxHeader::operator IAAFHeader2SP)
         .def("__str__", Header_tostring)
     ;
+    
+    class_<AxIdentification > ("AxIdentification", init <IAAFIdentificationSP>() )
+    .def("GetProductID",&AxIdentification::GetProductID)
+    ;
 
 }
 
