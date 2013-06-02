@@ -1,67 +1,68 @@
 import pyaaf
-
+from pyaaf import core
+import traceback
 from optparse import OptionParser
     
 parser = OptionParser()
+
+parser.add_option('-o','--objects',action="store_true", default=False)
+parser.add_option('-p','--properties',action="store_true", default=False)
+parser.add_option('-v','--values',action="store_true", default=False)
+parser.add_option('-r','--records',action="store_true", default=False)
+parser.add_option('--verbose',action="store_true", default=False)
+
 (options, args) = parser.parse_args()
 
 if not args:
     parser.error("not enough argements")
-
-f= pyaaf.AxFile()
-f.OpenExistingRead(args[0])
-
-header = pyaaf.Ax(f.GetHeader())
-
-print "renamePeskyOpaques", pyaaf.renamePeskyOpaques(header)
-ObjectRecIter = pyaaf.BaseObjectRecIter(header)
-
-for item in ObjectRecIter:
     
-    ax = pyaaf.PyAxObject()
-    ax.set_object(item)
     
-    level = ObjectRecIter.GetLevel()
-    
-    print " " * level,
-    
-    if ax.isAxHeader():
-        obj = ax.toAxHeader()
-        print "AxHeader",obj
-    
-    elif ax.isAxObject():
-        obj = ax.toAxObject()
-        name = obj.GetClassName()
-        print 'AxObject', name
-        
-    elif ax.isAxProperty():
-        obj = ax.toAxProperty()
-        name = obj.GetName()
-        auid = obj.GetAUID()
-        definition = obj.GetDefinition()
-        value = pyaaf.AxPropertyValue(obj.GetValue())
-        
-        print "AxProperty",name,value,definition
-    
-    elif ax.isAxPropertyValue():
-        obj = ax.toAxPropertyValue()
-        #dump = pyaaf.valueDump(obj)
-        print "AxPropertyValue",str(obj)
+with pyaaf.open(args[0]) as f:
 
-        
-    elif ax.isAxRecordIterator():
-        obj = ax.toAxRecordIterator()
-        record = pyaaf.PyRecord()
-        record.set_object(obj)
-        
-        second = record.second()
-        p = pyaaf.AxPropertyValue(second)
-        
-        print "AxRecordIterator", record.first(),str(p)
+    header = pyaaf.Ax(f.GetHeader())
+    
+    print "renamePeskyOpaques", pyaaf.renamePeskyOpaques(header)
+    ObjectRecIter = pyaaf.BaseObjectRecIter(header)
+    i = 0
+    for record_name, item in ObjectRecIter:
+        level = ObjectRecIter.GetLevel()
+        class_name = item.GetClassName()
+        obj = None
+        try:
+            obj = pyaaf.Ax(item)
+        except:
+            obj = pyaaf.AxObject(item)
+            
 
-    else:
-        print "***",item
+        title = "%07d %03d    " % (i,level)
+        title += "%s" +  "  "* level
         
-f.Close()
+        if record_name:
+            if options.records:
+                print title%"record  ",record_name
         
+        elif class_name == "Property":
+            
+            if str(obj.GetAUID()) in (str(core.PropertyDef.Header_Dictionary),
+                                      str(core.PropertyDef.Header_Version),
+                                      str(core.PropertyDef.Header_IdentificationList),
+                                      ):
+                #skip dictionary section
+                if not options.verbose:
+                    ObjectRecIter.PopStack()
+                
+            if options.properties:
+                print title%'property', obj.GetName()
+                
+        elif class_name == 'PropertyValue':
+            if options.values:
+                print title%"value   ", obj
+        
+    
+        else:
+       
+            if options.objects:    
+                print title%"object  ",class_name
+
+        i+= 1
 
