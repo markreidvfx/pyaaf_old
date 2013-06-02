@@ -1,0 +1,4 @@
+obj = Class("AxTaggedValue","AxTaggedValue.h")
+
+exclude(obj.GetValue)
+exclude(obj.SetValue)
