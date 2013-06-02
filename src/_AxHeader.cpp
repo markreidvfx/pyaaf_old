@@ -71,7 +71,7 @@ void Export_pyste_src_AxHeader()
         .def("GetDefinition", &AxObject::GetDefinition)
         .def("to_IAAFHeaderSP", &AxHeader::operator IAAFHeaderSP)
         .def("to_IAAFHeader2SP", &AxHeader::operator IAAFHeader2SP)
-        .def("__str__", Header_tostring)
+        .def("Dump", Header_tostring)
     ;
     
     class_<AxIdentification > ("AxIdentification", init <IAAFIdentificationSP>() )
