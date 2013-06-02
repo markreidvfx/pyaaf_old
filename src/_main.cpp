@@ -3,8 +3,6 @@
 
 // Exports =====================================================================
 void Export_pyste_src_implicitly_convertible();
-void Export_pyste_src_PyRecord();
-void Export_pyste_src_PyAxObject();
 void Export_pyste_src_AxUtil();
 void Export_pyste_src_AxTypes();
 void Export_pyste_src_AxTaggedValue();
@@ -49,8 +47,6 @@ void Export_pyste_src_AAFClassDefUIDs();
 BOOST_PYTHON_MODULE(core)
 {
     Export_pyste_src_implicitly_convertible();
-    Export_pyste_src_PyRecord();
-    Export_pyste_src_PyAxObject();
     Export_pyste_src_AxUtil();
     Export_pyste_src_AxTypes();
     Export_pyste_src_AxTaggedValue();
