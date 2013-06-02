@@ -14,8 +14,9 @@ void Export_pyste_src_AxObject()
 {
 
 
-    class_<AxObject ,std::auto_ptr<AxObject>, boost::noncopyable> ("AxObject", no_init)
+    class_<AxObject ,boost::noncopyable> ("AxObject", init <IAAFObjectSP>())
     .def("GetClassName",&AxObject::GetClassName)
+    .def("GetClassName",&AxObject::GetDictionary)
     .def("GetProperties",&AxObject::GetProperties)
     .def("GetDefinition",&AxObject::GetDefinition)
     ;
