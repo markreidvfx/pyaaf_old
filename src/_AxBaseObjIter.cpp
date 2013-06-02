@@ -45,7 +45,7 @@ private:
 class PyBaseObjectRecIter {
 public:
     PyBaseObjectRecIter (AxHeader);
-    std::auto_ptr<AxBaseObj> next();
+    boost::python::tuple next();
     int GetLevel();
     virtual ~PyBaseObjectRecIter();
     
@@ -67,7 +67,7 @@ PyBaseObjectRecIter::~PyBaseObjectRecIter()
 {
 }
 
-std::auto_ptr<AxBaseObj> PyBaseObjectRecIter::next()
+boost::python::tuple PyBaseObjectRecIter::next()
 {
     std::auto_ptr<AxBaseObj> nextPtr;
     bool nextExists;
@@ -79,7 +79,27 @@ std::auto_ptr<AxBaseObj> PyBaseObjectRecIter::next()
         boost::python::throw_error_already_set();
     }
     
-    return nextPtr;
+    if (dynamic_cast< AxBaseObjAny<AxRecordIterator::Pair>* >( nextPtr.get()))
+    {
+        IUnknownSP sp = *nextPtr.get();
+        std::auto_ptr< AxBaseObjAny<AxRecordIterator::Pair> > recPair(
+                                                                  dynamic_cast< AxBaseObjAny<AxRecordIterator::Pair>* >( nextPtr.release() ) );
+        
+        AxString text = recPair->get().first;
+        
+        return boost::python::make_tuple(text, recPair->get().second);
+        
+    }
+    
+    else
+    {
+    
+    AxString text = L"";
+    IUnknownSP sp = *nextPtr.get();
+        
+    return boost::python::make_tuple(text, sp);
+    }
+
 }
 
 int PyBaseObjectRecIter::GetLevel()
