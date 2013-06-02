@@ -105,6 +105,9 @@ void Export_pyste_src_AxEssence()
         .def("GetDefinition", &AxObject::GetDefinition)
         .def("to_IAAFLocatorSP", &AxLocator::operator IAAFLocatorSP)
     ;
+    
+    class_< AxNetworkLocator, bases< AxLocator >, boost::noncopyable >("AxNetworkLocator", init< IAAFNetworkLocatorSP >())
+    ;
 
     class_< AxEssenceDescriptor, boost::noncopyable >("AxEssenceDescriptor", init< IAAFEssenceDescriptorSP >())
         .def("CountLocators", &AxEssenceDescriptor::CountLocators)
