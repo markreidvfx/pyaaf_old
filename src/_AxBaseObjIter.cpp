@@ -48,6 +48,7 @@ public:
     PyBaseObjectRecIter (AxHeader);
     boost::python::tuple next();
     int GetLevel();
+    void PopStack();
     virtual ~PyBaseObjectRecIter();
     
 private:
@@ -66,6 +67,11 @@ PyBaseObjectRecIter::PyBaseObjectRecIter(AxHeader header)
 }
 PyBaseObjectRecIter::~PyBaseObjectRecIter()
 {
+}
+
+void PyBaseObjectRecIter::PopStack()
+{
+    recIter->PopStack();
 }
 
 boost::python::tuple PyBaseObjectRecIter::next()
@@ -231,6 +237,7 @@ void Export_pyste_src_AxBaseObjIter()
            .def("next", &PyBaseObjectRecIter::next)
            .def("__iter__", pass_through)
            .def("GetLevel",&PyBaseObjectRecIter::GetLevel)
+           .def("PopStack",&PyBaseObjectRecIter::PopStack)
     ;
 
     def("renamePeskyOpaques",renamePeskyOpaques);
