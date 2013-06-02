@@ -598,4 +598,22 @@ private:
     IAAFSoundDescriptorSP _spIaafSoundDescriptor;
 };
 
+//=---------------------------------------------------------------------=
+
+class AxPCMDescriptor : public AxSoundDescriptor {
+public:
+    AxPCMDescriptor(IAAFPCMDescriptorSP spIaafPCMDescriptor );
+    ~AxPCMDescriptor();
+    
+    inline operator IAAFPCMDescriptorSP ()
+    { return _spIaafPCMDescriptor; }
+    
+private:
+    AxPCMDescriptor();
+    
+    IAAFPCMDescriptorSP _spIaafPCMDescriptor;
+    
+};
+
+
 #endif

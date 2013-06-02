@@ -1175,3 +1175,10 @@ void AxSoundDescriptor::SetQuantizationBits( aafUInt32 bitsCount )
 
 //=---------------------------------------------------------------------=
 
+AxPCMDescriptor::AxPCMDescriptor( IAAFPCMDescriptorSP spIaafPCMDescriptor )
+:   AxSoundDescriptor( AxQueryInterface<IAAFPCMDescriptor, IAAFSoundDescriptor>(spIaafPCMDescriptor) ),
+_spIaafPCMDescriptor( spIaafPCMDescriptor )
+{}
+
+AxPCMDescriptor::~AxPCMDescriptor()
+{}
