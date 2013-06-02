@@ -1,6 +1,7 @@
 
 import core
 
+AX_NAME_REPLACERS = (("",""),("Definition","Def"),('EdgeCode','Edgecode'))
 
 def Ax(sp):
     """
@@ -16,45 +17,65 @@ def Ax(sp):
     #iterators are wrap in a AxIterWraper 
     if class_name.count("IEnumAAF"):
        iterator_name = class_name.replace('IEnumAAF', '')
-       if core.AxIter.__dict__.has_key(iterator_name):
-           class_object = core.AxIter.__dict__[iterator_name]
+       
+       d = core.AxIter.__dict__
+       
+       if d.has_key(iterator_name):
+           class_object = d[iterator_name]
            return AxIterWraper(class_object(sp))
            
        iterator_name = iterator_name.rstrip("s")
-       if core.AxIter.__dict__.has_key(iterator_name):
-           class_object = core.AxIter.__dict__[iterator_name]
+       if d.has_key(iterator_name):
+           class_object = d[iterator_name]
            return AxIterWraper(class_object(sp))
        
        iterator_name = class_name.replace('IEnumAAF', '').replace('ies', 'y')
-       if core.AxIter.__dict__.has_key(iterator_name):
-           class_object = core.AxIter.__dict__[iterator_name]
+       
+       if d.has_key(iterator_name):
+           class_object = d[iterator_name]
            return AxIterWraper(class_object(sp))
        
        else:
            raise ValueError(class_name)
-        
-   
     else:
-        name = class_name
-        for old, new in (("Definition","Def"),('EdgeCode','Edgecode')):
-            name = name.replace(old,new)
-        ax_name = 'Ax%s' % name
-        class_object = core.__dict__[ax_name]
+        
+        class_object = get_AxClass(sp)
+        if not class_object:
+            raise ValueError(class_name)
         
         #if sp is already a AxObject simple return it
         if isinstance(sp, class_object):
             return sp
-        methodToCall = None
         
-        for n in (name,class_name):
-            method = 'to_%sSP' % n
+        methodToCall = None
+        name = class_name
+        for old, new in AX_NAME_REPLACERS:
+            name = name.replace(old,new)
+            method = 'to_%sSP' % name
             if hasattr(sp,method):
                 methodToCall = getattr(sp, method)
                 
                 
         return class_object(methodToCall())
     
+def get_AxClass(sp):
     
+    if not hasattr(sp,"GetClassName"):
+        return None
+    class_name = sp.GetClassName() 
+    
+    d = core.__dict__
+    
+    for old, new in AX_NAME_REPLACERS:
+        class_name = class_name.replace(old,new)
+        ax_name = 'Ax%s' % class_name
+        
+        if d.has_key(ax_name):
+            return d[ax_name]
+        
+    return None
+
+
 
 class AxIterWraper(object):
     def __init__(self, ax_iter):
