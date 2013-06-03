@@ -37,7 +37,6 @@ void Export_pyste_src_AAFInterpolatorDefs();
 void Export_pyste_src_AAFFileKinds();
 void Export_pyste_src_AAFEssenceFormats();
 void Export_pyste_src_AAFDataDefs();
-void Export_pyste_src_AAFDataBuffer();
 void Export_pyste_src_AAFContainerDefs();
 void Export_pyste_src_AAFCompressionDefs();
 void Export_pyste_src_AAFCodecDefs();
@@ -81,7 +80,6 @@ BOOST_PYTHON_MODULE(core)
     Export_pyste_src_AAFFileKinds();
     Export_pyste_src_AAFEssenceFormats();
     Export_pyste_src_AAFDataDefs();
-    Export_pyste_src_AAFDataBuffer();
     Export_pyste_src_AAFContainerDefs();
     Export_pyste_src_AAFCompressionDefs();
     Export_pyste_src_AAFCodecDefs();
