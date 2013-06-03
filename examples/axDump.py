@@ -9,9 +9,17 @@ parser.add_option('-o','--objects',action="store_true", default=False)
 parser.add_option('-p','--properties',action="store_true", default=False)
 parser.add_option('-v','--values',action="store_true", default=False)
 parser.add_option('-r','--records',action="store_true", default=False)
+parser.add_option('-a','--all',action="store_true", default=False)
 parser.add_option('--verbose',action="store_true", default=False)
 
 (options, args) = parser.parse_args()
+
+
+if options.all:
+    options.objects = True
+    options.properties = True
+    options.values = True
+    options.records = True
 
 if not args:
     parser.error("not enough argements")
@@ -37,9 +45,11 @@ with pyaaf.open(args[0]) as f:
         title = "%07d %03d    " % (i,level)
         title += "%s" +  "  "* level
         
+        #print obj
+        
         if record_name:
             if options.records:
-                print title%"record  ",record_name
+                print title%"record  ",record_name,obj
         
         elif class_name == "Property":
             
