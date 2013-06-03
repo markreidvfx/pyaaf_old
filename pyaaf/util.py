@@ -102,6 +102,17 @@ def __AxWrapClass(obj):
         if not any([name.startswith(i) for i in startswiths]):
             setattr(obj,name, __AxDecorator(getattr(obj,name)))
             
+        if name.startswith('CreateInstance'):
+            setattr(obj,name, __AxDecoratorStatic(getattr(obj,name)))
+        
+def __AxDecoratorStatic(f):
+    @staticmethod
+    @wraps(f)
+    def _decorator(*args, **kwargs):
+        return Ax(f(*args, **kwargs))
+    return _decorator
+    
+            
 def __AxDecorator(f):
     @wraps(f)
     def _decorator(*args, **kwargs):
