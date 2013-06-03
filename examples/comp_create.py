@@ -1,7 +1,6 @@
 
 import os
 import pyaaf
-from pyaaf import Ax
 import essence_create
 
 
@@ -11,11 +10,11 @@ def CreateSourceClipToAppendToSequence(axDictionary, sourceMob,sequenceToAppendT
     # Search for the first slot in the source mob that matches the
     # data def of the sequenceToAppendTo.
     
-    sequenceDataDef = Ax(sequenceToAppendTo.GetDataDef())
+    sequenceDataDef = sequenceToAppendTo.GetDataDef()
     sequenceDataDefAUID = sequenceDataDef.GetAUID()    
         
     spSourceSlot = None
-    for axTimelineMobSlot in Ax(sourceMob.GetSlots()):
+    for axTimelineMobSlot in sourceMob.GetSlots():
 
         axDataDef = pyaaf.AxDataDef(axTimelineMobSlot.GetDataDef())
         
@@ -39,7 +38,7 @@ def CreateSourceClipToAppendToSequence(axDictionary, sourceMob,sequenceToAppendT
     sourceRef.sourceSlotID = spSourceSlot.GetSlotID()
     sourceRef.startTime =  spSourceSlot.GetOrigin()
     
-    axSegment = Ax(spSourceSlot.GetSegment())
+    axSegment = spSourceSlot.GetSegment()
     
     axSourceClip = pyaaf.AxSourceClip.CreateInstance(axDictionary)
     
@@ -60,13 +59,13 @@ def comp_create():
     axFile.OpenExistingModify( fileName )
     
     #get header dictionary and content storage
-    axHeader = Ax(axFile.GetHeader())
-    axDictionary = Ax(axHeader.GetDictionary())
-    axContentStorage = Ax(axHeader.GetContentStorage())
+    axHeader = axFile.GetHeader()
+    axDictionary = axHeader.GetDictionary()
+    axContentStorage = axHeader.GetContentStorage()
 
     #get master mobs
     master_mobs = {}
-    for mastermob in Ax(axContentStorage.GetMasterMobs()):
+    for mastermob in axContentStorage.GetMasterMobs():
         
         name = mastermob.GetName()
         master_mobs[name] = mastermob
@@ -87,11 +86,11 @@ def comp_create():
     audioSlotID = 2
     audioSlotName = "Audio Timeline" 
     
-    audioDataDef = Ax(axDictionary.LookupDataDef(pyaaf.DataDef.Sound))
+    audioDataDef = axDictionary.LookupDataDef(pyaaf.DataDef.Sound)
     audioSequence = pyaaf.AxSequence.CreateInstance(axDictionary)
     audioSequence.Initialize(audioDataDef)
     
-    videoDataDef = Ax(axDictionary.LookupDataDef(pyaaf.DataDef.Picture))
+    videoDataDef = axDictionary.LookupDataDef(pyaaf.DataDef.Picture)
     videoSequence = pyaaf.AxSequence.CreateInstance(axDictionary)
     videoSequence.Initialize(videoDataDef)
     
@@ -139,7 +138,7 @@ def comp_create():
         axDictionary.RegisterOperationDef( axOpDef)
     
     
-    MonoAudioDissolveDef = Ax(axDictionary.LookupOperationDef(pyaaf.OperationDef.EffectMonoAudioDissolve))
+    MonoAudioDissolveDef = axDictionary.LookupOperationDef(pyaaf.OperationDef.EffectMonoAudioDissolve)
     axMonoAudioDslvOpGroup = pyaaf.AxOperationGroup.CreateInstance(axDictionary)
     
     
@@ -181,7 +180,7 @@ def comp_create():
         axDictionary.RegisterOperationDef( axOpDef )
         
     
-    axVideoDslvOpDef = Ax(axDictionary.LookupOperationDef(pyaaf.OperationDef.EffectVideoDissolve))
+    axVideoDslvOpDef = axDictionary.LookupOperationDef(pyaaf.OperationDef.EffectVideoDissolve)
     
     axVideoDslvOpGroup = pyaaf.AxOperationGroup.CreateInstance(axDictionary)
     

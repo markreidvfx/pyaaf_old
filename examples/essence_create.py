@@ -1,6 +1,5 @@
 import pyaaf
 import os
-from pyaaf import Ax
 
 def chunks(l, n):
     """ Yield successive n-sized chunks from l.
@@ -9,8 +8,8 @@ def chunks(l, n):
         yield l[i:i+n]
         
 def AddImageEssence(masterMob, axHeader):
-    axContentStorage = Ax(axHeader.GetContentStorage())
-    axDictionary = Ax(axHeader.GetDictionary())
+    axContentStorage = axHeader.GetContentStorage()
+    axDictionary = axHeader.GetDictionary()
     
     axPictureDef = pyaaf.AxDataDef(axDictionary.LookupDataDef(pyaaf.DataDef.Picture))
     
@@ -22,7 +21,7 @@ def AddImageEssence(masterMob, axHeader):
     nullLocator = pyaaf.smartpointers.IAAFLocatorSP()
     
     
-    axEssenceAccess = Ax(masterMob.CreateEssence(1,
+    axEssenceAccess = masterMob.CreateEssence(1,
                                                 axPictureDef,
                                                 codec,
                                                 editRate,
@@ -30,15 +29,15 @@ def AddImageEssence(masterMob, axHeader):
                                                 pyaaf.aafCompressEnable_e.kAAFCompressionEnable,
                                                 nullLocator,
                                                 pyaaf.ContainerDef.ContainerAAF
-                                                ))
+                                                )
     
-    axMobSlot = list(Ax(masterMob.GetSlots()))[0]
+    axMobSlot = list(masterMob.GetSlots())[0]
     
-    axSourceClip = Ax(axMobSlot.GetSegment())
+    axSourceClip = axMobSlot.GetSegment()
     
-    sourceMob = Ax(axContentStorage.LookupMob(axSourceClip.GetSourceID()))
+    sourceMob = axContentStorage.LookupMob(axSourceClip.GetSourceID())
     
-    cdciDesc = Ax(sourceMob.GetEssenceDescriptor())
+    cdciDesc = sourceMob.GetEssenceDescriptor()
     
     #loads of parameters to set...
     rect = pyaaf.aafRect_t()
@@ -113,9 +112,9 @@ def AddImageEssence(masterMob, axHeader):
                                                 
 def AddAudioEssence(masterMob, axHeader):
     
-    axContentStorage = Ax(axHeader.GetContentStorage())
-    axDictionary = Ax(axHeader.GetDictionary())
-    axSoundDef = Ax(axDictionary.LookupDataDef(pyaaf.DataDef.Sound))
+    axContentStorage = axHeader.GetContentStorage()
+    axDictionary = axHeader.GetDictionary()
+    axSoundDef = axDictionary.LookupDataDef(pyaaf.DataDef.Sound)
     
     rateHz = 44100
     editRate = pyaaf.Rate(rateHz,1)
@@ -124,7 +123,7 @@ def AddAudioEssence(masterMob, axHeader):
     #We will use ContainerAAF, hence no locator is required.
     nullLocator = pyaaf.smartpointers.IAAFLocatorSP()
     
-    axEssenceAccess = Ax(masterMob.CreateEssence(1,
+    axEssenceAccess = masterMob.CreateEssence(1,
                                                 axSoundDef, 
                                                 pyaaf.CodecDef.WAVE,
                                                 editRate,
@@ -132,20 +131,20 @@ def AddAudioEssence(masterMob, axHeader):
                                                 pyaaf.aafCompressEnable_e.kAAFCompressionDisable,
                                                 nullLocator,
                                                 pyaaf.ContainerDef.ContainerAAF
-                                                ))
+                                                )
      
-    axMobSlot = list(Ax(masterMob.GetSlots()))[0]
+    axMobSlot = list(masterMob.GetSlots())[0]
 
     # The AxMobSlot::GetSegment() method will return a segment interface.  We know
     # that this is really a source clip, so cast to source clip.
  
-    axSourceClip = Ax(axMobSlot.GetSegment())
+    axSourceClip = axMobSlot.GetSegment()
 
-    sourceMob = Ax(axContentStorage.LookupMob(axSourceClip.GetSourceID()))
+    sourceMob = axContentStorage.LookupMob(axSourceClip.GetSourceID())
     
     #Get the essence descriptor, and cast to the WAVEDescriptor.
     
-    wavDesc = Ax(sourceMob.GetEssenceDescriptor())
+    wavDesc = sourceMob.GetEssenceDescriptor()
     
     # At this point, one must call wavDesc.SetSummary( size, pBuf ). A file
     # dump indicates this is a UInt8[36].  This is the header information
@@ -195,9 +194,9 @@ def essence_create():
     axFile.OpenNewModify( fileName )
     
     #get header dictionary and content storage
-    axHeader = Ax(axFile.GetHeader())
-    axDictionary = Ax(axHeader.GetDictionary())
-    axContentStorage = Ax(axHeader.GetContentStorage())
+    axHeader = axFile.GetHeader()
+    axDictionary = axHeader.GetDictionary()
+    axContentStorage = axHeader.GetContentStorage()
 
     #create some master mob
     
