@@ -124,7 +124,7 @@ def generate_rst(root):
     
     string = """
 
-.. automodule:: pyaaf.core
+.. automodule:: pyaaf
 
 """
 

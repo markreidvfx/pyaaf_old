@@ -1,6 +1,6 @@
 
 
-.. automodule:: pyaaf.core
+.. automodule:: pyaaf
 
 
             
