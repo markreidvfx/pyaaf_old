@@ -27,9 +27,9 @@ if not args:
     
 with pyaaf.open(args[0]) as f:
 
-    header = pyaaf.Ax(f.GetHeader())
+    header = f.GetHeader()
     
-    print "renamePeskyOpaques", pyaaf.renamePeskyOpaques(header)
+    #print "renamePeskyOpaques", pyaaf.renamePeskyOpaques(header)
     ObjectRecIter = pyaaf.BaseObjectRecIter(header)
     i = 0
     for record_name, item in ObjectRecIter:

@@ -89,15 +89,11 @@ class AxIterWraper(object):
     
     
 def __AxWrap(d):
-    
     skip = ("AxInit")
     for name, obj in d.items():
-        
         if name in skip:
             pass
-        
         elif name.startswith("Ax"):
-            #print name
             __AxWrapClass(obj)
             
 def __AxWrapClass(obj):
@@ -106,10 +102,8 @@ def __AxWrapClass(obj):
         if not any([name.startswith(i) for i in startswiths]):
             setattr(obj,name, __AxDecorator(getattr(obj,name)))
             
-    
 def __AxDecorator(f):
     @wraps(f)
     def _decorator(*args, **kwargs):
-        #print f.__name__
         return Ax(f(*args, **kwargs))
     return _decorator
