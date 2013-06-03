@@ -1,5 +1,7 @@
 from functools import wraps
 import core
+import pickle
+import os
 
 AX_NAME_REPLACERS = (("",""),("Definition","Def"),('EdgeCode','Edgecode'))
 
@@ -87,25 +89,41 @@ class AxIterWraper(object):
     def next(self):
         return Ax(self.ax_iter.next())
     
+def __get_docs():
+    
+    doc_file = os.path.join(os.path.dirname(os.path.abspath(__file__)),'docs.pkl')
+    
+    if os.path.exists(doc_file):
+        f = open(doc_file)
+        docs = pickle.load(f)
+        f.close()
+        return docs
+            
+    
     
 def __AxWrap(d):
     skip = ("AxInit")
+    docs = __get_docs()
     for name, obj in d.items():
         if name in skip:
             pass
         elif name.startswith("Ax"):
-            __AxWrapClass(obj)
             
-def __AxWrapClass(obj):
+            
+            __AxWrapClass(obj,docs.get(name) or {})
+            
+
+def __AxWrapClass(obj,docs=None):
     startswiths = ('_','to','Initialize','CreateInstance')
     for name in dir(obj):
         if not any([name.startswith(i) for i in startswiths]):
-            setattr(obj,name, __AxDecorator(getattr(obj,name)))
+            
+            setattr(obj,name, __AxDecorator(getattr(obj,name), docs.get(name)))
             
         if name.startswith('CreateInstance'):
             setattr(obj,name, __AxDecoratorStatic(getattr(obj,name)))
         
-def __AxDecoratorStatic(f):
+def __AxDecoratorStatic(f,docs =None):
     @staticmethod
     @wraps(f)
     def _decorator(*args, **kwargs):
@@ -113,8 +131,12 @@ def __AxDecoratorStatic(f):
     return _decorator
     
             
-def __AxDecorator(f):
+def __AxDecorator(f,docs=None):
     @wraps(f)
     def _decorator(*args, **kwargs):
         return Ax(f(*args, **kwargs))
+    
+    if docs:
+        _decorator.__doc__ += '\n\n' + docs
+        
     return _decorator
