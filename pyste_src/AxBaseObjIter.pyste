@@ -7,6 +7,7 @@ Include("AxHeader.h")
 Include("AxDictionary.h")
 Include("AAFTypeDefUIDs.h")
 Include("AxMetaDef.h")
+Include("AxProperty.h")
 Include("AxPropertyValue.h")
 Include("query_interface.h")
 
@@ -80,14 +81,51 @@ boost::python::tuple PyBaseObjectRecIter::next()
         boost::python::throw_error_already_set();
     }
     
-    if (dynamic_cast< AxBaseObjAny<AxRecordIterator::Pair>* >( nextPtr.get()))
+    if (dynamic_cast<AxObject*>( nextPtr.get()))
+    {
+        std::auto_ptr<AxObject> obj(
+                               dynamic_cast<AxObject*>( nextPtr.release() ) );
+        
+        IAAFObjectSP sp = *obj.get();
+        AxString text = L"";
+        
+        return boost::python::make_tuple(text,sp);
+        
+    }
+
+    
+    else if ( dynamic_cast<AxProperty*>( nextPtr.get() ) ) {
+        
+        std::auto_ptr<AxProperty> prop( 
+                 dynamic_cast<AxProperty*>( nextPtr.release() ) );
+        AxString text = L"";
+        IAAFPropertySP sp = *prop.get();
+        
+        return boost::python::make_tuple(text,sp);
+        
+    }
+    
+    
+    else if (dynamic_cast<AxPropertyValue*>(nextPtr.get() ))
+    {
+       
+        std::auto_ptr<AxPropertyValue> propVal(
+                                          dynamic_cast<AxPropertyValue*>( nextPtr.release() ) );
+        
+        AxString text = L"";
+        IAAFPropertyValueSP obj = *propVal.get();
+        
+        return boost::python::make_tuple(text,obj);
+        
+        
+    }
+    else if (dynamic_cast< AxBaseObjAny<AxRecordIterator::Pair>* >( nextPtr.get()))
     {
         IUnknownSP sp = *nextPtr.get();
         std::auto_ptr< AxBaseObjAny<AxRecordIterator::Pair> > recPair(
-                                                                  dynamic_cast< AxBaseObjAny<AxRecordIterator::Pair>* >( nextPtr.release() ) );
+                                                                      dynamic_cast< AxBaseObjAny<AxRecordIterator::Pair>* >( nextPtr.release() ) );
         
         AxString text = recPair->get().first;
-        
         return boost::python::make_tuple(text, recPair->get().second);
         
     }
@@ -95,37 +133,10 @@ boost::python::tuple PyBaseObjectRecIter::next()
     else
     {
     
-    AxString text = L"";
-    IUnknownSP sp = *nextPtr.get();
+        AxString text = L"";
+        IUnknownSP sp = *nextPtr.get();
         
-        
-        if ( PyAxIsA<IAAFObject>(sp) )
-        {
-            
-            IAAFObjectSP obj = query_interface<IUnknown, IAAFObject>(sp);
-            
-            return boost::python::make_tuple(text, obj);
-        }
-        
-        
-        else if ( PyAxIsA<IAAFProperty>(sp) )
-        {
-            
-            IAAFPropertySP obj = query_interface<IUnknown, IAAFProperty>(sp);
-            
-            return boost::python::make_tuple(text, obj);
-
-        }
-        
-        else if ( PyAxIsA<IAAFPropertyValue>(sp) )
-        {
-            
-            IAAFPropertyValueSP obj = query_interface<IUnknown, IAAFPropertyValue>(sp);
-            
-            return boost::python::make_tuple(text, obj);
-        }
-        
-    return boost::python::make_tuple(text, sp);
+        return boost::python::make_tuple(text, sp);
     
     }
 

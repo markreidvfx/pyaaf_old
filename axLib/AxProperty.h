@@ -54,6 +54,9 @@ public:
 	IAAFPropertyDefSP GetDefinition();
 
 	bool isA( const aafUID_t& propertyTypeUID ) const;
+    
+    inline operator IAAFPropertySP ()
+    { return _spIaafProperty; }
 
 private:
 	AxProperty& operator=( const AxProperty& );
