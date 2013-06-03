@@ -24,5 +24,9 @@ def Initialize():
     
 _AxInit = Initialize()
 
+from util import __AxWrap
+
+__AxWrap(globals())
+
 from open import open
 from util import Ax
