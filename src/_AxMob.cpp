@@ -52,14 +52,14 @@ void Export_pyste_src_AxMob()
         .def("SearchSource", &AxSearchSource::SearchSource)
         .def("to_IAAFMasterMobSP", &AxMasterMob::operator IAAFMasterMobSP)
         .def("to_IAAFMasterMob2SP", &AxMasterMob::operator IAAFMasterMob2SP)
-        .def("CreateInstance",create_instance<IAAFMasterMob,AxMasterMob>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFMasterMob, IAAFMasterMobSP, AxMasterMob> )
         .staticmethod("CreateInstance")
     ;
 
     class_< AxMasterMobEx, bases< AxMasterMob > , boost::noncopyable >("AxMasterMobEx", init< IAAFMasterMobExSP >())
         .def("ExtendEssence", &AxMasterMobEx::ExtendEssence)
         .def("to_IAAFMasterMobExSP", &AxMasterMobEx::operator IAAFMasterMobExSP)
-        .def("CreateInstance",create_instance<IAAFMasterMobEx,AxMasterMobEx>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFMasterMobEx, IAAFMasterMobExSP, AxMasterMobEx> )
         .staticmethod("CreateInstance")
     ;
 
@@ -68,7 +68,7 @@ void Export_pyste_src_AxMob()
         .def("Initialize", &AxCompositionMob::Initialize)
         .def("to_IAAFCompositionMobSP", &AxCompositionMob::operator IAAFCompositionMobSP)
         .def("to_IAAFCompositionMob2SP", &AxCompositionMob::operator IAAFCompositionMob2SP)
-        .def("CreateInstance",create_instance<IAAFCompositionMob,AxCompositionMob>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFCompositionMob,IAAFCompositionMobSP, AxCompositionMob> )
         .staticmethod("CreateInstance")
     ;
 
@@ -79,7 +79,7 @@ void Export_pyste_src_AxMob()
         .def("AddNilReference", &AxSourceMob::AddNilReference)
         .def("SearchSource", &AxSearchSource::SearchSource)
         .def("to_IAAFSourceMobSP", &AxSourceMob::operator IAAFSourceMobSP)
-        .def("CreateInstance",create_instance<IAAFSourceMob,AxSourceMob>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFSourceMob,IAAFSourceMobSP, AxSourceMob> )
         .staticmethod("CreateInstance")
     ;
 

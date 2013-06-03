@@ -49,13 +49,13 @@ module_code("""
         .def("GetDefinition", &AxObject::GetDefinition)
         .def("to_IAAFComponentSP", &AxComponent::operator IAAFComponentSP)
         .def("to_IAAFComponent2SP", &AxComponent::operator IAAFComponent2SP)
-        .def("CreateInstance",create_instance<IAAFComponent, AxComponent>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFComponent,IAAFComponentSP, AxComponent> )
         .staticmethod("CreateInstance")
     ;
 
     class_< AxSegment, bases< AxComponent > , boost::noncopyable >("AxSegment", init< IAAFSegmentSP >())
         .def("to_IAAFSegmentSP", &AxSegment::operator IAAFSegmentSP)
-        .def("CreateInstance",create_instance<IAAFSegment,AxSegment>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFSegment,IAAFSegmentSP, AxSegment> )
         .staticmethod("CreateInstance")
     ;
 
@@ -66,7 +66,7 @@ module_code("""
         .def("GetOperationGroup", &AxTransition::GetOperationGroup)
         .def("SetOperationGroup", &AxTransition::SetOperationGroup)
         .def("to_IAAFTransitionSP", &AxTransition::operator IAAFTransitionSP)
-        .def("CreateInstance",create_instance<IAAFTransition, AxTransition>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFTransition,IAAFTransitionSP, AxTransition> )
         .staticmethod("CreateInstance")
     ;
 
@@ -79,7 +79,7 @@ module_code("""
         .def("InsertComponentAt", &AxSequence::InsertComponentAt)
         .def("RemoveComponentAt", &AxSequence::RemoveComponentAt)
         .def("CountComponents", &AxSequence::CountComponents)
-        .def("CreateInstance",create_instance<IAAFSequence, AxSequence>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFSequence,IAAFSequenceSP, AxSequence> )
         .staticmethod("CreateInstance")
     ;
 
@@ -87,13 +87,13 @@ module_code("""
         .def("Initialize", &AxTimecode::Initialize)
         .def("GetTimecode", &AxTimecode::GetTimecode)
         .def("SetTimecode", &AxTimecode::SetTimecode)
-        .def("CreateInstance",create_instance<IAAFTimecode, AxTimecode>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFTimecode,IAAFTimecodeSP, AxTimecode> )
         .staticmethod("CreateInstance")
     ;
 
     class_< AxFiller, bases< AxSegment > , boost::noncopyable >("AxFiller", init< IAAFFillerSP >())
         .def("Initialize", &AxFiller::Initialize)
-        .def("CreateInstance",create_instance<IAAFFiller, AxFiller>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFFiller,IAAFFillerSP,  AxFiller> )
         .staticmethod("CreateInstance")
     ;
 
@@ -107,7 +107,7 @@ module_code("""
         .def("SetPulldownDirection", &AxPulldown::SetPulldownDirection)
         .def("SetPhaseFrame", &AxPulldown::SetPhaseFrame)
         .def("to_IAAFPulldownSP", &AxPulldown::operator IAAFPulldownSP)
-        .def("CreateInstance",create_instance<IAAFPulldown, AxPulldown>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFPulldown, IAAFPulldownSP, AxPulldown> )
         .staticmethod("CreateInstance")
     ;
 
@@ -117,7 +117,7 @@ module_code("""
         .def("GetSourceMobSlotID", &AxSourceReference::GetSourceMobSlotID)
         .def("SetSourceMobSlotID", &AxSourceReference::SetSourceMobSlotID)
         .def("to_IAAFSourceReferenceSP", &AxSourceReference::operator IAAFSourceReferenceSP)
-        .def("CreateInstance",create_instance<IAAFSourceReference, AxSourceReference>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFSourceReference,IAAFSourceReferenceSP, AxSourceReference> )
         .staticmethod("CreateInstance")
     ;
 
@@ -127,7 +127,7 @@ module_code("""
         .def("GetSourceReference", &AxSourceClip::GetSourceReference)
         .def("ResolveRef", &AxSourceClip::ResolveRef)
         .def("to_IAAFSourceClipSP", &AxSourceClip::operator IAAFSourceClipSP)
-        .def("CreateInstance",create_instance<IAAFSourceClip, AxSourceClip>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFSourceClip, IAAFSourceClipSP, AxSourceClip> )
         .staticmethod("CreateInstance")
     ;
 
@@ -152,7 +152,7 @@ module_code("""
         .def("GetParameters", &AxOperationGroup::GetParameters)
         .def("LookupParameter", &AxOperationGroup::LookupParameter)
         .def("to_IAAFOperationGroupSP", &AxOperationGroup::operator IAAFOperationGroupSP)
-        .def("CreateInstance",create_instance<IAAFOperationGroup, AxOperationGroup>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFOperationGroup, IAAFOperationGroupSP, AxOperationGroup> )
         .staticmethod("CreateInstance")
     ;
 
@@ -165,7 +165,7 @@ module_code("""
         .def("GetSegmentAt", &AxNestedScope::GetSegmentAt)
         .def("GetSegments", &AxNestedScope::GetSegments)
         .def("to_IAAFNestedScopeSP", &AxNestedScope::operator IAAFNestedScopeSP)
-        .def("CreateInstance",create_instance<IAAFNestedScope, AxNestedScope>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFNestedScope, IAAFNestedScopeSP, AxNestedScope> )
         .staticmethod("CreateInstance")
     ;
 
@@ -174,7 +174,7 @@ module_code("""
         .def("GetRelativeScope", &AxScopeReference::GetRelativeScope)
         .def("GetRelativeSlot", &AxScopeReference::GetRelativeSlot)
         .def("to_IAAFScopeReferenceSP", &AxScopeReference::operator IAAFScopeReferenceSP)
-        .def("CreateInstance",create_instance<IAAFScopeReference, AxScopeReference>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFScopeReference, IAAFScopeReferenceSP, AxScopeReference> )
         .staticmethod("CreateInstance")
     ;
 
@@ -183,7 +183,7 @@ module_code("""
         .def("CountChoices", &AxEssenceGroup::CountChoices)
         .def("GetChoiceAt", &AxEssenceGroup::GetChoiceAt)
         .def("to_IAAFEssenceGroupSP", &AxEssenceGroup::operator IAAFEssenceGroupSP)
-        .def("CreateInstance",create_instance<IAAFEssenceGroup, AxEssenceGroup>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFEssenceGroup, IAAFEssenceGroupSP, AxEssenceGroup> )
         .staticmethod("CreateInstance")
     ;
 
@@ -191,7 +191,7 @@ module_code("""
         .def("GetSelectedSegment", &AxSelector::GetSelectedSegment)
         .def("EnumAlternateSegments", &AxSelector::EnumAlternateSegments)
         .def("to_IAAFSelectorSP", &AxSelector::operator IAAFSelectorSP)
-        .def("CreateInstance",create_instance<IAAFSelector, AxSelector>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFSelector, IAAFSelectorSP, AxSelector> )
         .staticmethod("CreateInstance")
     ;
 
@@ -199,7 +199,7 @@ module_code("""
         .def("Initialize", &AxEdgecode::Initialize)
         .def("GetEdgecode", &AxEdgecode::GetEdgecode)
         .def("to_IAAFEdgecodeSP", &AxEdgecode::operator IAAFEdgecodeSP)
-        .def("CreateInstance",create_instance<IAAFEdgecode, AxEdgecode>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFEdgecode, IAAFEdgecodeSP, AxEdgecode> )
         .staticmethod("CreateInstance")
     ;
 
@@ -208,21 +208,21 @@ module_code("""
         .def("SetPosition", &AxEvent::SetPosition)
         .def("SetComment", &AxEvent::SetComment)
         .def("GetComment", &AxEvent::GetComment)
-        .def("CreateInstance",create_instance<IAAFEvent, AxEvent>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFEvent,IAAFEventSP, AxEvent> )
         .staticmethod("CreateInstance")
     ;
 
     class_< AxCommentMarker, bases< AxEvent > , boost::noncopyable >("AxCommentMarker", init< IAAFCommentMarkerSP >())
         .def("GetAnnotation", &AxCommentMarker::GetAnnotation)
         .def("SetAnnotation", &AxCommentMarker::SetAnnotation)
-        .def("CreateInstance",create_instance<IAAFCommentMarker, AxCommentMarker>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFCommentMarker,IAAFCommentMarkerSP, AxCommentMarker> )
         .staticmethod("CreateInstance")
     ;
 
     class_< AxGPITrigger, bases< AxEvent > , boost::noncopyable >("AxGPITrigger", init< IAAFGPITriggerSP >())
         .def("GetActiveState", &AxGPITrigger::GetActiveState)
         .def("SetActiveState", &AxGPITrigger::SetActiveState)
-        .def("CreateInstance",create_instance<IAAFGPITrigger, AxGPITrigger>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFGPITrigger, IAAFGPITriggerSP, AxGPITrigger> )
         .staticmethod("CreateInstance")
     ;
 
@@ -241,13 +241,13 @@ module_code("""
         .def("SetSourceType", &AxTimecodeStream::SetSourceType)
         .def("SetSource", &AxTimecodeStream::SetSource)
         .def("to_IAAFTimecodeStreamSP", &AxTimecodeStream::operator IAAFTimecodeStreamSP)
-        .def("CreateInstance",create_instance<IAAFTimecodeStream, AxTimecodeStream>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFTimecodeStream,IAAFTimecodeStreamSP, AxTimecodeStream> )
         .staticmethod("CreateInstance")
     ;
 
     class_< AxTimecodeStream12M, bases< AxTimecodeStream > , boost::noncopyable >("AxTimecodeStream12M", init< IAAFTimecodeStream12MSP >())
         .def("to_IAAFTimecodeStream12MSP", &AxTimecodeStream12M::operator IAAFTimecodeStream12MSP)
-        .def("CreateInstance",create_instance<IAAFTimecodeStream12M, AxTimecodeStream12M>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFTimecodeStream12M,IAAFTimecodeStream12MSP, AxTimecodeStream12M> )
         .staticmethod("CreateInstance")
     ;
 
@@ -258,7 +258,7 @@ module_code("""
         .def("SetDescribedSlotIDs", &AxDescriptiveMarker::SetDescribedSlotIDs)
         .def("SetDescriptiveFramework", &AxDescriptiveMarker::SetDescriptiveFramework)
         .def("to_IAAFDescriptiveMarkerSP", &AxDescriptiveMarker::operator IAAFDescriptiveMarkerSP)
-        .def("CreateInstance",create_instance<IAAFDescriptiveMarker, AxDescriptiveMarker>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFDescriptiveMarker,IAAFDescriptiveMarkerSP, AxDescriptiveMarker> )
         .staticmethod("CreateInstance")
     ;
 """)

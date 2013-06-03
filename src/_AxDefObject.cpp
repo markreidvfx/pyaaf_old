@@ -23,21 +23,21 @@ void Export_pyste_src_AxDefObject()
         .def("GetProperties", &AxObject::GetProperties)
         .def("GetDefinition", &AxObject::GetDefinition)
         .def("to_IAAFDefObjectSP", &AxDefObject::operator IAAFDefObjectSP)
-        .def("CreateInstance",create_instance<IAAFDefObject, AxDefObject>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFDefObject,IAAFDefObjectSP, AxDefObject> )
         .staticmethod("CreateInstance")
     ;
 
     class_< AxContainerDef, bases< AxDefObject > , boost::noncopyable >("AxContainerDef", init< IAAFContainerDefSP >())
         .def("Initialize", &AxContainerDef::Initialize)
         .def("to_IAAFContainerDefSP", &AxContainerDef::operator IAAFContainerDefSP)
-        .def("CreateInstance",create_instance<IAAFContainerDef, AxContainerDef>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFContainerDef, IAAFContainerDefSP, AxContainerDef> )
         .staticmethod("CreateInstance")
     ;
 
     class_< AxInterpolationDef, bases< AxDefObject > , boost::noncopyable >("AxInterpolationDef", init< IAAFInterpolationDefSP >())
         .def("Initialize", &AxInterpolationDef::Initialize)
         .def("to_IAAFInterpolationDefSP", &AxInterpolationDef::operator IAAFInterpolationDefSP)
-        .def("CreateInstance",create_instance<IAAFInterpolationDef, AxInterpolationDef>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFInterpolationDef, IAAFInterpolationDefSP, AxInterpolationDef> )
         .staticmethod("CreateInstance")
     ;
 
@@ -48,7 +48,7 @@ void Export_pyste_src_AxDefObject()
         .def("GetDisplayUnits", &AxParameterDef::GetDisplayUnits)
         .def("GetDisplayUnitsBufLen", &AxParameterDef::GetDisplayUnitsBufLen)
         .def("to_IAAFParameterDefSP", &AxParameterDef::operator IAAFParameterDefSP)
-        .def("CreateInstance",create_instance<IAAFParameterDef, AxParameterDef>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFParameterDef,IAAFParameterDefSP, AxParameterDef> )
         .staticmethod("CreateInstance")
     ;
 
@@ -63,7 +63,7 @@ void Export_pyste_src_AxDefObject()
         .def("SetSupportsAuthentication", &AxPluginDef::SetSupportsAuthentication)
         .def("SetManufacturerInfo", &AxPluginDef::SetManufacturerInfo)
         .def("to_IAAFPluginDefSP", &AxPluginDef::operator IAAFPluginDefSP)
-        .def("CreateInstance",create_instance<IAAFPluginDef, AxPluginDef>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFPluginDef,IAAFPluginDefSP, AxPluginDef> )
         .staticmethod("CreateInstance")
     ;
 
@@ -77,7 +77,7 @@ void Export_pyste_src_AxDefObject()
         .def("AreThereFlavours", &AxCodecDef::AreThereFlavours)
         .def("EnumCodecFlavours", &AxCodecDef::EnumCodecFlavours)
         .def("to_IAAFCodecDefSP", &AxCodecDef::operator IAAFCodecDefSP)
-        .def("CreateInstance",create_instance<IAAFCodecDef, AxCodecDef>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFCodecDef, IAAFCodecDefSP, AxCodecDef> )
         .staticmethod("CreateInstance")
     ;
 
@@ -99,7 +99,7 @@ void Export_pyste_src_AxDefObject()
         .def("to_IAAFDataDefSP", &AxDataDef::operator IAAFDataDefSP)
         .def("to_IAAFDataDef2SP", &AxDataDef::operator IAAFDataDef2SP)
         .def("to_IAAFDataDef3SP", &AxDataDef::operator IAAFDataDef3SP)
-        .def("CreateInstance",create_instance<IAAFDataDef, AxDataDef>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFDataDef,IAAFDataDefSP, AxDataDef> )
         .staticmethod("CreateInstance")
     ;
 
@@ -116,7 +116,7 @@ void Export_pyste_src_AxDefObject()
         .def("GetNumberInputs", &AxOperationDef::GetNumberInputs)
         .def("GetBypass", &AxOperationDef::GetBypass)
         .def("to_IAAFOperationDefSP", &AxOperationDef::operator IAAFOperationDefSP)
-        .def("CreateInstance",create_instance<IAAFOperationDef, AxOperationDef>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFOperationDef, IAAFOperationDefSP, AxOperationDef> )
         .staticmethod("CreateInstance")
     ;
 
@@ -129,7 +129,7 @@ void Export_pyste_src_AxDefObject()
         .def("CountParentProperties", &AxKLVDataDef::CountParentProperties)
         .def("GetKLVDataType", &AxKLVDataDef::GetKLVDataType)
         .def("to_IAAFKLVDataDefinitionSP", &AxKLVDataDef::operator IAAFKLVDataDefinitionSP)
-        .def("CreateInstance",create_instance<IAAFKLVDataDefinition, AxKLVDataDef>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFKLVDataDefinition,IAAFKLVDataDefinitionSP, AxKLVDataDef> )
         .staticmethod("CreateInstance")
     ;
 
@@ -140,7 +140,7 @@ void Export_pyste_src_AxDefObject()
         .def("GetParentProperties", &AxTaggedValueDef::GetParentProperties)
         .def("CountParentProperties", &AxTaggedValueDef::CountParentProperties)
         .def("to_IAAFTaggedValueDefinitionSP", &AxTaggedValueDef::operator IAAFTaggedValueDefinitionSP)
-        .def("CreateInstance",create_instance<IAAFTaggedValueDefinition, AxTaggedValueDef>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFTaggedValueDefinition, IAAFTaggedValueDefinitionSP, AxTaggedValueDef> )
         .staticmethod("CreateInstance")
     ;
 }

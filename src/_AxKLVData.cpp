@@ -39,7 +39,7 @@ void Export_pyste_src_AxKLVData()
         .def("GetProperties", &AxObject::GetProperties)
         .def("GetDefinition", &AxObject::GetDefinition)
         .def("to_IAAFKLVDataSP", &AxKLVData::operator IAAFKLVDataSP)
-        .def("CreateInstance",create_instance<IAAFKLVData, AxKLVData>, return_value_policy<manage_new_object>() )
+        .def("CreateInstance",create_instance<IAAFKLVData,IAAFKLVDataSP, AxKLVData>)
         .staticmethod("CreateInstance")
     ;
 }

@@ -3,10 +3,10 @@
 #include <AxDefObject.h>
 
 
-template <class Type, class AxType>
+template <typename Type, typename TypeSP, typename AxType>
 
-AxType* create_instance(AxDictionary& dict)
+TypeSP create_instance(AxDictionary& dict)
 {
-    return new AxType(AxCreateInstance<Type>(dict));
+    return AxCreateInstance<Type>(dict);
     
 };
