@@ -31,9 +31,15 @@ def run_cmd(cmd):
         
         
     return cmd,stdout,stderr
-    
 
-def run_gen():
+def find_aaf_header():
+    
+    for d in aaf_include_dirs:
+        aaf_header = os.path.join(d,'AAF.h')
+        if os.path.exists(aaf_header):
+            return aaf_header
+
+def run_gen(docs=False):
 
     working_dir = 'pyste_src'
 
@@ -47,6 +53,15 @@ def run_gen():
     cmd = ['python','gen_implicitly_convertible.py']
     print subprocess.list2cmdline(cmd)
     subprocess.check_call(cmd,cwd=working_dir)
+    
+    aaf_header_path = find_aaf_header()
+    
+    if aaf_header_path and docs:
+        cmd = ['python','docs/parse_aaf_header.py',aaf_header_path,'pyaaf/docs.pkl']
+        print subprocess.list2cmdline(cmd)
+        subprocess.check_call(cmd)
+    else:
+        print "skipping docstring generation"
   
 def run_pyste(pyste_files=None):
     
@@ -93,9 +108,11 @@ if __name__ == "__main__":
     from optparse import OptionParser
     
     parser = OptionParser()
+    parser.add_option('-d','--docstrings',action="store_true", default=False,
+                      help="parse AAF.h and gerate docstrings")
     (options, args) = parser.parse_args()
     
-    run_gen()    
+    run_gen(options.docstrings)    
     run_pyste(args)
 
 
