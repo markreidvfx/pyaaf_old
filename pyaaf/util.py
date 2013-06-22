@@ -38,7 +38,7 @@ def Ax(sp):
            return AxIterWraper(class_object(sp))
        
        else:
-           raise ValueError(class_name)
+           raise ValueError("unknown Ax iterator for %s" % class_name)
     else:
         
         class_object = get_AxClass(sp)
