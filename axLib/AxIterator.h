@@ -146,6 +146,9 @@ typedef AxIterator< IAAFSmartPointer2<IAAFKLVDataDefinition>,       IEnumAAFKLVD
 typedef AxIterator< IAAFSmartPointer2<IAAFTaggedValueDefinition>,   IEnumAAFTaggedValueDefs,    AddrOfSmartPointer2<IAAFTaggedValueDefinition> >
         AxTaggedValueDefsIter;
 
+typedef AxIterator< IAAFSmartPointer2<IAAFTaggedValue>,             IEnumAAFTaggedValues,       AddrOfSmartPointer2<IAAFTaggedValue> >
+        AxTaggedValuesIter;
+
 typedef AxIterator< aafUID_t,                                       IEnumAAFCodecFlavours,      AddrOfAafUID >
         AxCodecFlavoursIter;
 

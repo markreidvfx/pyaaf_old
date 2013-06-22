@@ -268,6 +268,7 @@ template class AxIterator< IAAFSmartPointer2<IAAFInterpolationDef>,         IEnu
 template class AxIterator< IAAFSmartPointer2<IAAFCodecDef>,                 IEnumAAFCodecDefs,          AddrOfSmartPointer2<IAAFCodecDef> >;
 template class AxIterator< IAAFSmartPointer2<IAAFKLVDataDefinition>,        IEnumAAFKLVDataDefs,        AddrOfSmartPointer2<IAAFKLVDataDefinition> >;
 template class AxIterator< IAAFSmartPointer2<IAAFTaggedValueDefinition>,    IEnumAAFTaggedValueDefs,    AddrOfSmartPointer2<IAAFTaggedValueDefinition> >;
+template class AxIterator< IAAFSmartPointer2<IAAFTaggedValue>,              IEnumAAFTaggedValues,       AddrOfSmartPointer2<IAAFTaggedValue> >;
 template class AxIterator< aafUID_t,                                        IEnumAAFCodecFlavours,      AddrOfAafUID >;
 template class AxIterator< aafUID_t,                                        IEnumAAFLoadedPlugins,      AddrOfAafUID >;
 template class AxIterator< IAAFSmartPointer2<IAAFComponent>,                IEnumAAFComponents,         AddrOfSmartPointer2<IAAFComponent> >;
