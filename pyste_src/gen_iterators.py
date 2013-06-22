@@ -72,6 +72,7 @@ iters = [
 #'PluginLocator',
 'Segment',
 #'TaggedValueDef',
+'TaggedValue',
 'TypeDef',
 ]
 
