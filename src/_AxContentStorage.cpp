@@ -4,6 +4,7 @@
 #include <boost/cstdint.hpp>
 
 // Includes ====================================================================
+#include <AAFClassDefUIDs.h>
 #include <AxContentStorage.h>
 #include <AxIterator.h>
 #include <AxSmartPointer.h>
@@ -41,6 +42,16 @@ IEnumAAFMobsSP PyGetCompositionMobs(AxContentStorage& storage)
         return storage.GetMobs( &criteria );
 
     }
+    
+IEnumAAFMobsSP PyGetSourceMobs(AxContentStorage& storage)
+{
+    
+    aafSearchCrit_t criteria;
+    criteria.searchTag = kAAFByClass;
+    criteria.tags.objClass = kAAFClassID_SourceMob;
+    return storage.GetMobs( &criteria );
+    
+}
 
 
 
@@ -62,6 +73,7 @@ void Export_pyste_src_AxContentStorage()
         .def("GetDefinition", &AxObject::GetDefinition)
         .def("GetMasterMobs",PyGetMasterMobs)
         .def("GetCompositionMobs",PyGetCompositionMobs)
+        .def("GetSourceMobs",PyGetSourceMobs)
     ;
 
 
