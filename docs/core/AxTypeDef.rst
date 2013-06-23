@@ -15,6 +15,7 @@ AxTypeDef
 .. toctree::
    :maxdepth: 8
    
+   AxTypeDefCharacter
    AxTypeDefEnum
    AxTypeDefExtEnum
    AxTypeDefFixedArray
