@@ -58,7 +58,7 @@ iters = [
 'InterpolationDef',
 'OperationDef',
 'EssenceData', #no s
-#'KLVData', #no s IAAFKLVDataDefinition???
+'KLVDataDefinition', #no s IAAFKLVDataDefinition???
 #'LoadedPlugin',
 'Locator',
 'MobSlot',
@@ -83,8 +83,8 @@ pyste += 'module_code("""\n\n'
 pyste += 'scope* AxIter_scope = new scope(class_<AxIter>("AxIter"));'
 for i in iters:
     
-    if i in ('EssenceData','KLVData','CodecFlavours'):
-        IEnumAAF =  i
+    if i in ('EssenceData','KLVDataDefinition','CodecFlavours'):
+        IEnumAAF =  i        
         
     elif i in ('Property'):
         IEnumAAF = 'Properties'
@@ -92,10 +92,13 @@ for i in iters:
     else:
         IEnumAAF = "%ss" % i
         
-    if i in ('ClassDef','CodecFlavours','ControlPoint','Identification','OperationDef','KLVData','Property',
+    if i in ('ClassDef','CodecFlavours','ControlPoint','Identification','OperationDef','Property',
              'Locator','TypeDef','MobSlot','Mob','Parameter','PropertyDef','PropertyValue'):
         AxName = i
         
+    elif i  == "KLVDataDefinition":
+        AxName = i.replace("Definition",'Defs')
+        IEnumAAF = AxName
     elif i in ('EssenceData'):
         AxName = 'Essence'
     else: 

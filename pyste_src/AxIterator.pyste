@@ -46,6 +46,7 @@ iterator_wrappers<const IAAFDataDefSP, IAAFDataDef, AxDataDefsIter, IEnumAAFData
 iterator_wrappers<const IAAFInterpolationDefSP, IAAFInterpolationDef, AxInterpolationDefsIter, IEnumAAFInterpolationDefsSP>().wrap("InterpolationDefs");
 iterator_wrappers<const IAAFOperationDefSP, IAAFOperationDef, AxOperationDefIter, IEnumAAFOperationDefsSP>().wrap("OperationDef");
 iterator_wrappers<const IAAFEssenceDataSP, IAAFEssenceData, AxEssenceIter, IEnumAAFEssenceDataSP>().wrap("Essence");
+iterator_wrappers<const IAAFKLVDataDefinitionSP, IAAFKLVDataDefinition, AxKLVDataDefsIter, IEnumAAFKLVDataDefsSP>().wrap("KLVDataDefs");
 iterator_wrappers<const IAAFLocatorSP, IAAFLocator, AxLocatorIter, IEnumAAFLocatorsSP>().wrap("Locator");
 iterator_wrappers<const IAAFMobSlotSP, IAAFMobSlot, AxMobSlotIter, IEnumAAFMobSlotsSP>().wrap("MobSlot");
 iterator_wrappers<const IAAFMobSP, IAAFMob, AxMobIter, IEnumAAFMobsSP>().wrap("Mob");
