@@ -72,6 +72,7 @@ iterator_wrappers<const IAAFPropertyDefSP, IAAFPropertyDef, AxPropertyDefIter, I
 iterator_wrappers<const IAAFPropertyValueSP, IAAFPropertyValue, AxPropertyValueIter, IEnumAAFPropertyValuesSP>().wrap("PropertyValue");
 iterator_wrappers<const IAAFPluginDefSP, IAAFPluginDef, AxPluginDefsIter, IEnumAAFPluginDefsSP>().wrap("PluginDefs");
 iterator_wrappers<const IAAFSegmentSP, IAAFSegment, AxSegmentsIter, IEnumAAFSegmentsSP>().wrap("Segments");
+iterator_wrappers<const IAAFTaggedValueDefinitionSP, IAAFTaggedValueDefinition, AxTaggedValueDefsIter, IEnumAAFTaggedValueDefsSP>().wrap("TaggedValueDefs");
 iterator_wrappers<const IAAFTaggedValueSP, IAAFTaggedValue, AxTaggedValuesIter, IEnumAAFTaggedValuesSP>().wrap("TaggedValues");
 iterator_wrappers<const IAAFTypeDefSP, IAAFTypeDef, AxTypeDefIter, IEnumAAFTypeDefsSP>().wrap("TypeDef");
 delete AxIter_scope;

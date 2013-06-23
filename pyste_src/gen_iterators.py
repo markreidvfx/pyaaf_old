@@ -71,7 +71,7 @@ iters = [
 'PluginDef',
 #'PluginLocator',
 'Segment',
-#'TaggedValueDef',
+'TaggedValueDefinition',
 'TaggedValue',
 'TypeDef',
 ]
@@ -83,7 +83,7 @@ pyste += 'module_code("""\n\n'
 pyste += 'scope* AxIter_scope = new scope(class_<AxIter>("AxIter"));'
 for i in iters:
     
-    if i in ('EssenceData','KLVDataDefinition','CodecFlavours'):
+    if i in ('EssenceData','KLVDataDefinition','CodecFlavours','TaggedValueDefinition'):
         IEnumAAF =  i        
         
     elif i in ('Property'):
@@ -96,7 +96,7 @@ for i in iters:
              'Locator','TypeDef','MobSlot','Mob','Parameter','PropertyDef','PropertyValue'):
         AxName = i
         
-    elif i  == "KLVDataDefinition":
+    elif i  == "KLVDataDefinition" or i == 'TaggedValueDefinition':
         AxName = i.replace("Definition",'Defs')
         IEnumAAF = AxName
     elif i in ('EssenceData'):
