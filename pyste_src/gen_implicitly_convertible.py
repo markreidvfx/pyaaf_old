@@ -76,6 +76,7 @@ for key,value in h.items():
             "TypeDefInt",
             "TypeDefSet",
             "TypeDefString",
+            "TypeDefCharacter",
             "TypeDefStream",
             "TypeDefVariableArrayEx",
             "TypeDefWeakObjRef",

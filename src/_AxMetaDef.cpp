@@ -107,6 +107,9 @@ void Export_pyste_src_AxMetaDef()
         .def("GetElements", &AxTypeDefString::GetElements)
     ;
 
+    class_< AxTypeDefCharacter, bases< AxTypeDef > , boost::noncopyable >("AxTypeDefCharacter", init< IAAFTypeDefCharacterSP >())
+    ;
+
     class_< AxTypeDefSet, bases< AxTypeDef > , boost::noncopyable >("AxTypeDefSet", init< IAAFTypeDefSetSP >())
         .def("GetElementType", &AxTypeDefSet::GetElementType)
         .def("GetType", &AxTypeDefSet::GetType)

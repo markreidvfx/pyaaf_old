@@ -81,6 +81,7 @@ AxBaseObj:
             AxTypeDefRecord:
             AxTypeDefStream:
             AxTypeDefString:
+            AxTypeDefCharacter:
             AxTypeDefSet:
             AxTypeDefObjectRef: #smartpointer named differently to AxObject AxTypeDefObjRef
             AxTypeDefWeakObjRef:

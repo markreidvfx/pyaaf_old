@@ -479,6 +479,17 @@ AxString AxTypeDefString::GetElements( IAAFPropertyValueSP& propVal )
 
 //=---------------------------------------------------------------------=
 
+AxTypeDefCharacter::AxTypeDefCharacter( IAAFTypeDefCharacterSP spIaafTypeDefCharacter )
+:	AxTypeDef( AxQueryInterface<IAAFTypeDefCharacter, IAAFTypeDef>(spIaafTypeDefCharacter) ),
+_spIaafTypeDefCharacter( spIaafTypeDefCharacter )
+{}
+
+AxTypeDefCharacter::~AxTypeDefCharacter()
+{}
+
+
+//=---------------------------------------------------------------------=
+
 AxTypeDefSet::AxTypeDefSet( IAAFTypeDefSetSP spIaafTypeDefSet )
 :	AxTypeDef( AxQueryInterface<IAAFTypeDefSet, IAAFTypeDef>(spIaafTypeDefSet) ),
 	_spIaafTypeDefSet( spIaafTypeDefSet )

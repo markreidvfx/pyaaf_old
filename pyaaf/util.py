@@ -56,7 +56,9 @@ def Ax(sp):
             method = 'to_%sSP' % name
             if hasattr(sp,method):
                 methodToCall = getattr(sp, method)
-                
+        
+        if not methodToCall:
+            raise ValueError("no smartpointer conversion for %s" % class_name)
                 
         return class_object(methodToCall())
     

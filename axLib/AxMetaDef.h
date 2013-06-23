@@ -322,6 +322,23 @@ private:
 
 //=---------------------------------------------------------------------=
 
+class AxTypeDefCharacter : public AxTypeDef {
+public:
+	AxTypeDefCharacter( IAAFTypeDefCharacterSP spIaafTypeDefCharacter );
+	virtual ~AxTypeDefCharacter();
+    
+	//AxString GetElements( IAAFPropertyValueSP& );
+    
+private:
+	AxTypeDefCharacter();
+	AxTypeDefCharacter( const AxTypeDefCharacter& );
+	AxTypeDefCharacter& operator=( const AxTypeDefCharacter& );
+    
+	IAAFTypeDefCharacterSP _spIaafTypeDefCharacter;
+};
+
+//=---------------------------------------------------------------------=
+
 class AxTypeDefSet : public AxTypeDef {
 public:
 	AxTypeDefSet( IAAFTypeDefSetSP spIaafTypeDefSet );

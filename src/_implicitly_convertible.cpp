@@ -62,6 +62,13 @@ void Export_pyste_src_implicitly_convertible()
 
      implicitly_convertible<AxRandomFile, IAAFSmartPointer<IAAFFile> > ();
 
+//AxInterpolationDef
+
+     implicitly_convertible<AxInterpolationDef, IAAFSmartPointer<IAAFInterpolationDef> > ();
+
+     implicitly_convertible<AxInterpolationDef, IAAFSmartPointer<IAAFDefObject> > ();
+     implicitly_convertible<AxInterpolationDef, IAAFSmartPointer<IAAFObject> > ();
+
 //AxObject
 
      implicitly_convertible<AxObject, IAAFSmartPointer<IAAFObject> > ();
@@ -228,13 +235,6 @@ void Export_pyste_src_implicitly_convertible()
 
      implicitly_convertible<AxParameterDef, IAAFSmartPointer<IAAFDefObject> > ();
      implicitly_convertible<AxParameterDef, IAAFSmartPointer<IAAFObject> > ();
-
-//AxInterpolationDef
-
-     implicitly_convertible<AxInterpolationDef, IAAFSmartPointer<IAAFInterpolationDef> > ();
-
-     implicitly_convertible<AxInterpolationDef, IAAFSmartPointer<IAAFDefObject> > ();
-     implicitly_convertible<AxInterpolationDef, IAAFSmartPointer<IAAFObject> > ();
 
 //AxOperationGroup
 
