@@ -487,6 +487,14 @@ _spIaafTypeDefCharacter( spIaafTypeDefCharacter )
 AxTypeDefCharacter::~AxTypeDefCharacter()
 {}
 
+aafCharacter AxTypeDefCharacter::GetCharacter( IAAFPropertyValueSP& propVal )
+{
+
+    aafCharacter *c;
+    CHECK_HRESULT( _spIaafTypeDefCharacter->GetCharacter( propVal, c) );
+    return *c;
+    
+}
 
 //=---------------------------------------------------------------------=
 

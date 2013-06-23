@@ -327,7 +327,7 @@ public:
 	AxTypeDefCharacter( IAAFTypeDefCharacterSP spIaafTypeDefCharacter );
 	virtual ~AxTypeDefCharacter();
     
-	//AxString GetElements( IAAFPropertyValueSP& );
+	aafCharacter GetCharacter( IAAFPropertyValueSP& );
     
 private:
 	AxTypeDefCharacter();
