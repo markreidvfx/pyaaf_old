@@ -40,12 +40,19 @@ DataDef
    :members:
    :undoc-members:
 
+ExtEnumDef
+----------------
+   
+.. autoclass:: pyaaf.core.ExtEnumDef
+   :members:
+   :undoc-members:
+   
 EssenceFormatDef
 ----------------
    
-.. autoclass:: pyaaf.core.EssenceFormatDef
-   :members:
-   :undoc-members:
+   .. autoclass:: pyaaf.core.EssenceFormatDef
+      :members:
+      :undoc-members:
    
 FileKindDef
 -----------
