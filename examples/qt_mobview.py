@@ -9,6 +9,25 @@ import pyaaf
 
 from qt_aafmodel import AAFModel
 
+
+class GraphicsLabel(QtGui.QGraphicsRectItem):
+    
+    def __init__(self, parent=None):
+        super(GraphicsLabel,self).__init__(parent)
+        
+        self.name = None
+        
+    def paint(self,p,opt,w):
+        
+        super(GraphicsLabel,self).paint(p,opt,w)
+        
+        if self.name:
+            p.save()
+            nameRect = QtCore.QRectF(self.rect())
+            p.drawText(nameRect,Qt.AlignLeft,self.name)
+            p.restore()
+        
+
 class GraphicsClip(QtGui.QGraphicsRectItem):
     
     def __init__(self,length, parent=None):
@@ -44,13 +63,13 @@ class GraphicsClip(QtGui.QGraphicsRectItem):
         if self.name:
             p.save()
             nameRect = QtCore.QRectF(self.rect())
-            p.drawText(nameRect,Qt.AlignCenter,self.name)
+            p.drawText(nameRect,Qt.AlignLeft,self.name)
             p.restore()
         
         
 
 
-class GraphicsTrack(QtGui.QGraphicsRectItem):
+class GraphicsTrack(QtGui.QGraphicsItemGroup):
     
     def __init__(self,parent=None):
         
@@ -58,6 +77,7 @@ class GraphicsTrack(QtGui.QGraphicsRectItem):
         
         self.height = 15
         self.length = 0
+        self.name = "Track"
         
         self.timeline = None
         
@@ -65,6 +85,11 @@ class GraphicsTrack(QtGui.QGraphicsRectItem):
         
         self.clips = []
         
+        self.trackItem = QtGui.QGraphicsRectItem()
+        self.trackLabel = GraphicsLabel()
+        
+        self.addToGroup(self.trackItem)
+        self.addToGroup(self.trackLabel)
     def addClip(self,length):
         
         clip = GraphicsClip(length)
@@ -93,22 +118,24 @@ class GraphicsTrack(QtGui.QGraphicsRectItem):
         
     def adjust(self):
         
-        self.setRect(QtCore.QRectF(0,0,self.length,self.height))
+        
+        track = self.trackItem
+        label = self.trackLabel
+        label.name = self.name
+        
+        track.setRect(QtCore.QRectF(0,0,self.length,self.height))
+        
+        label_length = 60
+        spacing = self.timeline.track_spacing
+        
+        label.setRect(QtCore.QRectF(0,0,label_length,self.height))
+        label.setX(-label_length - spacing )
         
         if self.parent:
             
             #r = self.parent.boundingRect()
             y = self.parent.y()
-            self.setY(y + self.parent.height + self.timeline.track_spacing)
-        
-
-
-        
-        
-        
-    
-    
-        
+            self.setY(y - self.parent.height - spacing)
         
 
 
@@ -193,10 +220,13 @@ def SetMob(mob,grahicsview):
             elif isinstance(segment, pyaaf.AxSourceClip):
                 sequences.append(segment)
     scene.clear()
-            
-    for seq in reversed(sequences):
+    i = 0   
+    for seq in sequences:
         
         track = scene.addTrack()
+        track.name = "Track %i" % i
+        
+        i += 1
         
         if isinstance(seq, pyaaf.AxSequence):
             components = list(seq.GetComponents())
