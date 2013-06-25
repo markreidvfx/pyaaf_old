@@ -9,79 +9,240 @@ import pyaaf
 
 from qt_aafmodel import AAFModel
 
+class GraphicsClip(QtGui.QGraphicsRectItem):
+    
+    def __init__(self,length, parent=None):
+        super(GraphicsClip,self).__init__(parent)
+        
+        self.length = length
+        
+        self.track = None
+        self.left = None
+        self.right = None
+        self.name = None
+        
+        self.setFlag(QtGui.QGraphicsItem.ItemIsSelectable,True)
+        
+        
+    def adjust(self):
+        
+        height = self.track.height
+        
+        self.setRect(QtCore.QRectF(0,0, self.length, height))
+    
+        y = self.track.y()
+        x = 0
+        
+        if self.left:
+            x = self.left.x() + self.left.length
+        self.setPos(x,y)
+        
+    def paint(self,p,opt,w):
+        
+        super(GraphicsClip,self).paint(p,opt,w)
+        
+        if self.name:
+            p.save()
+            nameRect = QtCore.QRectF(self.rect())
+            p.drawText(nameRect,Qt.AlignCenter,self.name)
+            p.restore()
+        
+        
+
+
+class GraphicsTrack(QtGui.QGraphicsRectItem):
+    
+    def __init__(self,parent=None):
+        
+        super(GraphicsTrack,self).__init__(parent)
+        
+        self.height = 15
+        self.length = 0
+        
+        self.timeline = None
+        
+        self.parent = None
+        
+        self.clips = []
+        
+    def addClip(self,length):
+        
+        clip = GraphicsClip(length)
+        clip.track = self
+        
+        if self.clips:
+            
+            prev_clip = self.clips[-1]
+            prev_clip.right = clip
+            
+            clip.left = prev_clip
+        
+        scene = self.scene()
+        scene.addItem(clip)
+        
+        self.clips.append(clip)
+        
+        clip.adjust()
+        
+        self.length += length
+        self.adjust()
+        
+        return clip
+            
+        
+        
+    def adjust(self):
+        
+        self.setRect(QtCore.QRectF(0,0,self.length,self.height))
+        
+        if self.parent:
+            
+            #r = self.parent.boundingRect()
+            y = self.parent.y()
+            self.setY(y + self.parent.height + self.timeline.track_spacing)
+        
+
+
+        
+        
+        
+    
+    
+        
+        
+
 
 
 class AAFTimeline(QtGui.QGraphicsScene):
     
-    def setMob(self,mob):
+    def __init__(self,parent=None):
         
-        self.clear()
-        sequences = []
+        super(AAFTimeline,self).__init__(parent)
         
-        for slot in mob.GetSlots():
-            if isinstance(slot, (pyaaf.AxTimelineMobSlot)):
-                segment = slot.GetSegment()
-                
-                if isinstance(segment, pyaaf.AxSequence):
-                    sequences.append(segment)
-                
-                elif isinstance(segment, pyaaf.AxNestedScope):
-                    for seq in segment.GetSegments():
-                        if isinstance(seq, pyaaf.AxSequence):
-                            sequences.append(seq)
-        height = 25 
-        timelineLength = 0       
-        for i, seq in enumerate(reversed(sequences)):
-            length = seq.GetLength()
-            
-            timelineLength = max(timelineLength,length)
-            print seq
-            
-            offset = i * height
-            
-            pen = QtGui.QPen(Qt.black)
-            pen.setWidth(0)
-            brush = QtGui.QBrush(Qt.NoBrush)
-            
-            timeline = self.addRect(QtCore.QRectF(0,0, length,height),pen,brush)
-            timeline.moveBy(0,offset)
-            
-            
-            if isinstance(seq, pyaaf.AxSequence):
-                x_pos = 0
-                for component in seq.GetComponents():
-                    component_length = component.GetLength()
-                    brush.setStyle(Qt.SolidPattern)
-                    if isinstance(component, (pyaaf.AxFiller,pyaaf.AxScopeReference)):
-                        
-                        brush.setColor(Qt.gray)
-                    else:
-                        brush.setColor(Qt.red)
-                        
-                    
-                    if isinstance(component,pyaaf.AxTransition):
-                        x_pos -= component_length
-                    else:
-
-                    
-                        clip = self.addRect(QtCore.QRectF(0,0, component_length,height),pen,brush)
-                        clip.moveBy(x_pos,offset)
-                    
-                        x_pos += component_length
-                                        
-                                        
-            
-            
-        self.setSceneRect(QtCore.QRectF(-20,-20, timelineLength+20, height*len(sequences) + 20 ))
+        self.tracks = []
+        self.track_spacing = 2
+    
+    def addTrack(self):
         
+        track = GraphicsTrack()
+        track.timeline = self
+        if self.tracks:
+            track.parent = self.tracks[-1]
+        
+            track.adjust()
+        self.tracks.append(track)
+        self.addItem(track)
+        return track
+    
+    def clear(self):
+        
+        super(AAFTimeline,self).clear()
+        
+        self.tracks = []        
 
         
+class AAFTimelineGraphicsView(QtGui.QGraphicsView):
+    
+    def wheelEvent(self, event):
         
-    def setMobFromModelIndex(self,index):
+        self.setTransformationAnchor(QtGui.QGraphicsView.AnchorUnderMouse)
+        scaleFactor = 1.15
         
-        treeItem = index.internalPointer()
-        if isinstance(treeItem.item, pyaaf.AxMob):
-            self.setMob(treeItem.item)
+        if event.delta() > 0:
+            self.scale(scaleFactor, scaleFactor)
+        else:
+            self.scale(1.0 / scaleFactor, 1.0 / scaleFactor)
+
+    def keyPressEvent(self, event):
+        
+        if event.key() == Qt.Key_F:
+            scene = self.scene()
+            if scene:
+                mode=Qt.KeepAspectRatio
+                if event.modifiers() == Qt.ShiftModifier:
+                    mode = Qt.IgnoreAspectRatio           
+                self.fitInView(scene.sceneRect(),mode=mode)
+                
+        else:
+            super(AAFTimelineGraphicsView,self).keyPressEvent(event)
+
+
+def AddMobFromIndex(index,grahicsview):
+    treeItem = index.internalPointer()
+    mob = treeItem.item
+    if isinstance(mob, pyaaf.AxMob):
+        SetMob(mob,grahicsview)
+        
+
+def SetMob(mob,grahicsview):
+
+    scene = grahicsview.scene()
+    sequences = []   
+    for slot in mob.GetSlots():
+        if isinstance(slot, (pyaaf.AxTimelineMobSlot)):
+            segment = slot.GetSegment()
+             
+            if isinstance(segment, pyaaf.AxSequence):
+                sequences.append(segment)
+             
+            elif isinstance(segment, pyaaf.AxNestedScope):
+                for seq in segment.GetSegments():
+                    if isinstance(seq, pyaaf.AxSequence):
+                        sequences.append(seq)
+                        
+            elif isinstance(segment, pyaaf.AxSourceClip):
+                sequences.append(segment)
+    scene.clear()
+            
+    for seq in reversed(sequences):
+        
+        track = scene.addTrack()
+        
+        if isinstance(seq, pyaaf.AxSequence):
+            components = list(seq.GetComponents())
+            
+        else:
+            components = [seq]
+        
+        
+            
+        last_transition = 0
+        for component in components:
+            component_length = component.GetLength() -last_transition
+            
+            if isinstance(component,pyaaf.AxTransition):
+                last_transition = component_length
+                #clip = track.addClip(component_length)
+                #clip.setBrush(Qt.blue)
+            else:
+            
+                clip = track.addClip(component_length)
+                if isinstance(component,(pyaaf.AxFiller,pyaaf.AxScopeReference)):
+                    
+                    clip.setBrush(Qt.gray)
+                #elif isinstance(component, pyaaf.AxScopeReference):
+                    #clip.setBrush(Qt.gray)
+                else:
+                    clip.setBrush(Qt.red)
+                    
+                name = None 
+                if isinstance(component, pyaaf.AxSourceClip):
+                    try:
+                        ref = component.ResolveRef()
+                        name = ref.GetName()
+                    except:
+                        pass
+                    
+                elif isinstance(component, pyaaf.AxOperationGroup):
+                    name = component.GetOperationDef().GetName()
+                
+                if name:
+                    clip.name = name
+                    clip.adjust()
+                    
+                last_transition = 0
+        
+            #clip.adjust()
 
 
 
@@ -115,6 +276,8 @@ if __name__ == "__main__":
         header = axfile.GetHeader()
         storage = header.GetContentStorage()
         
+        topLevelMobs = list(storage.GetTopLevelMobs())
+
         model = AAFModel(storage)
         
         timeline = AAFTimeline()
@@ -127,16 +290,14 @@ if __name__ == "__main__":
         
         
         
-        graphicsview = QtGui.QGraphicsView()
+        graphicsview = AAFTimelineGraphicsView()
         graphicsview.resize(400,600)
         graphicsview.setScene(timeline)
-        def loadMob( index,grahicsview):
-            scene = grahicsview.scene()
-            scene.setMobFromModelIndex(index)
-            grahicsview.fitInView(scene.sceneRect())
-            
-        tree.doubleClicked.connect(lambda x,y=graphicsview: loadMob(x,y))
+
+        tree.doubleClicked.connect(lambda x,y=graphicsview: AddMobFromIndex(x,y))
         
+        if topLevelMobs:
+            SetMob(topLevelMobs[0],graphicsview)
         window.addWidget(tree)
         window.addWidget(graphicsview)
         
