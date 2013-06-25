@@ -5,6 +5,7 @@
 
 // Includes ====================================================================
 #include <AAFClassDefUIDs.h>
+#include <AAFExtEnum.h>
 #include <AxContentStorage.h>
 #include <AxIterator.h>
 #include <AxSmartPointer.h>
@@ -53,6 +54,17 @@ IEnumAAFMobsSP PyGetSourceMobs(AxContentStorage& storage)
     
 }
 
+IEnumAAFMobsSP PyGetTopLevelMobs(AxContentStorage& storage)
+{
+    
+    aafSearchCrit_t criteria;
+    criteria.searchTag = kAAFByCompositionMobUsageCode;
+    criteria.tags.usageCode = kAAFUsage_TopLevel;
+    return storage.GetMobs( &criteria );
+    
+}
+
+
 
 
 // Module ======================================================================
@@ -74,6 +86,7 @@ void Export_pyste_src_AxContentStorage()
         .def("GetMasterMobs",PyGetMasterMobs)
         .def("GetCompositionMobs",PyGetCompositionMobs)
         .def("GetSourceMobs",PyGetSourceMobs)
+        .def("GetTopLevelMobs",PyGetTopLevelMobs)
     ;
 
 
