@@ -9,25 +9,6 @@ import pyaaf
 
 from qt_aafmodel import AAFModel
 
-
-class GraphicsLabel(QtGui.QGraphicsRectItem):
-    
-    def __init__(self, parent=None):
-        super(GraphicsLabel,self).__init__(parent)
-        
-        self.name = None
-        
-    def paint(self,p,opt,w):
-        
-        super(GraphicsLabel,self).paint(p,opt,w)
-        
-        if self.name:
-            p.save()
-            nameRect = QtCore.QRectF(self.rect())
-            p.drawText(nameRect,Qt.AlignLeft,self.name)
-            p.restore()
-        
-
 class GraphicsClip(QtGui.QGraphicsRectItem):
     
     def __init__(self,length, parent=None):
@@ -86,10 +67,11 @@ class GraphicsTrack(QtGui.QGraphicsItemGroup):
         self.clips = []
         
         self.trackItem = QtGui.QGraphicsRectItem()
-        self.trackLabel = GraphicsLabel()
         
         self.addToGroup(self.trackItem)
-        self.addToGroup(self.trackLabel)
+        
+        #scene.addItem(trackLabel)
+        #self.addToGroup(self.trackLabel)
     def addClip(self,length):
         
         clip = GraphicsClip(length)
@@ -120,16 +102,11 @@ class GraphicsTrack(QtGui.QGraphicsItemGroup):
         
         
         track = self.trackItem
-        label = self.trackLabel
-        label.name = self.name
         
         track.setRect(QtCore.QRectF(0,0,self.length,self.height))
         
-        label_length = 60
         spacing = self.timeline.track_spacing
         
-        label.setRect(QtCore.QRectF(0,0,label_length,self.height))
-        label.setX(-label_length - spacing )
         
         if self.parent:
             
@@ -165,11 +142,80 @@ class AAFTimeline(QtGui.QGraphicsScene):
         
         super(AAFTimeline,self).clear()
         
-        self.tracks = []        
-
+        self.tracks = []
         
+        
+              
+
+    
 class AAFTimelineGraphicsView(QtGui.QGraphicsView):
     
+    def __init__(self,parent=None):
+        
+        super(AAFTimelineGraphicsView,self).__init__(parent)
+        self.setViewportUpdateMode(QtGui.QGraphicsView.FullViewportUpdate)
+        
+        self.marginWidth = 90
+        
+        self.setViewportMargins(self.marginWidth, 0, 0, 0)
+        
+        self.trackWidgets = []
+
+    def drawBackground(self,painter,rect):
+        
+        super(AAFTimelineGraphicsView,self).drawForeground(painter,rect)
+
+        #print rect.left()
+    def updateTrackLabels(self,offset=0):
+        scene = self.scene()
+        edge = self.mapToScene(0,0)
+        
+        for track in self.trackWidgets:
+            track.hide()
+
+        for i, track in enumerate(scene.tracks):
+            #track.trackLabel.setX(max(0,edge.x() + offset))
+            
+            
+            trackItem = track.trackItem
+            rect = trackItem.rect()
+            pos = track.pos()
+            widget_pos = self.mapFromScene(pos)
+            
+            spacing = track.timeline.track_spacing
+            
+            topLeft = rect.topLeft() + QtCore.QPointF(0,spacing)
+            
+            
+            
+            widget_height =  self.mapFromScene(rect.bottomLeft()).y() - self.mapFromScene(rect.topLeft()).y()
+            
+            if i+1 > len(self.trackWidgets):
+                l = QtGui.QLabel(self)
+                l.setFrameStyle(QtGui.QFrame.Panel)
+                self.trackWidgets.append(l)
+                
+            label = self.trackWidgets[i]
+            
+            label.show()
+            label.move(0,widget_pos.y())
+            
+            label.setText(track.name)
+
+            label.setFixedWidth(self.marginWidth)
+            label.setFixedHeight(widget_height)
+            
+            
+            
+
+    def paintEvent(self, event):
+        #self.updateTrackLabels()
+        result = super(AAFTimelineGraphicsView,self).paintEvent(event)
+        self.updateTrackLabels()
+        
+        
+        
+
     def wheelEvent(self, event):
         
         self.setTransformationAnchor(QtGui.QGraphicsView.AnchorUnderMouse)
@@ -192,6 +238,7 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
                 
         else:
             super(AAFTimelineGraphicsView,self).keyPressEvent(event)
+            
 
 
 def AddMobFromIndex(index,grahicsview):
@@ -336,6 +383,7 @@ if __name__ == "__main__":
         #window.setLayout(layout)
         
         window.show()
+        #graphicsview.show()
         
         sys.exit(app.exec_())
         
