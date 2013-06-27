@@ -262,26 +262,14 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
             track.hide()
 
         for i, track in enumerate(scene.tracks):
-            #track.trackLabel.setX(max(0,edge.x() + offset))
-            
-            
-            #trackItem = track.trackItem
             rect = track.rect()
             pos = track.pos()
             widget_pos = self.mapFromScene(pos)
-            
-            spacing = track.timeline.track_spacing
-            
-            topLeft = rect.topLeft() + QtCore.QPointF(0,spacing)
-            
-            
-            
             widget_height =  self.mapFromScene(rect.bottomLeft()).y() - self.mapFromScene(rect.topLeft()).y()
             
             if i+1 > len(self.trackWidgets):
                 l = QtGui.QLabel(self)
                 l.setFrameStyle(QtGui.QFrame.Panel)
-                #l.setLineWidth(2)
                 self.trackWidgets.append(l)
                 
             label = self.trackWidgets[i]
@@ -292,7 +280,7 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
             label.setText(track.name)
 
             label.setFixedWidth(self.marginWidth)
-            label.setFixedHeight(widget_height)
+            label.setFixedHeight(widget_height + 2)
             
 
     def paintEvent(self, event):
