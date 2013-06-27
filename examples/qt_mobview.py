@@ -9,6 +9,46 @@ import pyaaf
 
 from qt_aafmodel import AAFModel
 
+class GraphicsTimeSlider(QtGui.QGraphicsRectItem):
+    
+    
+    def __init__(self,parent=None):
+        super(GraphicsTimeSlider,self).__init__(parent)
+        
+        #self.setFlag(QtGui.QGraphicsItem.ItemIsSelectable,True)
+        
+        self.height = 100
+        self.edge_spacing = 10
+        
+        pen = QtGui.QPen()
+        pen.setBrush(Qt.blue)
+        self.setPen(pen)
+        self.setBrush(Qt.blue)
+        self.frame = 0
+        self.setZValue(100)
+        self.setPos(0,0)
+        
+        
+    def setHeight(self,value):
+        self.height = value
+        
+        self.adjust()
+        
+    def setFrame(self,value):
+        
+        self.frame = int(value)
+        self.adjust()
+    def getFrame(self):
+        return self.frame
+        
+    def adjust(self):
+        
+        rect = QtCore.QRectF(0,0,1,self.height)
+        
+        rect.adjust(0,-self.edge_spacing,0,self.edge_spacing)
+        self.setRect(rect)
+        self.setPos(self.frame, 0)
+
 class GraphicsClip(QtGui.QGraphicsRectItem):
     
     def __init__(self,length, parent=None):
@@ -50,13 +90,13 @@ class GraphicsClip(QtGui.QGraphicsRectItem):
         
 
 
-class GraphicsTrack(QtGui.QGraphicsItemGroup):
+class GraphicsTrack(QtGui.QGraphicsRectItem):
     
     def __init__(self,parent=None):
         
         super(GraphicsTrack,self).__init__(parent)
         
-        self.height = 15
+        self.height = 20
         self.length = 0
         self.name = "Track"
         
@@ -66,12 +106,8 @@ class GraphicsTrack(QtGui.QGraphicsItemGroup):
         
         self.clips = []
         
-        self.trackItem = QtGui.QGraphicsRectItem()
         
-        self.addToGroup(self.trackItem)
-        
-        #scene.addItem(trackLabel)
-        #self.addToGroup(self.trackLabel)
+
     def addClip(self,length):
         
         clip = GraphicsClip(length)
@@ -99,20 +135,15 @@ class GraphicsTrack(QtGui.QGraphicsItemGroup):
         
         
     def adjust(self):
-        
-        
-        track = self.trackItem
-        
-        track.setRect(QtCore.QRectF(0,0,self.length,self.height))
+        self.setRect(QtCore.QRectF(0,0,self.length,self.height))
         
         spacing = self.timeline.track_spacing
         
         
         if self.parent:
-            
-            #r = self.parent.boundingRect()
             y = self.parent.y()
-            self.setY(y - self.parent.height - spacing)
+            self.setY(y + self.parent.height + spacing)
+            
         
 
 
@@ -124,7 +155,11 @@ class AAFTimeline(QtGui.QGraphicsScene):
         super(AAFTimeline,self).__init__(parent)
         
         self.tracks = []
-        self.track_spacing = 2
+        self.track_spacing = 10
+        self.edge_spacing = 50
+        self.timeSlider = None
+        
+        self.timeSliderDrag = False
     
     def addTrack(self):
         
@@ -136,7 +171,59 @@ class AAFTimeline(QtGui.QGraphicsScene):
             track.adjust()
         self.tracks.append(track)
         self.addItem(track)
+        
+        self.updateSceneRect()
         return track
+    
+    def updateSceneRect(self):
+        
+        rect = QtCore.QRectF()
+        for track in self.tracks:
+            rect = rect.united(track.sceneBoundingRect())
+        
+        
+        height = rect.height()
+        rect.adjust(0,-self.edge_spacing,0,self.edge_spacing)
+        
+        
+        
+        self.setSceneRect(rect)
+        
+        self.timeSlider.edge_spacing = self.edge_spacing
+        self.timeSlider.setHeight(height)
+        
+    def setFrame(self,value):
+        self.timeSlider.setFrame(value)
+        
+    def getFrame(self):
+        return self.timeSlider.getFrame()
+        
+    def mousePressEvent(self,event):
+        
+        pos = event.scenePos()
+        if not self.itemAt(event.scenePos()):
+            self.setFrame(pos.x())
+            self.timeSliderDrag = True
+            print self.getFrame()
+            event.accept()
+        else:
+            super(AAFTimeline,self).mousePressEvent(event)
+            
+    def mouseMoveEvent(self, event):
+        super(AAFTimeline,self).mouseMoveEvent(event)
+        
+        if self.timeSliderDrag:
+            pos = event.scenePos()
+            print self.getFrame()
+            self.setFrame(pos.x())
+            
+    def mouseReleaseEvent(self,event):
+        if self.timeSliderDrag:
+            self.timeSliderDrag = False
+        
+        super(AAFTimeline,self).mouseReleaseEvent(event)
+
+        
     
     def clear(self):
         
@@ -144,6 +231,11 @@ class AAFTimeline(QtGui.QGraphicsScene):
         
         self.tracks = []
         
+        self.timeSlider = GraphicsTimeSlider()
+        self.timeSlider.edge_space = self.edge_spacing
+        self.timeSlider.setPos(0,0)
+        
+        self.addItem(self.timeSlider)
         
               
 
@@ -153,19 +245,15 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
     def __init__(self,parent=None):
         
         super(AAFTimelineGraphicsView,self).__init__(parent)
-        self.setViewportUpdateMode(QtGui.QGraphicsView.FullViewportUpdate)
+        #self.setViewportUpdateMode(QtGui.QGraphicsView.FullViewportUpdate)
         
         self.marginWidth = 90
         
         self.setViewportMargins(self.marginWidth, 0, 0, 0)
         
         self.trackWidgets = []
-
-    def drawBackground(self,painter,rect):
         
-        super(AAFTimelineGraphicsView,self).drawForeground(painter,rect)
 
-        #print rect.left()
     def updateTrackLabels(self,offset=0):
         scene = self.scene()
         edge = self.mapToScene(0,0)
@@ -177,8 +265,8 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
             #track.trackLabel.setX(max(0,edge.x() + offset))
             
             
-            trackItem = track.trackItem
-            rect = trackItem.rect()
+            #trackItem = track.trackItem
+            rect = track.rect()
             pos = track.pos()
             widget_pos = self.mapFromScene(pos)
             
@@ -193,6 +281,7 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
             if i+1 > len(self.trackWidgets):
                 l = QtGui.QLabel(self)
                 l.setFrameStyle(QtGui.QFrame.Panel)
+                #l.setLineWidth(2)
                 self.trackWidgets.append(l)
                 
             label = self.trackWidgets[i]
@@ -205,16 +294,11 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
             label.setFixedWidth(self.marginWidth)
             label.setFixedHeight(widget_height)
             
-            
-            
 
     def paintEvent(self, event):
         #self.updateTrackLabels()
         result = super(AAFTimelineGraphicsView,self).paintEvent(event)
         self.updateTrackLabels()
-        
-        
-        
 
     def wheelEvent(self, event):
         
@@ -227,7 +311,7 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
             self.scale(1.0 / scaleFactor, 1.0 / scaleFactor)
 
     def keyPressEvent(self, event):
-        
+
         if event.key() == Qt.Key_F:
             scene = self.scene()
             if scene:
@@ -268,12 +352,11 @@ def SetMob(mob,grahicsview):
                 sequences.append(segment)
     scene.clear()
     i = 0   
-    for seq in sequences:
+    for i, seq in reversed(list(enumerate(sequences))):
         
         track = scene.addTrack()
         track.name = "Track %i" % i
         
-        i += 1
         
         if isinstance(seq, pyaaf.AxSequence):
             components = list(seq.GetComponents())
