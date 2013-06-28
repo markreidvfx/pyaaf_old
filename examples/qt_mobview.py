@@ -191,30 +191,30 @@ class AAFTimeline(QtGui.QGraphicsScene):
         
     def getFrame(self):
         return self.timeSlider.getFrame()
-        
-    def mousePressEvent(self,event):
-        
-        pos = event.scenePos()
-        print pos
-        if not self.itemAt(event.scenePos()):
-            self.setFrame(pos.x())
-            self.timeSliderDrag = True
-            event.accept()
-        else:
-            super(AAFTimeline,self).mousePressEvent(event)
-            
-    def mouseMoveEvent(self, event):
-        super(AAFTimeline,self).mouseMoveEvent(event)
-        
-        if self.timeSliderDrag:
-            pos = event.scenePos()
-            self.setFrame(pos.x())
-            
-    def mouseReleaseEvent(self,event):
-        if self.timeSliderDrag:
-            self.timeSliderDrag = False
-        
-        super(AAFTimeline,self).mouseReleaseEvent(event)
+#         
+#     def mousePressEvent(self,event):
+#         
+#         pos = event.scenePos()
+#         print pos
+#         if not self.itemAt(event.scenePos()):
+#             self.setFrame(pos.x())
+#             self.timeSliderDrag = True
+#             event.accept()
+#         else:
+#             super(AAFTimeline,self).mousePressEvent(event)
+#             
+#     def mouseMoveEvent(self, event):
+#         super(AAFTimeline,self).mouseMoveEvent(event)
+#         
+#         if self.timeSliderDrag:
+#             pos = event.scenePos()
+#             self.setFrame(pos.x())
+#             
+#     def mouseReleaseEvent(self,event):
+#         if self.timeSliderDrag:
+#             self.timeSliderDrag = False
+#         
+#         super(AAFTimeline,self).mouseReleaseEvent(event)
 
         
     
@@ -232,7 +232,7 @@ class AAFTimeline(QtGui.QGraphicsScene):
         
               
 class TimeLineWidget(QtGui.QWidget):
-    
+    frameChanged = QtCore.pyqtSignal(int)
     def __init__(self,parent):
         
         super(TimeLineWidget,self).__init__(parent)
@@ -240,6 +240,14 @@ class TimeLineWidget(QtGui.QWidget):
         self.start = 0
         self.end = 1
         self.scale = 1
+        self.currentFrame = 10
+        self.silderDrag = True
+
+        
+    def setCurrentFrame(self,value):
+        
+        self.currentFrame = int(value)
+        self.repaint()
         
     def setScale(self,value):
         self.scale = value
@@ -256,12 +264,37 @@ class TimeLineWidget(QtGui.QWidget):
         
     def mapFromFrame(self,value):
         
-        return (value - self.start)  * self.scale
+        return (float(value) - self.start)  * self.scale
     
     def mapToFrame(self, value):
         
-        pass
+        frame = (value/ float(self.width()) * self.length()) + self.start
+        return int(frame)
     
+    def mousePressEvent(self, event):
+
+        frame = self.mapToFrame(event.pos().x())
+        self.setCurrentFrame(frame)
+        self.silderDrag = True
+        self.frameChanged.emit(frame)
+        
+        super(TimeLineWidget,self).mousePressEvent(event)
+    def mouseMoveEvent(self, event):
+        
+        if self.silderDrag:
+            frame = self.mapToFrame(event.pos().x())
+            self.setCurrentFrame(frame)
+            self.frameChanged.emit(frame)
+        super(TimeLineWidget,self).mouseMoveEvent(event)  
+    
+    def mouseReleaseEvent(self,event):
+        
+        if self.silderDrag:
+            self.silderDrag = False
+        
+        super(TimeLineWidget,self).mouseMoveEvent(event)  
+        
+         
     def paintEvent(self, event):
         super(TimeLineWidget,self).paintEvent(event)
         
@@ -308,7 +341,19 @@ class TimeLineWidget(QtGui.QWidget):
                         last_text = x
                         height = self.height() * .4
                         painter.drawText(QtCore.QPointF(x,height), str(i))
-
+                        
+                        
+        rect = QtCore.QRectF(0,0,1 * self.scale,self.height())
+        
+        rect.translate(self.mapFromFrame(self.currentFrame), 0)
+        
+        pen =QtGui.QPen(Qt.blue)
+        
+        painter.setPen(pen)
+        painter.setBrush(Qt.blue)
+        
+        painter.drawRect(rect)
+        
         painter.end()
         
         
@@ -317,6 +362,7 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
     def __init__(self,parent=None):
         
         super(AAFTimelineGraphicsView,self).__init__(parent)
+        self.timeSliderDrag = False
         #self.setViewportUpdateMode(QtGui.QGraphicsView.FullViewportUpdate)
         
         self.marginWidth = 90
@@ -325,6 +371,7 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
         self.setViewportMargins(self.marginWidth, self.topMaginHeight, 0, 0)
         
         self.timelineWidget = TimeLineWidget(self)
+        self.timelineWidget.frameChanged.connect(self.setCurrentFrame)
         
         self.trackWidgets = []
                 
@@ -357,6 +404,14 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
             label.setFixedWidth(self.marginWidth)
             label.setFixedHeight(widget_height + 2)
             
+    def setCurrentFrame(self,value):
+        
+        scene = self.scene()
+        if scene:
+            scene.setFrame(value)
+            self.updateTimeLine()
+        
+            
     def updateTimeLine(self):
         
         t = self.timelineWidget
@@ -373,7 +428,7 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
             #print t.scale
             
             t.start = self.mapToScene(0,0).x()
-            
+            t.setCurrentFrame(scene.getFrame())
             #t.end = self.mapToScene(self.width() - self.m, self.topMaginHeight).x()
             t.repaint()
         
@@ -383,6 +438,36 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
         result = super(AAFTimelineGraphicsView,self).paintEvent(event)
         self.updateTrackLabels()
         self.updateTimeLine()
+        
+    def mousePressEvent(self,event):
+        pos = event.pos()
+        scenePos = self.mapToScene(pos)
+        
+        scene = self.scene()
+        
+        if scene:
+            if not scene.itemAt(scenePos):
+                self.setCurrentFrame(scenePos.x())
+                self.timeSliderDrag = True
+                event.accept()
+
+        
+        super(AAFTimelineGraphicsView,self).mousePressEvent(event)
+         
+    def mouseMoveEvent(self, event):
+        pos = event.pos()
+        scenePos = self.mapToScene(pos)
+        if self.timeSliderDrag:
+            self.setCurrentFrame(scenePos.x())
+            
+        super(AAFTimelineGraphicsView,self).mouseMoveEvent(event)
+             
+    def mouseReleaseEvent(self,event):
+        if self.timeSliderDrag:
+            self.timeSliderDrag = False
+         
+        super(AAFTimelineGraphicsView,self).mouseReleaseEvent(event)
+
 
     def wheelEvent(self, event):
         
