@@ -146,10 +146,6 @@ class GraphicsTrack(QtGui.QGraphicsRectItem):
             y = self.parent.y()
             self.setY(y + self.parent.height + spacing)
             
-        
-
-
-
 class AAFTimeline(QtGui.QGraphicsScene):
     
     def __init__(self,parent=None):
@@ -199,6 +195,7 @@ class AAFTimeline(QtGui.QGraphicsScene):
     def mousePressEvent(self,event):
         
         pos = event.scenePos()
+        print pos
         if not self.itemAt(event.scenePos()):
             self.setFrame(pos.x())
             self.timeSliderDrag = True
@@ -234,8 +231,58 @@ class AAFTimeline(QtGui.QGraphicsScene):
         self.addItem(self.timeSlider)
         
               
-
+class TimeLineWidget(QtGui.QWidget):
     
+    def __init__(self,parent):
+        
+        super(TimeLineWidget,self).__init__(parent)
+        
+        self.start = 0
+        self.end = 0
+        self.scale = 1
+    
+    def paintEvent(self, event):
+        super(TimeLineWidget,self).paintEvent(event)
+        
+        width = self.width()
+        
+        end = (width / self.scale) + self.start
+        #print self.scale,self.width(),self.start,'-', end
+        
+        painter =QtGui.QPainter()
+        painter.begin(self)
+        #painter.setBrush(Qt.black)
+        
+        rect = self.rect()
+        rect.adjust(0,0,0,-2)
+        
+        painter.drawRect(rect)
+
+        #step = 1 * self.scale
+        length = end - self.start
+        step = 1
+        while width / length * step < 10:
+            step += 1
+        
+        for i in xrange(int(self.start), int(end), step):
+            x = (i-self.start)  * self.scale
+            
+            height_ratio = .5
+            
+            if i% 12 == 0:
+                height_ratio = .25
+            
+            painter.drawLine(x, self.height() * height_ratio, x, self.height()-4)
+        
+        #while True:
+            
+            
+        
+       # print width * self.scale,  self.end
+
+        painter.end()
+        
+        
 class AAFTimelineGraphicsView(QtGui.QGraphicsView):
     
     def __init__(self,parent=None):
@@ -244,11 +291,14 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
         #self.setViewportUpdateMode(QtGui.QGraphicsView.FullViewportUpdate)
         
         self.marginWidth = 90
+        self.topMaginHeight = 20
         
-        self.setViewportMargins(self.marginWidth, 0, 0, 0)
+        self.setViewportMargins(self.marginWidth, self.topMaginHeight, 0, 0)
+        
+        self.timelineWidget = TimeLineWidget(self)
         
         self.trackWidgets = []
-        
+                
 
     def updateTrackLabels(self,offset=0):
         scene = self.scene()
@@ -271,18 +321,39 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
             label = self.trackWidgets[i]
             
             label.show()
-            label.move(0,widget_pos.y())
+            label.move(0,widget_pos.y() + self.topMaginHeight)
             
             label.setText(track.name)
 
             label.setFixedWidth(self.marginWidth)
             label.setFixedHeight(widget_height + 2)
             
+    def updateTimeLine(self):
+        
+        t = self.timelineWidget
+        
+        t.move(QtCore.QPoint(self.marginWidth,0))
+        
+        t.setFixedWidth(self.viewport().width())
+        t.setFixedHeight(self.topMaginHeight)
+        
+        
+        scene = self.scene()
+        if scene:
+            t.scale = self.transform().m11()
+            #print t.scale
+            
+            t.start = self.mapToScene(0,0).x()
+            
+            #t.end = self.mapToScene(self.width() - self.m, self.topMaginHeight).x()
+            t.repaint()
+        
 
     def paintEvent(self, event):
         #self.updateTrackLabels()
         result = super(AAFTimelineGraphicsView,self).paintEvent(event)
         self.updateTrackLabels()
+        self.updateTimeLine()
 
     def wheelEvent(self, event):
         
