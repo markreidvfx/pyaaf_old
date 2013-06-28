@@ -278,12 +278,12 @@ class TimeLineWidget(QtGui.QWidget):
         
         
         last_tick = 0
-        last_text = 0
+        last_text = -90
         
         step = 1
         #find a optimized step
         #this should be adjusted of different frame rates
-        for step in (1,2,3,6,12,24):
+        for step in (1,2,3,6,12,24,48,24*30):
             if self.width() / length * step > 5:
                 break
 
@@ -296,7 +296,7 @@ class TimeLineWidget(QtGui.QWidget):
                 last_tick = x
                 height_ratio = .7
                 
-                if i% 12 == 0:
+                if i % (step * 2) == 0:
                     height_ratio = .5
                 
                 painter.drawLine(x, self.height() * height_ratio, x, self.height()-4)
