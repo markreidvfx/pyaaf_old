@@ -238,16 +238,32 @@ class TimeLineWidget(QtGui.QWidget):
         super(TimeLineWidget,self).__init__(parent)
         
         self.start = 0
-        self.end = 0
+        self.end = 1
         self.scale = 1
+        
+    def setScale(self,value):
+        self.scale = value
+        self.end = (self.width() / self.scale) + self.start
+        
+    def setEnd(self, value):
+        
+        self.end = value
+        self.scale = self.length() / self.width()
+        
+    def length(self):
+        
+        return self.end - self.start
+        
+    def mapFromFrame(self,value):
+        
+        return (value - self.start)  * self.scale
+    
+    def mapToFrame(self, value):
+        
+        pass
     
     def paintEvent(self, event):
         super(TimeLineWidget,self).paintEvent(event)
-        
-        width = self.width()
-        
-        end = (width / self.scale) + self.start
-        #print self.scale,self.width(),self.start,'-', end
         
         painter =QtGui.QPainter()
         painter.begin(self)
@@ -258,27 +274,23 @@ class TimeLineWidget(QtGui.QWidget):
         
         painter.drawRect(rect)
 
-        #step = 1 * self.scale
-        length = end - self.start
+        length = self.length()
         step = 1
-        while width / length * step < 10:
-            step += 1
         
-        for i in xrange(int(self.start), int(end), step):
-            x = (i-self.start)  * self.scale
-            
-            height_ratio = .5
-            
-            if i% 12 == 0:
-                height_ratio = .25
-            
-            painter.drawLine(x, self.height() * height_ratio, x, self.height()-4)
+        last_tick = 0
+
         
-        #while True:
+        for i in xrange(int(self.start), int(self.end), step):
+            x = self.mapFromFrame(i)
             
-            
-        
-       # print width * self.scale,  self.end
+            if x - last_tick > 5:
+                last_tick = x
+                height_ratio = .5
+                
+                if i% 12 == 0:
+                    height_ratio = .25
+                
+                painter.drawLine(x, self.height() * height_ratio, x, self.height()-4)
 
         painter.end()
         
@@ -340,7 +352,7 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
         
         scene = self.scene()
         if scene:
-            t.scale = self.transform().m11()
+            t.setScale(self.transform().m11())
             #print t.scale
             
             t.start = self.mapToScene(0,0).x()
