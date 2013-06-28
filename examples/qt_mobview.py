@@ -275,22 +275,39 @@ class TimeLineWidget(QtGui.QWidget):
         painter.drawRect(rect)
 
         length = self.length()
-        step = 1
+        
         
         last_tick = 0
-
+        last_text = 0
         
-        for i in xrange(int(self.start), int(self.end), step):
+        step = 1
+        #find a optimized step
+        #this should be adjusted of different frame rates
+        for step in (1,2,3,6,12,24):
+            if self.width() / length * step > 5:
+                break
+
+        start = int(round(self.start/step) * step) #start at a multple of step
+
+        for i in xrange(start, int(self.end), step):
             x = self.mapFromFrame(i)
             
             if x - last_tick > 5:
                 last_tick = x
-                height_ratio = .5
+                height_ratio = .7
                 
                 if i% 12 == 0:
-                    height_ratio = .25
+                    height_ratio = .5
                 
                 painter.drawLine(x, self.height() * height_ratio, x, self.height()-4)
+            
+            
+            if i & 1 == 0: #text for only even numbers
+                if int(round(i/step) * step) == i: #only multiples of step
+                    if x - last_text > 100:
+                        last_text = x
+                        height = self.height() * .4
+                        painter.drawText(QtCore.QPointF(x,height), str(i))
 
         painter.end()
         
@@ -303,7 +320,7 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
         #self.setViewportUpdateMode(QtGui.QGraphicsView.FullViewportUpdate)
         
         self.marginWidth = 90
-        self.topMaginHeight = 20
+        self.topMaginHeight = 35
         
         self.setViewportMargins(self.marginWidth, self.topMaginHeight, 0, 0)
         
