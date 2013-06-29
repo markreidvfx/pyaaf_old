@@ -401,6 +401,10 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
             self.verticalScrollBar().setValue(y) #Don't change the Y Scroll
             self.frameSpinbox.setValue(int(value))
             self.repaint()
+    def currentFrame(self):
+        scene = self.scene()
+        if scene:
+            return scene.getFrame()
         
             
     def updateTimeLine(self):
@@ -419,7 +423,7 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
             #print t.scale
             
             t.start = self.mapToScene(0,0).x()
-            t.setCurrentFrame(scene.getFrame())
+            t.setCurrentFrame(self.currentFrame())
             #t.end = self.mapToScene(self.width() - self.m, self.topMaginHeight).x()
             t.repaint()
         
@@ -445,6 +449,15 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
         
         super(AAFTimelineGraphicsView,self).mousePressEvent(event)
         
+    def snapToNearest(self,radius = 50):
+        
+        pos = self.mapFromScene(self.currentFrame(), 0)
+        item = self.nearestItemAt(pos,radius)
+        
+        if item:
+            self.setCurrentFrame(item.pos().x())
+        
+        
     def nearestItemAt(self,pos,radius = 50):
         
         scene = self.scene()
@@ -466,7 +479,7 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
         
         rectF = QtCore.QRectF(min_x, sceneRect.top(),
                             max_x, sceneRect.bottom())
-        #print pos, rectF
+        
         last_item = None
         last_distance = None
         
@@ -499,9 +512,7 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
             
             
             if event.modifiers() == Qt.ControlModifier:
-                nearset = self.nearestItemAt(pos)
-                if nearset:
-                    self.setCurrentFrame(nearset.pos().x())
+                self.snapToNearest()
             
             
             
