@@ -346,6 +346,13 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
         self.timelineWidget = TimeLineWidget(self)
         self.timelineWidget.frameChanged.connect(self.setCurrentFrame)
         
+        self.frameSpinbox = QtGui.QSpinBox(self)
+        
+        self.frameSpinbox.setFixedSize(self.marginWidth-3,self.topMaginHeight-3)
+        self.frameSpinbox.setMinimum(-100000)
+        self.frameSpinbox.setMaximum(100000)
+        
+        self.frameSpinbox.valueChanged.connect(self.setCurrentFrame)
         self.trackWidgets = []
                 
 
@@ -389,7 +396,7 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
             y = self.verticalScrollBar().value()
             self.ensureVisible(sliderRect)
             self.verticalScrollBar().setValue(y) #Don't change the Y Scroll
-
+            self.frameSpinbox.setValue(int(value))
             self.repaint()
         
             
@@ -453,12 +460,15 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
     def wheelEvent(self, event):
         
         self.setTransformationAnchor(QtGui.QGraphicsView.AnchorUnderMouse)
-        scaleFactor = 1.15
-        
+        scaleFactorX = 1.15
+        scaleFactorY = scaleFactorX
+        if event.modifiers() == Qt.AltModifier:
+            scaleFactorY = 1    
         if event.delta() > 0:
-            self.scale(scaleFactor, scaleFactor)
+            
+            self.scale(scaleFactorX, scaleFactorY)
         else:
-            self.scale(1.0 / scaleFactor, 1.0 / scaleFactor)
+            self.scale(1.0 / scaleFactorX, 1.0 / scaleFactorY)
 
     def keyPressEvent(self, event):
         
