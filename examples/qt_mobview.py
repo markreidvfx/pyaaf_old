@@ -256,6 +256,7 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
 
             label.setFixedWidth(self.marginWidth)
             label.setFixedHeight(widget_height + 2)
+        self.frameSpinbox.raise_()
             
     def setCurrentFrame(self,value):
         
@@ -420,14 +421,10 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
                 self.fitInView(scene.sceneRect(),mode=mode)
                 
             elif event.key() == Qt.Key_Right:
-                
-                frame = scene.getFrame()
-                self.setCurrentFrame(frame + 1)
+                self.setCurrentFrame(self.currentFrame() + 1)
             
             elif event.key() == Qt.Key_Left:
-                
-                frame = scene.getFrame()
-                self.setCurrentFrame(frame - 1)
+                self.setCurrentFrame(self.currentFrame() - 1)
                 
             else:
                 super(AAFTimelineGraphicsView,self).keyPressEvent(event)
