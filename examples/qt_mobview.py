@@ -211,12 +211,14 @@ class TimeLineWidget(QtGui.QWidget):
         
         super(TimeLineWidget,self).__init__(parent)
         
+        fps = 24
         self.start = 0
         self.end = 1
         self.scale = 1
         self.currentFrame = 10
         self.silderDrag = True
-
+        self.fps = fps
+        self.steps = (1,2,3,int(fps/4), int(fps/2), fps,fps*2, fps*30, fps*30*5,fps*30*15,fps*30*30,fps*30*60)
         
     def setCurrentFrame(self,value):
         
@@ -298,9 +300,11 @@ class TimeLineWidget(QtGui.QWidget):
         last_text = -90
         
         step = 1
+        
+        fps = self.fps
         #find a optimized step
         #this should be adjusted of different frame rates
-        for step in (1,2,3,6,12,24,48,24*30):
+        for step in self.steps:
             if self.width() / length * step > 5:
                 break
 
