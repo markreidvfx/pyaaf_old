@@ -280,10 +280,20 @@ class TimeLineWidget(QtGui.QWidget):
         rect.adjust(0,0,0,-2)
         
         painter.drawRect(rect)
-
+        
+        #paint timeslider
+        rect = QtCore.QRectF(0,0,1.0 * self.scale,self.height())
+        rect.translate(self.mapFromFrame(self.currentFrame), 0)
+        pen =QtGui.QPen(Qt.blue)
+        painter.setPen(pen)
+        painter.setBrush(Qt.blue)
+        painter.drawRect(rect)
+        
+        
+        painter.setPen(QtGui.QPen(Qt.black))
+        painter.setBrush(Qt.NoBrush)
+        
         length = self.length()
-        
-        
         last_tick = 0
         last_text = -90
         
@@ -316,17 +326,6 @@ class TimeLineWidget(QtGui.QWidget):
                         height = self.height() * .4
                         painter.drawText(QtCore.QPointF(x,height), str(i))
                         
-                        
-        rect = QtCore.QRectF(0,0,1 * self.scale,self.height())
-        
-        rect.translate(self.mapFromFrame(self.currentFrame), 0)
-        
-        pen =QtGui.QPen(Qt.blue)
-        
-        painter.setPen(pen)
-        painter.setBrush(Qt.blue)
-        
-        painter.drawRect(rect)
         
         painter.end()
         
