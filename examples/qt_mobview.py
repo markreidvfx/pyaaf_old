@@ -440,12 +440,66 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
 
         
         super(AAFTimelineGraphicsView,self).mousePressEvent(event)
+        
+    def nearestItemAt(self,pos,radius = 50):
+        
+        scene = self.scene()
+        
+        sceneRect = scene.sceneRect()
+        
+        top = self.mapFromScene(sceneRect.topLeft()).y()
+        bottom = self.mapFromScene(sceneRect.bottomRight()).y()
+        
+        rect = QtCore.QRect(pos.x() - radius, top,pos.x() + radius, bottom)
+        rectF = QtCore.QRectF(rect)
+        
+        nearest = None
+        
+        scenePos = self.mapToScene(pos)
+        
+        min_x = self.mapToScene(pos.x() - radius, 0).x()
+        max_x = self.mapToScene(pos.x() + radius, 0).x()
+        
+        rectF = QtCore.QRectF(min_x, sceneRect.top(),
+                            max_x, sceneRect.bottom())
+        #print pos, rectF
+        last_item = None
+        last_distance = None
+        
+        for item in scene.items(rectF,mode=Qt.IntersectsItemBoundingRect):
+            
+            if isinstance(item, GraphicsClip):
+                itemX = item.pos().x()
+                if itemX > min_x and itemX < max_x:
+                    distance = abs(scenePos.x() - itemX)
+                    if last_item is None:
+                        last_item = item
+                        last_distance = distance
+                        
+                    else:
+                        if distance < last_distance:
+                            last_item = item
+                            last_distance = distance
+        
+        return last_item
+                            
+        
          
     def mouseMoveEvent(self, event):
         pos = event.pos()
         scenePos = self.mapToScene(pos)
+        
+        scene = self.scene()
         if self.timeSliderDrag:
             self.setCurrentFrame(scenePos.x())
+            
+            
+            if event.modifiers() == Qt.ControlModifier:
+                nearset = self.nearestItemAt(pos)
+                if nearset:
+                    self.setCurrentFrame(nearset.pos().x())
+            
+            
             
         super(AAFTimelineGraphicsView,self).mouseMoveEvent(event)
              
@@ -475,7 +529,7 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
         
         if scene:
             if event.key() == Qt.Key_F:
-                mode=Qt.KeepAspectRatio
+                mode=Qt.KeepAspectRatioByExpanding
                 if event.modifiers() == Qt.ShiftModifier:
                     mode = Qt.IgnoreAspectRatio           
                 self.fitInView(scene.sceneRect(),mode=mode)
