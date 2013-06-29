@@ -349,8 +349,7 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
         self.frameSpinbox = QtGui.QSpinBox(self)
         
         self.frameSpinbox.setFixedSize(self.marginWidth-3,self.topMaginHeight-3)
-        self.frameSpinbox.setMinimum(-100000)
-        self.frameSpinbox.setMaximum(100000)
+        self.frameSpinbox.setRange(-1000000,10000000)
         
         self.frameSpinbox.valueChanged.connect(self.setCurrentFrame)
         self.trackWidgets = []
