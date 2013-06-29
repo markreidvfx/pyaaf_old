@@ -191,32 +191,6 @@ class AAFTimeline(QtGui.QGraphicsScene):
         
     def getFrame(self):
         return self.timeSlider.getFrame()
-#         
-#     def mousePressEvent(self,event):
-#         
-#         pos = event.scenePos()
-#         print pos
-#         if not self.itemAt(event.scenePos()):
-#             self.setFrame(pos.x())
-#             self.timeSliderDrag = True
-#             event.accept()
-#         else:
-#             super(AAFTimeline,self).mousePressEvent(event)
-#             
-#     def mouseMoveEvent(self, event):
-#         super(AAFTimeline,self).mouseMoveEvent(event)
-#         
-#         if self.timeSliderDrag:
-#             pos = event.scenePos()
-#             self.setFrame(pos.x())
-#             
-#     def mouseReleaseEvent(self,event):
-#         if self.timeSliderDrag:
-#             self.timeSliderDrag = False
-#         
-#         super(AAFTimeline,self).mouseReleaseEvent(event)
-
-        
     
     def clear(self):
         
@@ -410,6 +384,14 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
         if scene:
             scene.setFrame(value)
             self.updateTimeLine()
+            
+            sliderRect = QtCore.QRectF(scene.timeSlider.sceneBoundingRect())
+
+            y = self.verticalScrollBar().value()
+            self.ensureVisible(sliderRect)
+            self.verticalScrollBar().setValue(y) #Don't change the Y Scroll
+
+            self.repaint()
         
             
     def updateTimeLine(self):
@@ -442,7 +424,7 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
     def mousePressEvent(self,event):
         pos = event.pos()
         scenePos = self.mapToScene(pos)
-        
+        print "scene",scenePos
         scene = self.scene()
         
         if scene:
@@ -493,12 +475,12 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
             elif event.key() == Qt.Key_Right:
                 
                 frame = scene.getFrame()
-                scene.setFrame(frame + 1)
+                self.setCurrentFrame(frame + 1)
             
             elif event.key() == Qt.Key_Left:
                 
                 frame = scene.getFrame()
-                scene.setFrame(frame - 1)
+                self.setCurrentFrame(frame - 1)
                 
             else:
                 super(AAFTimelineGraphicsView,self).keyPressEvent(event)
