@@ -39,7 +39,7 @@ class GraphicsTimeSlider(QtGui.QGraphicsRectItem):
         self.frame = int(value)
         self.adjust()
         
-        print "frame =", self.frame
+        #print "frame =", self.frame
     def getFrame(self):
         return self.frame
         
@@ -426,29 +426,6 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
             t.setCurrentFrame(self.currentFrame())
             #t.end = self.mapToScene(self.width() - self.m, self.topMaginHeight).x()
             t.repaint()
-        
-
-    def paintEvent(self, event):
-        #self.updateTrackLabels()
-        result = super(AAFTimelineGraphicsView,self).paintEvent(event)
-        self.updateTrackLabels()
-        self.updateTimeLine()
-        
-    def mousePressEvent(self,event):
-        pos = event.pos()
-        scenePos = self.mapToScene(pos)
-        print "scene",scenePos
-        scene = self.scene()
-        
-        if scene:
-            if not scene.itemAt(scenePos):
-                self.setCurrentFrame(scenePos.x())
-                self.timeSliderDrag = True
-                event.accept()
-
-        
-        super(AAFTimelineGraphicsView,self).mousePressEvent(event)
-        
     def snapToNearest(self,radius = 50):
         
         pos = self.mapFromScene(self.currentFrame(), 0)
@@ -499,8 +476,28 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
                             last_distance = distance
         
         return last_item
-                            
         
+
+    def paintEvent(self, event):
+        #self.updateTrackLabels()
+        result = super(AAFTimelineGraphicsView,self).paintEvent(event)
+        self.updateTrackLabels()
+        self.updateTimeLine()
+        
+    def mousePressEvent(self,event):
+        pos = event.pos()
+        scenePos = self.mapToScene(pos)
+        print "scene",scenePos
+        scene = self.scene()
+        
+        if scene:
+            if not scene.itemAt(scenePos):
+                self.setCurrentFrame(scenePos.x())
+                self.timeSliderDrag = True
+                event.accept()
+
+        
+        super(AAFTimelineGraphicsView,self).mousePressEvent(event)
          
     def mouseMoveEvent(self, event):
         pos = event.pos()
