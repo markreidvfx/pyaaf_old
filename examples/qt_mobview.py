@@ -202,137 +202,7 @@ class AAFTimeline(QtGui.QGraphicsScene):
         self.timeSlider.edge_space = self.edge_spacing
         self.timeSlider.setPos(0,0)
         
-        self.addItem(self.timeSlider)
-        
-              
-class TimeLineWidget(QtGui.QWidget):
-    frameChanged = QtCore.pyqtSignal(int)
-    def __init__(self,parent):
-        
-        super(TimeLineWidget,self).__init__(parent)
-        
-        fps = 24
-        self.start = 0
-        self.end = 1
-        self.scale = 1
-        self.currentFrame = 10
-        self.silderDrag = True
-        self.fps = fps
-        self.steps = (1,2,3,int(fps/4), int(fps/2), fps,fps*2, fps*30, fps*30*5,fps*30*15,fps*30*30,fps*30*60)
-        
-    def setCurrentFrame(self,value):
-        
-        self.currentFrame = int(value)
-        self.repaint()
-        
-    def setScale(self,value):
-        self.scale = value
-        self.end = (self.width() / self.scale) + self.start
-        
-    def setEnd(self, value):
-        
-        self.end = value
-        self.scale = self.length() / self.width()
-        
-    def length(self):
-        
-        return self.end - self.start
-        
-    def mapFromFrame(self,value):
-        
-        return (float(value) - self.start)  * self.scale
-    
-    def mapToFrame(self, value):
-        
-        frame = (value/ float(self.width()) * self.length()) + self.start
-        return int(frame)
-    
-    def mousePressEvent(self, event):
-
-        frame = self.mapToFrame(event.pos().x())
-        self.setCurrentFrame(frame)
-        self.silderDrag = True
-        self.frameChanged.emit(frame)
-        
-        super(TimeLineWidget,self).mousePressEvent(event)
-    def mouseMoveEvent(self, event):
-        
-        if self.silderDrag:
-            frame = self.mapToFrame(event.pos().x())
-            self.setCurrentFrame(frame)
-            self.frameChanged.emit(frame)
-        super(TimeLineWidget,self).mouseMoveEvent(event)  
-    
-    def mouseReleaseEvent(self,event):
-        
-        if self.silderDrag:
-            self.silderDrag = False
-        
-        super(TimeLineWidget,self).mouseMoveEvent(event)  
-        
-         
-    def paintEvent(self, event):
-        super(TimeLineWidget,self).paintEvent(event)
-        
-        painter =QtGui.QPainter()
-        painter.begin(self)
-        #painter.setBrush(Qt.black)
-        
-        rect = self.rect()
-        rect.adjust(0,0,0,-2)
-        
-        painter.drawRect(rect)
-        
-        #paint timeslider
-        rect = QtCore.QRectF(0,0,1.0 * self.scale,self.height())
-        rect.translate(self.mapFromFrame(self.currentFrame), 0)
-        pen =QtGui.QPen(Qt.blue)
-        painter.setPen(pen)
-        painter.setBrush(Qt.blue)
-        painter.drawRect(rect)
-        
-        
-        painter.setPen(QtGui.QPen(Qt.black))
-        painter.setBrush(Qt.NoBrush)
-        
-        length = self.length()
-        last_tick = 0
-        last_text = -90
-        
-        step = 1
-        
-        fps = self.fps
-        #find a optimized step
-        #this should be adjusted of different frame rates
-        for step in self.steps:
-            if self.width() / length * step > 5:
-                break
-
-        start = int(round(self.start/step) * step) #start at a multple of step
-
-        for i in xrange(start, int(self.end), step):
-            x = self.mapFromFrame(i)
-            
-            if x - last_tick > 5:
-                last_tick = x
-                height_ratio = .7
-                
-                if i % (step * 2) == 0:
-                    height_ratio = .5
-                
-                painter.drawLine(x, self.height() * height_ratio, x, self.height()-4)
-            
-            
-            if i & 1 == 0: #text for only even numbers
-                if int(round(i/step) * step) == i: #only multiples of step
-                    if x - last_text > 100:
-                        last_text = x
-                        height = self.height() * .4
-                        painter.drawText(QtCore.QPointF(x,height), str(i))
-                        
-        
-        painter.end()
-        
+        self.addItem(self.timeSlider)        
         
 class AAFTimelineGraphicsView(QtGui.QGraphicsView):
     
@@ -562,6 +432,134 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
 
         else:
             super(AAFTimelineGraphicsView,self).keyPressEvent(event)
+            
+class TimeLineWidget(QtGui.QWidget):
+    frameChanged = QtCore.pyqtSignal(int)
+    def __init__(self,parent):
+        
+        super(TimeLineWidget,self).__init__(parent)
+        
+        fps = 24
+        self.start = 0
+        self.end = 1
+        self.scale = 1
+        self.currentFrame = 10
+        self.silderDrag = True
+        self.fps = fps
+        self.steps = (1,2,3,int(fps/4), int(fps/2), fps,fps*2, fps*30, fps*30*5,fps*30*15,fps*30*30,fps*30*60)
+        
+    def setCurrentFrame(self,value):
+        
+        self.currentFrame = int(value)
+        self.repaint()
+        
+    def setScale(self,value):
+        self.scale = value
+        self.end = (self.width() / self.scale) + self.start
+        
+    def setEnd(self, value):
+        
+        self.end = value
+        self.scale = self.length() / self.width()
+        
+    def length(self):
+        
+        return self.end - self.start
+        
+    def mapFromFrame(self,value):
+        
+        return (float(value) - self.start)  * self.scale
+    
+    def mapToFrame(self, value):
+        
+        frame = (value/ float(self.width()) * self.length()) + self.start
+        return int(frame)
+    
+    def mousePressEvent(self, event):
+
+        frame = self.mapToFrame(event.pos().x())
+        self.setCurrentFrame(frame)
+        self.silderDrag = True
+        self.frameChanged.emit(frame)
+        
+        super(TimeLineWidget,self).mousePressEvent(event)
+    def mouseMoveEvent(self, event):
+        
+        if self.silderDrag:
+            frame = self.mapToFrame(event.pos().x())
+            self.setCurrentFrame(frame)
+            self.frameChanged.emit(frame)
+        super(TimeLineWidget,self).mouseMoveEvent(event)  
+    
+    def mouseReleaseEvent(self,event):
+        
+        if self.silderDrag:
+            self.silderDrag = False
+        
+        super(TimeLineWidget,self).mouseMoveEvent(event)  
+        
+         
+    def paintEvent(self, event):
+        super(TimeLineWidget,self).paintEvent(event)
+        
+        painter =QtGui.QPainter()
+        painter.begin(self)
+        #painter.setBrush(Qt.black)
+        
+        rect = self.rect()
+        rect.adjust(0,0,0,-2)
+        
+        painter.drawRect(rect)
+        
+        #paint timeslider
+        rect = QtCore.QRectF(0,0,1.0 * self.scale,self.height())
+        rect.translate(self.mapFromFrame(self.currentFrame), 0)
+        pen =QtGui.QPen(Qt.blue)
+        painter.setPen(pen)
+        painter.setBrush(Qt.blue)
+        painter.drawRect(rect)
+        
+        
+        painter.setPen(QtGui.QPen(Qt.black))
+        painter.setBrush(Qt.NoBrush)
+        
+        length = self.length()
+        last_tick = 0
+        last_text = -90
+        
+        step = 1
+        
+        fps = self.fps
+        #find a optimized step
+        #this should be adjusted of different frame rates
+        for step in self.steps:
+            if self.width() / length * step > 5:
+                break
+
+        start = int(round(self.start/step) * step) #start at a multple of step
+
+        for i in xrange(start, int(self.end), step):
+            x = self.mapFromFrame(i)
+            
+            if x - last_tick > 5:
+                last_tick = x
+                height_ratio = .7
+                
+                if i % (step * 2) == 0:
+                    height_ratio = .5
+                
+                painter.drawLine(x, self.height() * height_ratio, x, self.height()-4)
+            
+            
+            if i & 1 == 0: #text for only even numbers
+                if int(round(i/step) * step) == i: #only multiples of step
+                    if x - last_text > 100:
+                        last_text = x
+                        height = self.height() * .4
+                        painter.drawText(QtCore.QPointF(x,height), str(i))
+                        
+        
+        painter.end()
             
 
 
