@@ -219,7 +219,7 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
         
         self.timelineWidget = TimeLineWidget(self)
         self.timelineWidget.frameChanged.connect(self.setCurrentFrame)
-        
+        self.timelineWidget.snap.connect(self.snapToNearest)
         self.frameSpinbox = QtGui.QSpinBox(self)
         
         self.frameSpinbox.setFixedSize(self.marginWidth-3,self.topMaginHeight-3)
@@ -364,6 +364,9 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
             if not scene.itemAt(scenePos):
                 self.setCurrentFrame(scenePos.x())
                 self.timeSliderDrag = True
+                
+                if event.modifiers() == Qt.ControlModifier:
+                    self.snapToNearest()
                 event.accept()
 
         
@@ -435,6 +438,7 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
             
 class TimeLineWidget(QtGui.QWidget):
     frameChanged = QtCore.pyqtSignal(int)
+    snap = QtCore.pyqtSignal(int)
     def __init__(self,parent):
         
         super(TimeLineWidget,self).__init__(parent)
@@ -443,6 +447,7 @@ class TimeLineWidget(QtGui.QWidget):
         self.start = 0
         self.end = 1
         self.scale = 1
+        self.snapRadius = 50
         self.currentFrame = 10
         self.silderDrag = True
         self.fps = fps
@@ -481,6 +486,8 @@ class TimeLineWidget(QtGui.QWidget):
         self.setCurrentFrame(frame)
         self.silderDrag = True
         self.frameChanged.emit(frame)
+        if event.modifiers() == Qt.ControlModifier:
+            self.snap.emit(self.snapRadius)
         
         super(TimeLineWidget,self).mousePressEvent(event)
     def mouseMoveEvent(self, event):
@@ -489,12 +496,16 @@ class TimeLineWidget(QtGui.QWidget):
             frame = self.mapToFrame(event.pos().x())
             self.setCurrentFrame(frame)
             self.frameChanged.emit(frame)
+            if event.modifiers() == Qt.ControlModifier:
+                self.snap.emit(self.snapRadius)
         super(TimeLineWidget,self).mouseMoveEvent(event)  
     
     def mouseReleaseEvent(self,event):
         
         if self.silderDrag:
             self.silderDrag = False
+            
+            
         
         super(TimeLineWidget,self).mouseMoveEvent(event)  
         
