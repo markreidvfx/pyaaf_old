@@ -257,6 +257,16 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
             label.setFixedWidth(self.marginWidth)
             label.setFixedHeight(widget_height + 2)
         self.frameSpinbox.raise_()
+        
+    def markIn(self,value):
+        print "markIn", value
+        self.timelineWidget.markIn(value)
+    def markOut(self,value):
+        print "markOut", value
+        self.timelineWidget.markOut(value)
+    def clearMarks(self):
+        print "clear marks"
+        self.timelineWidget.clearMarks()
             
     def setCurrentFrame(self,value):
         
@@ -426,6 +436,14 @@ class AAFTimelineGraphicsView(QtGui.QGraphicsView):
             elif event.key() == Qt.Key_Left:
                 self.setCurrentFrame(self.currentFrame() - 1)
                 
+            elif event.key() == Qt.Key_I:
+                self.markIn(self.currentFrame())
+                
+            elif event.key() == Qt.Key_O:
+                self.markOut(self.currentFrame())
+            
+            elif event.key() == Qt.Key_G:
+                self.clearMarks()
             else:
                 super(AAFTimelineGraphicsView,self).keyPressEvent(event)
                 
@@ -449,6 +467,20 @@ class TimeLineWidget(QtGui.QWidget):
         self.silderDrag = True
         self.fps = fps
         self.steps = (1,2,3,int(fps/4), int(fps/2), fps,fps*2, fps*30, fps*30*5,fps*30*15,fps*30*30,fps*30*60)
+        self.mark_in = None
+        self.mark_out = None
+        
+    def markIn(self,value):
+        self.mark_in= value
+        self.repaint()
+    def markOut(self,value):
+        self.mark_out = value
+        self.repaint()
+        
+    def clearMarks(self):
+        self.mark_in = None
+        self.mark_out = None
+        self.repaint()
         
     def setCurrentFrame(self,value):
         
@@ -527,9 +559,54 @@ class TimeLineWidget(QtGui.QWidget):
         painter.setBrush(Qt.blue)
         painter.drawRect(rect)
         
-        
+        #paint marks
         painter.setPen(QtGui.QPen(Qt.black))
         painter.setBrush(Qt.NoBrush)
+        
+        fm = QtGui.QFontMetricsF(painter.font())
+        
+        #draw markin
+        if not self.mark_in is None:
+            painter.save()
+            height = self.height() * .4
+            x = self.mapFromFrame(self.mark_in)
+            
+            char = ']'
+            font_width = fm.width(char)
+            
+            painter.drawText(QtCore.QPointF(x-font_width,height),char)
+            painter.restore()
+        
+        #draw markout
+        if not self.mark_out is None:
+            painter.save()
+            height = self.height() * .4
+            x = self.mapFromFrame(self.mark_out)
+            char = '['
+            font_width = fm.width(char)
+            
+            painter.drawText(QtCore.QPointF(x+font_width,height),char)
+            
+            painter.restore()
+        
+        #draw selection
+        if not self.mark_in is None and not self.mark_out is None:
+            painter.save()
+            selection_rect = QtCore.QRectF(0, 0,
+                                           (self.mark_out - self.mark_in)*self.scale, self.height())
+            
+            selection_rect.translate(self.mapFromFrame(self.mark_in), 0)
+
+            color = QtGui.QColor(Qt.blue)
+            color.setAlphaF(.4)
+            brush = QtGui.QBrush(color)
+            painter.setBrush(brush)
+            painter.setPen(QtGui.QPen(color))
+            painter.drawRect(selection_rect)
+            painter.restore()
+
+            
+        
         
         length = self.length()
         last_tick = 0
@@ -561,6 +638,7 @@ class TimeLineWidget(QtGui.QWidget):
             
             if i & 1 == 0: #text for only even numbers
                 if int(round(i/step) * step) == i: #only multiples of step
+                    
                     if x - last_text > 100:
                         last_text = x
                         height = self.height() * .4
