@@ -583,9 +583,9 @@ class TimeLineWidget(QtGui.QWidget):
             height = self.height() * .4
             x = self.mapFromFrame(self.mark_out)
             char = '['
-            font_width = fm.width(char)
+            #font_width = fm.width(char)
             
-            painter.drawText(QtCore.QPointF(x+font_width,height),char)
+            painter.drawText(QtCore.QPointF(x,height),char)
             
             painter.restore()
         
