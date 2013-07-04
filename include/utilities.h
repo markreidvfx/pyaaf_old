@@ -62,6 +62,16 @@ T GetInt(AxPropertyValue axPropertyValue )
     return i;
 };
 
+template <class TypeDst>
+inline bool isClassType(IUnknownSP sp)
+{
+    
+    IAAFSmartPointer<TypeDst> dummy;
+    
+    return AxIsA<TypeDst>(sp,dummy);
+    
+    
+};
 
 std::string AxStringToString( AxString axString );
 

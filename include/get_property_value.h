@@ -21,7 +21,7 @@ public:
     boost::python::object getObject();
     boost::python::object GetInteger( const IAAFPropertyValueSP& spPropVal,
                                      IAAFTypeDefIntSP& spTypeDef);
-    
+    void processAny(IAAFPropertyValueSP& spPropVal, IAAFTypeDef& spTypeDef);
     void process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefCharacterSP& spTypeDef );
     void process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefIndirectSP& spTypeDef );
     void process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefVariableArraySP&  spTypeDef);

@@ -37,6 +37,13 @@ boost::python::object PyGetValue::GetInteger( const IAAFPropertyValueSP& spPropV
     
 }
 
+
+void PyGetValue::processAny(IAAFPropertyValueSP& spPropVal, IAAFTypeDef& spTypeDef)
+{
+    
+    
+}
+
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefCharacterSP& spTypeDef)
 {
 }
@@ -47,8 +54,8 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefIndirectSP&
     AxTypeDef axActualTypeDef( axIndirect.GetActualType(spPropVal) );
     IAAFPropertyValueSP actualPropertyValueSP = axIndirect.GetActualValue(spPropVal);
     
-    IAAFTypeDefVariableArraySP spVariableArray;
-    if (AxIsA(axActualTypeDef, spVariableArray ))
+    //IAAFTypeDefVariableArraySP spVariableArray;
+    if (isClassType<IAAFTypeDefVariableArray>(axActualTypeDef))
     {
         
         IAAFTypeDefVariableArraySP sp(AxQueryInterface<IAAFTypeDef,
@@ -67,7 +74,7 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefVariableArr
     AxTypeDef axTypeDefOfArray( axVarArray.GetType() );
     IAAFTypeDefIntSP spTypeDefInt;
     
-    if (AxIsA(axTypeDefOfArray,spTypeDefInt))
+    if (isClassType<IAAFTypeDefInt>(axTypeDefOfArray))
     {
         IAAFTypeDefIntSP TypeDefIntSP(AxQueryInterface<IAAFTypeDef,IAAFTypeDefInt>(axTypeDefOfArray));
         AxTypeDefInt axTypeDefInt(TypeDefIntSP);
@@ -115,6 +122,7 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefRecordSP& s
     
     aafUInt32 size = axTDR.GetCount();
     
+    
     boost::python::dict d;
     
     for (aafUInt32 i = 0; i<size; i++)
@@ -132,9 +140,7 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefRecordSP& s
         if (axDef.GetAUID() == kAAFTypeID_DateStruct)
         {
             aafDateStruct_t date = GetDate(axValue);
-            
-            
-            d[name] = boost::python::make_tuple(date.year, date.month, date.day);
+            d[name] = DateToString(date);
         }
         else if (axDef.GetAUID() == kAAFTypeID_TimeStruct)
         {
@@ -144,13 +150,25 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefRecordSP& s
             
         }
         
+        else if (axDef.GetAUID() == kAAFTypeID_TimeStamp)
+        {
+            _aafTimeStamp_t timeStamp = GetTimeStamp(axValue);
+            d[name] = TimeStampToString( timeStamp );
+        }
+        
         else
         {
-            throw std::invalid_argument("Invalid AUID ");
+            
+            PyGetValue valueGetter;
+            
+            
+            
+            d[name] = boost::python::object();
+            //throw std::invalid_argument("Invalid AUID ");
         }
         
         
-        std::wcout << name << " " <<axDef.GetName() << "\n";
+        std::wcout << axTDR.GetName() << " " << name << " " <<axDef.GetName() << "\n";
         
     }
     _obj = d;
