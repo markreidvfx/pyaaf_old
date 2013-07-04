@@ -43,9 +43,36 @@ boost::python::object PyGetValue::GetInteger( const IAAFPropertyValueSP& spPropV
 void PyGetValue::processAny(IAAFPropertyValueSP& spPropVal, IAAFTypeDefSP& spTypeDef)
 {
     AxTypeDef axTypeDef(spTypeDef);
+    AxPropertyValue axValue(spPropVal);
+    
+    if (axTypeDef.GetAUID() == kAAFTypeID_DateStruct)
+    {
+        aafDateStruct_t date = GetDate(axValue);
+        _obj = boost::python::object( DateToString(date));
+    }
+    else if (axTypeDef.GetAUID() == kAAFTypeID_TimeStruct)
+    {
+        _aafTimeStruct_t time = GetTime( axValue);
+        
+        _obj = boost::python::object(TimeToString(time));
+        
+    }
+    
+    else if (axTypeDef.GetAUID() == kAAFTypeID_TimeStamp)
+    {
+        _aafTimeStamp_t timeStamp = GetTimeStamp(axValue);
+        _obj = boost::python::object(TimeStampToString( timeStamp ));
+    }
+    
+    else if (axTypeDef.GetAUID() == kAAFTypeID_AUID)
+    {
+        
+        aafUID_t uid = GetUID( axValue);
+        _obj = boost::python::object(uid);
+    }
     
     
-    if (isClassType<IAAFTypeDefInt>(axTypeDef))
+    else if (isClassType<IAAFTypeDefInt>(axTypeDef))
     {
         
         IAAFTypeDefIntSP sp(AxQueryInterface<IAAFTypeDef,
@@ -131,6 +158,26 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefFixedArrayS
     aafUInt32 size = axTDFA.GetCount();
     
     std::wcout << size << "\n";
+    
+    boost::python::list elements;
+    
+    for ( aafUInt32 i = 0; i<size; i++ )
+    {
+        
+        IAAFPropertyValueSP spElement = axTDFA.GetElementValue(spPropVal, i);
+        
+        AxPropertyValue axElement(spElement);
+        
+        IAAFTypeDefSP spElementTypeDef = axElement.GetType();
+        
+        PyGetValue valueGetter;
+        valueGetter.processAny(spElement, spElementTypeDef);
+        
+        elements.append(valueGetter.getObject());
+        
+    }
+    
+    _obj = elements;
 
 }
 
@@ -155,36 +202,14 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefRecordSP& s
         AxPropertyValue axValue(spValue);
         IAAFTypeDefSP spMemTypeDef = axValue.GetType();
         AxTypeDef axDef(spMemTypeDef);
+
+        PyGetValue valueGetter;
         
-        if (axDef.GetAUID() == kAAFTypeID_DateStruct)
-        {
-            aafDateStruct_t date = GetDate(axValue);
-            d[name] = DateToString(date);
-        }
-        else if (axDef.GetAUID() == kAAFTypeID_TimeStruct)
-        {
-            _aafTimeStruct_t time = GetTime( axValue);
-            
-            d[name] = TimeToString(time);
-            
-        }
+        valueGetter.processAny(spValue, spMemTypeDef);
         
-        else if (axDef.GetAUID() == kAAFTypeID_TimeStamp)
-        {
-            _aafTimeStamp_t timeStamp = GetTimeStamp(axValue);
-            d[name] = TimeStampToString( timeStamp );
-        }
+        d[name] = valueGetter.getObject();
+        //throw std::invalid_argument("Invalid AUID ");
         
-        else
-        {
-            
-            PyGetValue valueGetter;
-            
-            valueGetter.processAny(spValue, spMemTypeDef);
-            
-            d[name] = valueGetter.getObject();
-            //throw std::invalid_argument("Invalid AUID ");
-        }
         
         
         //std::wcout << axTDR.GetName() << " " << name << " " <<axDef.GetName() << "\n";
@@ -252,6 +277,13 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefStreamSP& s
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefStringSP& spTypeDef)
 {
+    
+    AxTypeDefString axTypeDefString(spTypeDef);
+    AxString value = axTypeDefString.GetElements( spPropVal );
+    
+    _obj = boost::python::object(value);
+    
+    
     
 }
 
