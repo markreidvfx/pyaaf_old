@@ -191,6 +191,10 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefStringSP& s
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefStrongObjRefSP& spTypeDef)
 {
     
+    AxTypeDefStrongObjRef axDefRef(spTypeDef);
+    
+    IAAFObjectSP spObj = axDefRef.GetObject<IAAFObject>(spPropVal);
+    _obj = boost::python::object(spObj);
 }
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefWeakObjRefSP& spTypeDef)
