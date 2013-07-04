@@ -13,10 +13,10 @@
 #include <AAFTypeDefUIDs.h>
 
 
-class PyValueGet : public AxPropertyValueNoopPrtcl {
+class PyGetValue : public AxPropertyValueNoopPrtcl {
 public:
-    PyValueGet() {};
-    virtual ~PyValueGet(){};
+    PyGetValue() {};
+    virtual ~PyGetValue(){};
     boost::python::object getObject();
     boost::python::object GetInteger( const IAAFPropertyValueSP& spPropVal,
                                      IAAFTypeDefIntSP& spTypeDef);

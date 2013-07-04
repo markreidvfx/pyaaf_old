@@ -38,10 +38,10 @@ std::wstring valueToString(AxPropertyValue& value)
 }
 
 
-boost::python::object PyGetValue(AxPropertyValue& ax)
+boost::python::object GetValue(AxPropertyValue& ax)
 {
     
-    PyValueGet valueGetter;
+    PyGetValue valueGetter;
     ax.Process(valueGetter);
     return valueGetter.getObject();
 
@@ -56,7 +56,7 @@ void Export_pyste_src_AxPropertyValue()
 
     class_<AxPropertyValue ,std::auto_ptr<AxPropertyValue>, boost::noncopyable> ("AxPropertyValue", init <IAAFPropertyValueSP>())
     .def("GetType",&AxPropertyValue::GetType)
-    .def("GetValue",PyGetValue)
+    .def("GetValue",GetValue)
     .def("toString",valueToString)
     .def("__str__",valueToString)
     ;

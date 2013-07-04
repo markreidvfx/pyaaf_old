@@ -69,12 +69,12 @@ std::string TimeToString( _aafTimeStruct_t &time )
 
 
 
-boost::python::object PyValueGet::getObject()
+boost::python::object PyGetValue::getObject()
 {
     return _obj;
 }
 
-boost::python::object PyValueGet::GetInteger( const IAAFPropertyValueSP& spPropVal, IAAFTypeDefIntSP& spTypeDef)
+boost::python::object PyGetValue::GetInteger( const IAAFPropertyValueSP& spPropVal, IAAFTypeDefIntSP& spTypeDef)
 {
     AxTypeDefInt axIntDef(spTypeDef);
     AxPropertyValue axValue(spPropVal);
@@ -106,11 +106,11 @@ boost::python::object PyValueGet::GetInteger( const IAAFPropertyValueSP& spPropV
     
 }
 
-void PyValueGet::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefCharacterSP& spTypeDef)
+void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefCharacterSP& spTypeDef)
 {
 }
 
-void PyValueGet::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefIndirectSP& spTypeDef )
+void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefIndirectSP& spTypeDef )
 {
     AxTypeDefIndirect axIndirect( spTypeDef );
     AxTypeDef axActualTypeDef( axIndirect.GetActualType(spPropVal) );
@@ -129,7 +129,7 @@ void PyValueGet::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefIndirectSP&
     
 }
 
-void PyValueGet::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefVariableArraySP&  spTypeDef)
+void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefVariableArraySP&  spTypeDef)
 {
     
     AxTypeDefVariableArray axVarArray( spTypeDef );
@@ -173,12 +173,12 @@ void PyValueGet::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefVariableArr
     
 }
 
-void PyValueGet::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefIntSP& spTypeDef)
+void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefIntSP& spTypeDef)
 {
     _obj = this->GetInteger(spPropVal,spTypeDef);
 }
 
-void PyValueGet::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefRecordSP& spTypeDef)
+void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefRecordSP& spTypeDef)
 {
     AxTypeDefRecord axTDR(spTypeDef);
     
