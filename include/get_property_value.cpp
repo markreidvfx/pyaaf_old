@@ -38,6 +38,8 @@ boost::python::object PyGetValue::GetInteger( const IAAFPropertyValueSP& spPropV
 }
 
 
+
+
 void PyGetValue::processAny(IAAFPropertyValueSP& spPropVal, IAAFTypeDefSP& spTypeDef)
 {
     AxTypeDef axTypeDef(spTypeDef);
@@ -54,8 +56,21 @@ void PyGetValue::processAny(IAAFPropertyValueSP& spPropVal, IAAFTypeDefSP& spTyp
         
     }
     
+    else if (isClassType<IAAFTypeDefFixedArray>(axTypeDef))
+        
+    {
+
+        IAAFTypeDefFixedArraySP sp(AxQueryInterface<IAAFTypeDef,
+                                   IAAFTypeDefFixedArray>(axTypeDef));
+        
+        this->process(spPropVal, sp);
+
+    }
+    
     else
     {
+        
+        std::wcout << axTypeDef.GetName() << "\n";
         throw std::invalid_argument("Invalid AUID ");
 
         
@@ -110,6 +125,13 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefExtEnumSP& 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefFixedArraySP& spTypeDef)
 {
     
+    AxTypeDefFixedArray axTDFA(spTypeDef);
+    
+    
+    aafUInt32 size = axTDFA.GetCount();
+    
+    std::wcout << size << "\n";
+
 }
 
 
@@ -175,7 +197,52 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefRecordSP& s
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefSetSP& spTypeDef)
 {
+    AxTypeDefSet axDefSet(spTypeDef);
     
+    
+    
+    _obj = boost::python::object(axDefSet.GetElements(spPropVal));
+    
+    
+    //boost::python::list elements;
+    //AxPropertyValueIter axIter(axDefSet.GetElements(spPropVal));
+    
+    /*
+    bool notAtEnd =true;
+    while (notAtEnd)
+    {
+        IAAFSmartPointer2<IAAFPropertyValue> nextValue;
+    
+    
+        notAtEnd = axIter.NextOne(nextValue);
+        if (notAtEnd)
+        {
+            
+            IAAFPropertyValueSP spValue = nextValue;
+            AxPropertyValue axValue(spValue);
+            
+            AxTypeDef axValueTypeDef(axValue.GetType());
+            
+            if (isClassType<IAAFTypeDefStrongObjRef>(axValueTypeDef))
+            {
+                IAAFTypeDefStrongObjRefSP sp(AxQueryInterface<IAAFTypeDef,
+                                              IAAFTypeDefStrongObjRef>(axValueTypeDef));
+                AxTypeDefStrongObjRef axDefRef(sp);
+                
+                
+                
+                IAAFObjectSP spObj = axDefRef.GetObject<IAAFObject>(spValue);
+                elements.append(spObj);
+          
+                //std::wcout << axValueTypeDef.GetName() << "\n";
+            }
+            
+            
+        }
+    }
+    
+    _obj = elements;
+     */
 }
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefStreamSP& spTypeDef)
