@@ -40,19 +40,20 @@ std::wstring valueToString(AxPropertyValue& value)
     
 }
 
-aafUInt8 GetUInt8( AxPropertyValue axPropertyValue )
+template < class T>
+T GetInt(AxPropertyValue axPropertyValue )
 {
     AxTypeDef axTypeDef( axPropertyValue.GetType() );
     AxTypeDefInt axTypeDefInt(
                               AxQueryInterface< IAAFTypeDef,
-                                                IAAFTypeDefInt > (axTypeDef ) );
+                              IAAFTypeDefInt > (axTypeDef ) );
     
-    aafUInt8 i;
+    T i;
     IAAFPropertyValueSP propValue( axPropertyValue.GetValue() );
     axTypeDefInt.GetInteger( propValue, &i );
     
     return i;
-}
+};
 
 
 class PyValueGet : public AxPropertyValueNoopPrtcl {
@@ -66,6 +67,38 @@ public:
     boost::python::object getObject()
     {
         return _obj;
+    }
+    
+    boost::python::object GetInteger( const IAAFPropertyValueSP& spPropVal, IAAFTypeDefIntSP& spTypeDef)
+    {
+        AxTypeDefInt axIntDef(spTypeDef);
+        AxPropertyValue axValue(spPropVal);
+        aafUInt32 size = axIntDef.GetSize();
+        
+        if (axIntDef.IsSigned())
+        {
+            if (sizeof(aafInt8) == size)
+                return boost::python::object(GetInt<aafInt8>(axValue));
+            else if (sizeof(aafInt16) == size)
+                return boost::python::object(GetInt<aafInt16>(axValue));
+            else if (sizeof(aafInt32) == size)
+                return boost::python::object(GetInt<aafInt32>(axValue));
+            else
+                return boost::python::object(GetInt<aafInt64>(axValue));
+        }
+        else
+        {
+            if (sizeof(aafUInt8) == size)
+                return boost::python::object(GetInt<aafUInt8>(axValue));
+            else if (sizeof(aafUInt16) == size)
+                return boost::python::object(GetInt<aafUInt16>(axValue));
+            else if (sizeof(aafUInt32) == size)
+                return boost::python::object(GetInt<aafUInt32>(axValue));
+            else
+                return boost::python::object(GetInt<aafUInt64>(axValue));
+        }
+        
+        
     }
     
     void process( IAAFPropertyValueSP&, IAAFTypeDefCharacterSP& )
@@ -100,9 +133,9 @@ public:
         
         if (AxIsA(axTypeDefOfArray,spTypeDefInt))
             {
+                IAAFTypeDefIntSP TypeDefIntSP(AxQueryInterface<IAAFTypeDef,IAAFTypeDefInt>(axTypeDefOfArray));
+                AxTypeDefInt axTypeDefInt(TypeDefIntSP);
                 
-                AxTypeDefInt axTypeDefInt(AxQueryInterface<IAAFTypeDef,
-                                      IAAFTypeDefInt>(axTypeDefOfArray));
                 
                 aafUInt32 size = axVarArray.GetCount(spPropVal);
                 
@@ -122,7 +155,7 @@ public:
                     if (notAtEnd)
                     {
                         AxPropertyValue value(nextValue);
-                        elements.append(GetUInt8(value));
+                        elements.append(this->GetInteger(nextValue,TypeDefIntSP));
                         
                     }
                     
@@ -133,6 +166,16 @@ public:
                 
             }
         
+    }
+    
+    void process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefIntSP& spTypeDef)
+    {
+        _obj = this->GetInteger(spPropVal,spTypeDef);
+    }
+    
+    void process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefRecordSP& spTypeDef)
+    {
+    
     }
 private:
     boost::python::object _obj;
