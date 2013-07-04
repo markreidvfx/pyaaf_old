@@ -56,8 +56,9 @@ endif()
 
 FILE(GLOB Souces src/*.cpp)
 FILE(GLOB AxLibSouces axLib/*.cpp)
+FILE(GLOB IncludeSources include/*.cpp)
 SET(CMAKE_SHARED_LIBRARY_PREFIX "")
-ADD_LIBRARY(core SHARED ${Souces} ${AxLibSouces})
+ADD_LIBRARY(core SHARED ${Souces} ${AxLibSouces} ${IncludeSources})
 
 
 target_link_libraries(core
