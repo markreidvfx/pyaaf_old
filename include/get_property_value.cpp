@@ -42,8 +42,9 @@ boost::python::object PyGetValue::GetInteger( const IAAFPropertyValueSP& spPropV
 
 void PyGetValue::processAny(IAAFPropertyValueSP& spPropVal, IAAFTypeDefSP& spTypeDef)
 {
-    AxTypeDef axTypeDef(spTypeDef);
     AxPropertyValue axValue(spPropVal);
+    AxTypeDef axTypeDef(axValue.GetType());
+    
     
     if (axTypeDef.GetAUID() == kAAFTypeID_DateStruct)
     {
@@ -71,94 +72,56 @@ void PyGetValue::processAny(IAAFPropertyValueSP& spPropVal, IAAFTypeDefSP& spTyp
         _obj = boost::python::object(uid);
     }
     
-    else if (isClassType<IAAFTypeDefInt>(axTypeDef))
-    {
-        
-        IAAFTypeDefIntSP sp(AxQueryInterface<IAAFTypeDef,
-                            IAAFTypeDefInt>(axTypeDef));
-        
-        this->process(spPropVal, sp);
-        
-        
-    }
-    
-    else if (isClassType<IAAFTypeDefStrongObjRef>(axTypeDef))
-    {
-        IAAFTypeDefStrongObjRefSP sp(AxQueryInterface<IAAFTypeDef,
-                                   IAAFTypeDefStrongObjRef>(axTypeDef));
-        
-        this->process(spPropVal, sp);
-        
-    }
-    
-    else if (isClassType<IAAFTypeDefWeakObjRef>(axTypeDef))
-    {
-        IAAFTypeDefWeakObjRefSP sp(AxQueryInterface<IAAFTypeDef,
-                                     IAAFTypeDefWeakObjRef>(axTypeDef));
-        
-        this->process(spPropVal, sp);
-        
-    }
-    else if (isClassType<IAAFTypeDefEnum>(axTypeDef))
-    {
-        
-        IAAFTypeDefEnumSP sp(AxQueryInterface<IAAFTypeDef,
-                                   IAAFTypeDefEnum>(axTypeDef));
-        
-        this->process(spPropVal, sp);
-        
-    }
-    
-    else if (isClassType<IAAFTypeDefFixedArray>(axTypeDef))
-    {
-
-        IAAFTypeDefFixedArraySP sp(AxQueryInterface<IAAFTypeDef,
-                                   IAAFTypeDefFixedArray>(axTypeDef));
-        
-        this->process(spPropVal, sp);
-
-    }
-    
-    else if (isClassType<IAAFTypeDefRecord>(axTypeDef))
-    {
-        
-        IAAFTypeDefRecordSP sp(AxQueryInterface<IAAFTypeDef,
-                                   IAAFTypeDefRecord>(axTypeDef));
-        
-        this->process(spPropVal, sp);
-        
-    }
-    
-    else if (isClassType<IAAFTypeDefString>(axTypeDef))
-        
-    {
-        
-        IAAFTypeDefStringSP sp(AxQueryInterface<IAAFTypeDef,
-                                   IAAFTypeDefString>(axTypeDef));
-        
-        this->process(spPropVal, sp);
-        
-    }
-    
-    else if (isClassType<IAAFTypeDefVariableArray>(axTypeDef))
-        
-    {
-        
-        IAAFTypeDefVariableArraySP sp(AxQueryInterface<IAAFTypeDef,
-                                   IAAFTypeDefVariableArray>(axTypeDef));
-        
-        this->process(spPropVal, sp);
-        
-    }
-    
     else
     {
         
-        std::wcout << axTypeDef.GetName() << " "
-        << AxTypeCatMap::getInstance().getStr( axTypeDef.GetTypeCategory() ) <<"\n";
-        throw std::invalid_argument("Not Implemented");
+        eAAFTypeCategory_t cat = axTypeDef.GetTypeCategory();
+        
+        switch( cat )
+        {
+                
+                #define CASE(T)	\
+                case kAAFTypeCat##T :	\
+                { \
+                IAAFTypeDef##T##SP sp; \
+                AxQueryInterface( axTypeDef.GetTypeDefSP(), sp ); \
+                this->process( spPropVal, sp ); \
+                break; \
+                }
+                        
+                CASE( Int )
+                CASE( Character )
+                CASE( StrongObjRef )
+                CASE( WeakObjRef )
+                CASE( Rename )
+                CASE( Enum )
+                CASE( FixedArray )
+                // CASE( VariableArray )
+                CASE( Set )
+                CASE( Record )
+                CASE( Stream )
+                CASE( String )
+                CASE( ExtEnum )
+                CASE( Indirect )
+                CASE( Opaque )
+                CASE( VariableArray )
+                
+                #undef CASE
+                
+            case kAAFTypeCatUnknown:
+                // FIXME - What to do here?  Get RawAccessType perhaps, but how is that
+                // distinquished from encrypted using only the process() argument type?
+                break;
+            case kAAFTypeCatEncrypted:
+                // FIXME - see kAAFTypeCatUnknown above.
+                break;
+                
+            default:
+                throw AxExBadImp( L"unknown type category" );
 
         
+        }
+    
     }
     
     
