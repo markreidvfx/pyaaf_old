@@ -154,7 +154,18 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefIntSP& spTy
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefRenameSP& spTypeDef)
 {
-    throw std::invalid_argument("IAAFTypeDefRenameSP Not Implemented");
+    
+    AxTypeDefRename axTDR(spTypeDef);
+    
+    IAAFTypeDefSP spRealTypeDef = axTDR.GetBaseType();
+    IAAFPropertyValueSP spRealValue = axTDR.GetBaseValue(spPropVal);
+    
+    
+    PyGetValue valueGetter;
+    valueGetter.processAny(spRealValue, spRealTypeDef);
+    
+    _obj = valueGetter.GetObject();
+
 }
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefEnumSP& spTypeDef)
@@ -292,8 +303,6 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefStringSP& s
     AxString value = axTypeDefString.GetElements( spPropVal );
     
     _obj = boost::python::object(value);
-    
-    
     
 }
 
