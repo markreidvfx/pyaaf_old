@@ -126,24 +126,20 @@ void PyGetValue::processAny(IAAFPropertyValueSP& spPropVal, IAAFTypeDefSP& spTyp
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefCharacterSP& spTypeDef)
 {
+  throw std::invalid_argument("IAAFTypeDefCharacterSP Not Implemented");  
 }
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefIndirectSP& spTypeDef )
 {
     AxTypeDefIndirect axIndirect( spTypeDef );
-    AxTypeDef axActualTypeDef( axIndirect.GetActualType(spPropVal) );
-    IAAFPropertyValueSP actualPropertyValueSP = axIndirect.GetActualValue(spPropVal);
     
-    //IAAFTypeDefVariableArraySP spVariableArray;
-    if (isClassType<IAAFTypeDefVariableArray>(axActualTypeDef))
-    {
-        
-        IAAFTypeDefVariableArraySP sp(AxQueryInterface<IAAFTypeDef,
-                                      IAAFTypeDefVariableArray>(axActualTypeDef));
-        
-        this->process(actualPropertyValueSP,sp);
-        
-    }
+    IAAFTypeDefSP spActualTypeDef = axIndirect.GetActualType(spPropVal);
+    IAAFPropertyValueSP actualValueSP = axIndirect.GetActualValue(spPropVal);
+    
+    PyGetValue valueGetter;
+    valueGetter.processAny(actualValueSP, spActualTypeDef);
+    
+    _obj = valueGetter.GetObject();
     
 }
 
