@@ -112,6 +112,17 @@ void PyGetValue::processAny(IAAFPropertyValueSP& spPropVal, IAAFTypeDefSP& spTyp
 
     }
     
+    else if (isClassType<IAAFTypeDefVariableArray>(axTypeDef))
+        
+    {
+        
+        IAAFTypeDefVariableArraySP sp(AxQueryInterface<IAAFTypeDef,
+                                   IAAFTypeDefVariableArray>(axTypeDef));
+        
+        this->process(spPropVal, sp);
+        
+    }
+    
     else
     {
         
