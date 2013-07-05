@@ -83,6 +83,24 @@ void PyGetValue::processAny(IAAFPropertyValueSP& spPropVal, IAAFTypeDefSP& spTyp
         
     }
     
+    else if (isClassType<IAAFTypeDefStrongObjRef>(axTypeDef))
+    {
+        IAAFTypeDefStrongObjRefSP sp(AxQueryInterface<IAAFTypeDef,
+                                   IAAFTypeDefStrongObjRef>(axTypeDef));
+        
+        this->process(spPropVal, sp);
+        
+    }
+    
+    else if (isClassType<IAAFTypeDefWeakObjRef>(axTypeDef))
+    {
+        IAAFTypeDefWeakObjRefSP sp(AxQueryInterface<IAAFTypeDef,
+                                     IAAFTypeDefWeakObjRef>(axTypeDef));
+        
+        this->process(spPropVal, sp);
+        
+    }
+    
     else if (isClassType<IAAFTypeDefFixedArray>(axTypeDef))
         
     {
@@ -98,7 +116,7 @@ void PyGetValue::processAny(IAAFPropertyValueSP& spPropVal, IAAFTypeDefSP& spTyp
     {
         
         std::wcout << axTypeDef.GetName() << "\n";
-        throw std::invalid_argument("Invalid AUID ");
+        throw std::invalid_argument("Not Implemented");
 
         
     }
@@ -136,17 +154,17 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefIntSP& spTy
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefRenameSP& spTypeDef)
 {
-    
+    throw std::invalid_argument("IAAFTypeDefRenameSP Not Implemented");
 }
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefEnumSP& spTypeDef)
 {
-    
+ throw std::invalid_argument("IAAFTypeDefEnumSP Not Implemented");   
 }
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefExtEnumSP& spTypeDef)
 {
-    
+ throw std::invalid_argument("IAAFTypeDefExtEnumSP Not Implemented");   
 }
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefFixedArraySP& spTypeDef)
@@ -226,13 +244,13 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefSetSP& spTy
     
     
     
-    _obj = boost::python::object(axDefSet.GetElements(spPropVal));
+    //_obj = boost::python::object(axDefSet.GetElements(spPropVal));
     
     
-    //boost::python::list elements;
-    //AxPropertyValueIter axIter(axDefSet.GetElements(spPropVal));
+    boost::python::list elements;
+    AxPropertyValueIter axIter(axDefSet.GetElements(spPropVal));
     
-    /*
+
     bool notAtEnd =true;
     while (notAtEnd)
     {
@@ -246,33 +264,25 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefSetSP& spTy
             IAAFPropertyValueSP spValue = nextValue;
             AxPropertyValue axValue(spValue);
             
-            AxTypeDef axValueTypeDef(axValue.GetType());
             
-            if (isClassType<IAAFTypeDefStrongObjRef>(axValueTypeDef))
-            {
-                IAAFTypeDefStrongObjRefSP sp(AxQueryInterface<IAAFTypeDef,
-                                              IAAFTypeDefStrongObjRef>(axValueTypeDef));
-                AxTypeDefStrongObjRef axDefRef(sp);
-                
-                
-                
-                IAAFObjectSP spObj = axDefRef.GetObject<IAAFObject>(spValue);
-                elements.append(spObj);
-          
-                //std::wcout << axValueTypeDef.GetName() << "\n";
-            }
+            IAAFTypeDefSP spElementTypeDef = axValue.GetType();
             
+            PyGetValue valueGetter;
+            valueGetter.processAny(spValue, spElementTypeDef);
             
+            elements.append(valueGetter.GetObject());
+            
+
         }
     }
     
     _obj = elements;
-     */
+    
 }
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefStreamSP& spTypeDef)
 {
-    
+    throw std::invalid_argument("IAAFTypeDefStreamSP Not Implemented");
 }
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefStringSP& spTypeDef)
@@ -298,17 +308,21 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefStrongObjRe
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefWeakObjRefSP& spTypeDef)
 {
+    AxTypeDefWeakObjRef axDefRef(spTypeDef);
+    
+    IAAFObjectSP spObj = axDefRef.GetObject<IAAFObject>(spPropVal);
+    _obj = boost::python::object(spObj);
     
 }
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefObjectRefSP& spTypeDef)
 {
-    
+    throw std::invalid_argument("IAAFTypeDefObjectRefSP Not Implemented");
 }
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefOpaqueSP& spTypeDef)
 {
-    
+    throw std::invalid_argument("IAAFTypeDefOpaqueSP Not Implemented");
 }
 
 
@@ -339,22 +353,21 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefVariableArr
             AxPropertyValue axValue(spValue);
             
             IAAFTypeDefSP spElementTypeDef = axValue.GetType();
-            
+
+
             PyGetValue valueGetter;
-            
             valueGetter.processAny(spValue, spElementTypeDef);
-            
+                        
             elements.append(valueGetter.GetObject());
-            
-            //AxPropertyValue value(nextValue);
-            //elements.append(this->GetInteger(nextValue,TypeDefIntSP));
+
             
         }
         
         
-        //_obj = elements;
+        
     }
     
+    _obj = elements;
         
     
     
