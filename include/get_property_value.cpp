@@ -40,10 +40,11 @@ boost::python::object PyGetValue::GetInteger( const IAAFPropertyValueSP& spPropV
 
 
 
-void PyGetValue::processAny(IAAFPropertyValueSP& spPropVal, IAAFTypeDefSP& spTypeDef)
+void PyGetValue::processAny(IAAFPropertyValueSP& spPropVal)
 {
     AxPropertyValue axValue(spPropVal);
-    AxTypeDef axTypeDef(axValue.GetType());
+    IAAFTypeDefSP spTypeDef = axValue.GetType();
+    AxTypeDef axTypeDef(spTypeDef);
     
     
     if (axTypeDef.GetAUID() == kAAFTypeID_DateStruct)
@@ -136,11 +137,10 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefIndirectSP&
 {
     AxTypeDefIndirect axIndirect( spTypeDef );
     
-    IAAFTypeDefSP spActualTypeDef = axIndirect.GetActualType(spPropVal);
     IAAFPropertyValueSP actualValueSP = axIndirect.GetActualValue(spPropVal);
     
     PyGetValue valueGetter;
-    valueGetter.processAny(actualValueSP, spActualTypeDef);
+    valueGetter.processAny(actualValueSP);
     
     _obj = valueGetter.GetObject();
     
@@ -155,13 +155,11 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefRenameSP& s
 {
     
     AxTypeDefRename axTDR(spTypeDef);
-    
-    IAAFTypeDefSP spRealTypeDef = axTDR.GetBaseType();
     IAAFPropertyValueSP spRealValue = axTDR.GetBaseValue(spPropVal);
     
     
     PyGetValue valueGetter;
-    valueGetter.processAny(spRealValue, spRealTypeDef);
+    valueGetter.processAny(spRealValue);
     
     _obj = valueGetter.GetObject();
 
@@ -223,13 +221,9 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefFixedArrayS
     {
         
         IAAFPropertyValueSP spElement = axTDFA.GetElementValue(spPropVal, i);
-        
-        AxPropertyValue axElement(spElement);
-        
-        IAAFTypeDefSP spElementTypeDef = axElement.GetType();
-        
+       
         PyGetValue valueGetter;
-        valueGetter.processAny(spElement, spElementTypeDef);
+        valueGetter.processAny(spElement);
         
         elements.append(valueGetter.GetObject());
         
@@ -258,12 +252,10 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefRecordSP& s
         IAAFPropertyValueSP spValue = axTDR.GetValue(spPropVal, i);
         
         AxPropertyValue axValue(spValue);
-        IAAFTypeDefSP spMemTypeDef = axValue.GetType();
-        AxTypeDef axDef(spMemTypeDef);
 
         PyGetValue valueGetter;
         
-        valueGetter.processAny(spValue, spMemTypeDef);
+        valueGetter.processAny(spValue);
         
         d[name] = valueGetter.GetObject();
         //throw std::invalid_argument("Invalid AUID ");
@@ -302,17 +294,12 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefSetSP& spTy
         {
             
             IAAFPropertyValueSP spValue = nextValue;
-            AxPropertyValue axValue(spValue);
-            
-            
-            IAAFTypeDefSP spElementTypeDef = axValue.GetType();
             
             PyGetValue valueGetter;
-            valueGetter.processAny(spValue, spElementTypeDef);
+            valueGetter.processAny(spValue);
             
             elements.append(valueGetter.GetObject());
             
-
         }
     }
     
@@ -399,13 +386,9 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefVariableArr
         if (notAtEnd)
         {
             IAAFPropertyValueSP spValue = nextValue;
-            AxPropertyValue axValue(spValue);
-            
-            IAAFTypeDefSP spElementTypeDef = axValue.GetType();
-
 
             PyGetValue valueGetter;
-            valueGetter.processAny(spValue, spElementTypeDef);
+            valueGetter.processAny(spValue);
                         
             elements.append(valueGetter.GetObject());
 
