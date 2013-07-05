@@ -46,7 +46,6 @@ void PyGetValue::processAny(IAAFPropertyValueSP& spPropVal)
     IAAFTypeDefSP spTypeDef = axValue.GetType();
     AxTypeDef axTypeDef(spTypeDef);
     
-    
     if (axTypeDef.GetAUID() == kAAFTypeID_DateStruct)
     {
         aafDateStruct_t date = GetDate(axValue);
@@ -119,7 +118,6 @@ void PyGetValue::processAny(IAAFPropertyValueSP& spPropVal)
                 
             default:
                 throw AxExBadImp( L"unknown type category" );
-
         
         }
     
@@ -157,7 +155,6 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefRenameSP& s
     AxTypeDefRename axTDR(spTypeDef);
     IAAFPropertyValueSP spRealValue = axTDR.GetBaseValue(spPropVal);
     
-    
     PyGetValue valueGetter;
     valueGetter.processAny(spRealValue);
     
@@ -168,7 +165,6 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefRenameSP& s
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefEnumSP& spTypeDef)
 {
     AxTypeDefEnum axTDE(spTypeDef);
-    
     aafUInt32 size = axTDE.CountElements();
     
     boost::python::dict d;
@@ -188,7 +184,6 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefExtEnumSP& 
     
     
     AxTypeDefExtEnum axTDEE(spTypeDef);
-    
     aafUInt32 size = axTDEE.CountElements();
     
     boost::python::dict d;
@@ -213,8 +208,6 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefFixedArrayS
     
     aafUInt32 size = axTDFA.GetCount();
     
-    std::wcout << size << "\n";
-    
     boost::python::list elements;
     
     for ( aafUInt32 i = 0; i<size; i++ )
@@ -237,7 +230,6 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefFixedArrayS
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefRecordSP& spTypeDef)
 {
     AxTypeDefRecord axTDR(spTypeDef);
-    
     aafUInt32 size = axTDR.GetCount();
     
     
@@ -247,22 +239,13 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefRecordSP& s
     {
         
         AxString name = axTDR.GetMemberName(i);
-        
-        
         IAAFPropertyValueSP spValue = axTDR.GetValue(spPropVal, i);
         
-        AxPropertyValue axValue(spValue);
-
         PyGetValue valueGetter;
-        
         valueGetter.processAny(spValue);
         
         d[name] = valueGetter.GetObject();
-        //throw std::invalid_argument("Invalid AUID ");
-        
-        
-        
-        //std::wcout << axTDR.GetName() << " " << name << " " <<axDef.GetName() << "\n";
+
         
     }
     _obj = d;
@@ -273,12 +256,6 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefRecordSP& s
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefSetSP& spTypeDef)
 {
     AxTypeDefSet axDefSet(spTypeDef);
-    
-    
-    
-    //_obj = boost::python::object(axDefSet.GetElements(spPropVal));
-    
-    
     boost::python::list elements;
     AxPropertyValueIter axIter(axDefSet.GetElements(spPropVal));
     
@@ -381,8 +358,6 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefVariableArr
         IAAFSmartPointer2<IAAFPropertyValue> nextValue;
         notAtEnd = axIter.NextOne(nextValue);
         
-        
-        
         if (notAtEnd)
         {
             IAAFPropertyValueSP spValue = nextValue;
@@ -395,12 +370,8 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefVariableArr
             
         }
         
-        
-        
     }
     
     _obj = elements;
         
-    
-    
 }
