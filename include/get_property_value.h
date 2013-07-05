@@ -10,6 +10,7 @@
 #include <AxPropertyValue.h>
 #include <AxPropertyValueDump.h>
 #include <AxSmartPointer.h>
+#include <AxUtil.h>
 #include <AAFTypeDefUIDs.h>
 #include <utilities.h>
 

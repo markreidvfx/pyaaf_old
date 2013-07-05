@@ -71,7 +71,6 @@ void PyGetValue::processAny(IAAFPropertyValueSP& spPropVal, IAAFTypeDefSP& spTyp
         _obj = boost::python::object(uid);
     }
     
-    
     else if (isClassType<IAAFTypeDefInt>(axTypeDef))
     {
         
@@ -100,9 +99,17 @@ void PyGetValue::processAny(IAAFPropertyValueSP& spPropVal, IAAFTypeDefSP& spTyp
         this->process(spPropVal, sp);
         
     }
+    else if (isClassType<IAAFTypeDefEnum>(axTypeDef))
+    {
+        
+        IAAFTypeDefEnumSP sp(AxQueryInterface<IAAFTypeDef,
+                                   IAAFTypeDefEnum>(axTypeDef));
+        
+        this->process(spPropVal, sp);
+        
+    }
     
     else if (isClassType<IAAFTypeDefFixedArray>(axTypeDef))
-        
     {
 
         IAAFTypeDefFixedArraySP sp(AxQueryInterface<IAAFTypeDef,
@@ -110,6 +117,27 @@ void PyGetValue::processAny(IAAFPropertyValueSP& spPropVal, IAAFTypeDefSP& spTyp
         
         this->process(spPropVal, sp);
 
+    }
+    
+    else if (isClassType<IAAFTypeDefRecord>(axTypeDef))
+    {
+        
+        IAAFTypeDefRecordSP sp(AxQueryInterface<IAAFTypeDef,
+                                   IAAFTypeDefRecord>(axTypeDef));
+        
+        this->process(spPropVal, sp);
+        
+    }
+    
+    else if (isClassType<IAAFTypeDefString>(axTypeDef))
+        
+    {
+        
+        IAAFTypeDefStringSP sp(AxQueryInterface<IAAFTypeDef,
+                                   IAAFTypeDefString>(axTypeDef));
+        
+        this->process(spPropVal, sp);
+        
     }
     
     else if (isClassType<IAAFTypeDefVariableArray>(axTypeDef))
@@ -126,7 +154,8 @@ void PyGetValue::processAny(IAAFPropertyValueSP& spPropVal, IAAFTypeDefSP& spTyp
     else
     {
         
-        std::wcout << axTypeDef.GetName() << "\n";
+        std::wcout << axTypeDef.GetName() << " "
+        << AxTypeCatMap::getInstance().getStr( axTypeDef.GetTypeCategory() ) <<"\n";
         throw std::invalid_argument("Not Implemented");
 
         
