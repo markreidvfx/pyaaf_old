@@ -18,7 +18,7 @@ class PyGetValue : public AxPropertyValueNoopPrtcl {
 public:
     PyGetValue() {};
     virtual ~PyGetValue(){};
-    boost::python::object getObject();
+    boost::python::object GetObject();
     boost::python::object GetInteger( const IAAFPropertyValueSP& spPropVal,
                                      IAAFTypeDefIntSP& spTypeDef);
     void processAny(IAAFPropertyValueSP& spPropVal, IAAFTypeDefSP& spTypeDef);

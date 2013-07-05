@@ -43,7 +43,7 @@ boost::python::object GetValue(AxPropertyValue& ax)
     
     PyGetValue valueGetter;
     ax.Process(valueGetter);
-    return valueGetter.getObject();
+    return valueGetter.GetObject();
 
 }
 
