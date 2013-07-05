@@ -170,12 +170,42 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefRenameSP& s
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefEnumSP& spTypeDef)
 {
- throw std::invalid_argument("IAAFTypeDefEnumSP Not Implemented");   
+    AxTypeDefEnum axTDE(spTypeDef);
+    
+    aafUInt32 size = axTDE.CountElements();
+    
+    boost::python::dict d;
+    
+    for ( aafUInt32 i = 0; i<size; i++ )
+    {
+        AxString name = axTDE.GetElementName(i);
+        aafInt64 id = axTDE.GetElementValue(i);
+        d[name] = id;
+        
+    }
+    _obj = d;
 }
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefExtEnumSP& spTypeDef)
 {
- throw std::invalid_argument("IAAFTypeDefExtEnumSP Not Implemented");   
+    
+    
+    AxTypeDefExtEnum axTDEE(spTypeDef);
+    
+    aafUInt32 size = axTDEE.CountElements();
+    
+    boost::python::dict d;
+    
+    for ( aafUInt32 i = 0; i<size; i++ )
+    {
+        AxString name = axTDEE.GetElementName(i);
+        aafUID_t id = axTDEE.GetElementValue(i);
+        
+        d[name] = id;
+        
+    }
+    _obj = d;
+
 }
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefFixedArraySP& spTypeDef)
