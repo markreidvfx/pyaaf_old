@@ -42,6 +42,7 @@ Include("AxTaggedValue.h")
 Include("AxTypes.h")
 Include("AxUtil.h")
 Include("AAFTypes.h")
+Include("resolve_smartpointer.h")
 
 """
 
@@ -73,7 +74,6 @@ for line in s.splitlines():
                 
                 #pointer_name = ""
                 
-            
             #if pointer_type == 'AXSP_TDEF_A':
             #    pass
             #else:
@@ -84,6 +84,11 @@ for line in s.splitlines():
             string = string % (pointer_name,pointer_name)
             
             string += '.def("to_%sSP", query_interface_pass_through<%s > )\n' % ( name, pointer_name)
+            
+            if pointer_type == "AXSP_TDEF_C":
+                string += '.def("ResolveSP", resolve_any_smartpointer< %s > )\n' % (name) 
+            else:
+                string += '.def("ResolveSP", resolve_any_smartpointer< IAAF%s > )\n' % (name) 
 
             try:
                 key = name.replace("2",'').replace('3','')

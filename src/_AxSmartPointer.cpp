@@ -34,6 +34,7 @@
 #include <AxTypes.h>
 #include <AxUtil.h>
 #include <query_interface.h>
+#include <resolve_smartpointer.h>
 
 // Using =======================================================================
 using namespace boost::python;
@@ -89,22 +90,27 @@ void Export_pyste_src_AxSmartPointer()
 scope smartpointers = class_<SmartPointers>("smartpointers");
 class_< IAAFAIFCDescriptorSP > ("IAAFAIFCDescriptorSP")
 .def("to_AIFCDescriptorSP", query_interface_pass_through<IAAFAIFCDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFAIFCDescriptor > )
 ;
 class_< IAAFClassDefSP > ("IAAFClassDefSP")
 .def("to_ClassDefSP", query_interface_pass_through<IAAFClassDefSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFClassDef > )
 .def("GetClassName",PyGetClassName_from_string<IAAFClassDefSP, classname_ClassDef> )
 ;
 class_< IAAFCodecDefSP > ("IAAFCodecDefSP")
 .def("to_CodecDefSP", query_interface_pass_through<IAAFCodecDefSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFCodecDef > )
 .def("GetClassName",PyGetClassName<IAAFCodecDef, AxCodecDef> )
 ;
 class_< IAAFCommentMarkerSP > ("IAAFCommentMarkerSP")
 .def("to_CommentMarkerSP", query_interface_pass_through<IAAFCommentMarkerSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFCommentMarker > )
 .def("to_DescriptiveMarkerSP", query_interface<IAAFCommentMarker, IAAFDescriptiveMarker > )
 .def("GetClassName",PyGetClassName<IAAFCommentMarker, AxCommentMarker> )
 ;
 class_< IAAFComponentSP > ("IAAFComponentSP")
 .def("to_ComponentSP", query_interface_pass_through<IAAFComponentSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFComponent > )
 .def("to_TransitionSP", query_interface<IAAFComponent, IAAFTransition > )
 .def("to_SegmentSP", query_interface<IAAFComponent, IAAFSegment > )
 .def("to_TimecodeSP", query_interface<IAAFComponent, IAAFTimecode > )
@@ -129,34 +135,42 @@ class_< IAAFComponentSP > ("IAAFComponentSP")
 ;
 class_< IAAFCompositionMobSP > ("IAAFCompositionMobSP")
 .def("to_CompositionMobSP", query_interface_pass_through<IAAFCompositionMobSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFCompositionMob > )
 .def("GetClassName",PyGetClassName<IAAFCompositionMob, AxCompositionMob> )
 ;
 class_< IAAFCompositionMob2SP > ("IAAFCompositionMob2SP")
 .def("to_CompositionMob2SP", query_interface_pass_through<IAAFCompositionMob2SP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFCompositionMob2 > )
 .def("GetClassName",PyGetClassName<IAAFCompositionMob2, AxCompositionMob> )
 ;
 class_< IAAFConstantValueSP > ("IAAFConstantValueSP")
 .def("to_ConstantValueSP", query_interface_pass_through<IAAFConstantValueSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFConstantValue > )
 .def("GetClassName",PyGetClassName<IAAFConstantValue, AxConstantValue> )
 ;
 class_< IAAFContainerDefSP > ("IAAFContainerDefSP")
 .def("to_ContainerDefSP", query_interface_pass_through<IAAFContainerDefSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFContainerDef > )
 .def("GetClassName",PyGetClassName<IAAFContainerDef, AxContainerDef> )
 ;
 class_< IAAFContentStorageSP > ("IAAFContentStorageSP")
 .def("to_ContentStorageSP", query_interface_pass_through<IAAFContentStorageSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFContentStorage > )
 .def("GetClassName",PyGetClassName<IAAFContentStorage, AxContentStorage> )
 ;
 class_< IAAFControlPointSP > ("IAAFControlPointSP")
 .def("to_ControlPointSP", query_interface_pass_through<IAAFControlPointSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFControlPoint > )
 .def("GetClassName",PyGetClassName<IAAFControlPoint, AxControlPoint> )
 ;
 class_< IAAFDataDefSP > ("IAAFDataDefSP")
 .def("to_DataDefSP", query_interface_pass_through<IAAFDataDefSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFDataDef > )
 .def("GetClassName",PyGetClassName<IAAFDataDef, AxDataDef> )
 ;
 class_< IAAFDefObjectSP > ("IAAFDefObjectSP")
 .def("to_DefObjectSP", query_interface_pass_through<IAAFDefObjectSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFDefObject > )
 .def("to_KLVDataDefinitionSP", query_interface<IAAFDefObject, IAAFKLVDataDefinition > )
 .def("to_CodecDefSP", query_interface<IAAFDefObject, IAAFCodecDef > )
 .def("to_PluginDefSP", query_interface<IAAFDefObject, IAAFPluginDef > )
@@ -172,29 +186,36 @@ class_< IAAFDefObjectSP > ("IAAFDefObjectSP")
 ;
 class_< IAAFPluginDefSP > ("IAAFPluginDefSP")
 .def("to_PluginDefSP", query_interface_pass_through<IAAFPluginDefSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFPluginDef > )
 .def("GetClassName",PyGetClassName<IAAFPluginDef, AxPluginDef> )
 ;
 class_< IAAFDictionarySP > ("IAAFDictionarySP")
 .def("to_DictionarySP", query_interface_pass_through<IAAFDictionarySP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFDictionary > )
 .def("GetClassName",PyGetClassName<IAAFDictionary, AxDictionary> )
 ;
 class_< IAAFEdgecodeSP > ("IAAFEdgecodeSP")
 .def("to_EdgecodeSP", query_interface_pass_through<IAAFEdgecodeSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFEdgecode > )
 .def("GetClassName",PyGetClassName<IAAFEdgecode, AxEdgecode> )
 ;
 class_< IAAFOperationDefSP > ("IAAFOperationDefSP")
 .def("to_OperationDefSP", query_interface_pass_through<IAAFOperationDefSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFOperationDef > )
 .def("GetClassName",PyGetClassName<IAAFOperationDef, AxOperationDef> )
 ;
 class_< IAAFEssenceAccessSP > ("IAAFEssenceAccessSP")
 .def("to_EssenceAccessSP", query_interface_pass_through<IAAFEssenceAccessSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFEssenceAccess > )
 .def("GetClassName",PyGetClassName_from_string<IAAFEssenceAccessSP, classname_EssenceAccess> )
 ;
 class_< IAAFEssenceDataSP > ("IAAFEssenceDataSP")
 .def("to_EssenceDataSP", query_interface_pass_through<IAAFEssenceDataSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFEssenceData > )
 ;
 class_< IAAFEssenceDescriptorSP > ("IAAFEssenceDescriptorSP")
 .def("to_EssenceDescriptorSP", query_interface_pass_through<IAAFEssenceDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFEssenceDescriptor > )
 .def("to_FileDescriptorSP", query_interface<IAAFEssenceDescriptor, IAAFFileDescriptor > )
 .def("to_SoundDescriptorSP", query_interface<IAAFEssenceDescriptor, IAAFSoundDescriptor > )
 .def("to_PCMDescriptorSP", query_interface<IAAFEssenceDescriptor, IAAFPCMDescriptor > )
@@ -212,6 +233,7 @@ class_< IAAFEssenceDescriptorSP > ("IAAFEssenceDescriptorSP")
 ;
 class_< IAAFEventSP > ("IAAFEventSP")
 .def("to_EventSP", query_interface_pass_through<IAAFEventSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFEvent > )
 .def("to_CommentMarkerSP", query_interface<IAAFEvent, IAAFCommentMarker > )
 .def("to_DescriptiveMarkerSP", query_interface<IAAFEvent, IAAFDescriptiveMarker > )
 .def("to_GPITriggerSP", query_interface<IAAFEvent, IAAFGPITrigger > )
@@ -221,15 +243,18 @@ class_< IAAFEventSP > ("IAAFEventSP")
 ;
 class_< IAAFEventMobSlotSP > ("IAAFEventMobSlotSP")
 .def("to_EventMobSlotSP", query_interface_pass_through<IAAFEventMobSlotSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFEventMobSlot > )
 .def("GetClassName",PyGetClassName<IAAFEventMobSlot, AxEventMobSlot> )
 ;
 class_< IAAFFileSP > ("IAAFFileSP")
 .def("to_FileSP", query_interface_pass_through<IAAFFileSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFFile > )
 .def("to_RandomFileSP", query_interface<IAAFFile, IAAFRandomFile > )
 .def("GetClassName",PyGetClassName_from_string<IAAFFileSP, classname_File> )
 ;
 class_< IAAFFileDescriptorSP > ("IAAFFileDescriptorSP")
 .def("to_FileDescriptorSP", query_interface_pass_through<IAAFFileDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFFileDescriptor > )
 .def("to_SoundDescriptorSP", query_interface<IAAFFileDescriptor, IAAFSoundDescriptor > )
 .def("to_PCMDescriptorSP", query_interface<IAAFFileDescriptor, IAAFPCMDescriptor > )
 .def("to_WAVEDescriptorSP", query_interface<IAAFFileDescriptor, IAAFWAVEDescriptor > )
@@ -240,10 +265,12 @@ class_< IAAFFileDescriptorSP > ("IAAFFileDescriptorSP")
 ;
 class_< IAAFFilmDescriptorSP > ("IAAFFilmDescriptorSP")
 .def("to_FilmDescriptorSP", query_interface_pass_through<IAAFFilmDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFFilmDescriptor > )
 .def("GetClassName",PyGetClassName<IAAFFilmDescriptor, AxFilmDescriptor> )
 ;
 class_< IAAFDigitalImageDescriptorSP > ("IAAFDigitalImageDescriptorSP")
 .def("to_DigitalImageDescriptorSP", query_interface_pass_through<IAAFDigitalImageDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFDigitalImageDescriptor > )
 .def("to_CDCIDescriptorSP", query_interface<IAAFDigitalImageDescriptor, IAAFCDCIDescriptor > )
 .def("to_RGBADescriptorSP", query_interface<IAAFDigitalImageDescriptor, IAAFRGBADescriptor > )
 .def("to_RGBADescriptor2SP", query_interface<IAAFDigitalImageDescriptor, IAAFRGBADescriptor2 > )
@@ -251,68 +278,84 @@ class_< IAAFDigitalImageDescriptorSP > ("IAAFDigitalImageDescriptorSP")
 ;
 class_< IAAFCDCIDescriptorSP > ("IAAFCDCIDescriptorSP")
 .def("to_CDCIDescriptorSP", query_interface_pass_through<IAAFCDCIDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFCDCIDescriptor > )
 .def("GetClassName",PyGetClassName<IAAFCDCIDescriptor, AxCDCIDescriptor> )
 ;
 class_< IAAFEssenceFormatSP > ("IAAFEssenceFormatSP")
 .def("to_EssenceFormatSP", query_interface_pass_through<IAAFEssenceFormatSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFEssenceFormat > )
 .def("GetClassName",PyGetClassName_from_string<IAAFEssenceFormatSP, classname_EssenceFormat> )
 ;
 class_< IAAFEssenceGroupSP > ("IAAFEssenceGroupSP")
 .def("to_EssenceGroupSP", query_interface_pass_through<IAAFEssenceGroupSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFEssenceGroup > )
 .def("GetClassName",PyGetClassName<IAAFEssenceGroup, AxEssenceGroup> )
 ;
 class_< IAAFFillerSP > ("IAAFFillerSP")
 .def("to_FillerSP", query_interface_pass_through<IAAFFillerSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFFiller > )
 .def("GetClassName",PyGetClassName<IAAFFiller, AxFiller> )
 ;
 class_< IAAFFindSourceInfoSP > ("IAAFFindSourceInfoSP")
 .def("to_FindSourceInfoSP", query_interface_pass_through<IAAFFindSourceInfoSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFFindSourceInfo > )
 ;
 class_< IAAFOperationGroupSP > ("IAAFOperationGroupSP")
 .def("to_OperationGroupSP", query_interface_pass_through<IAAFOperationGroupSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFOperationGroup > )
 .def("GetClassName",PyGetClassName<IAAFOperationGroup, AxOperationGroup> )
 ;
 class_< IAAFGPITriggerSP > ("IAAFGPITriggerSP")
 .def("to_GPITriggerSP", query_interface_pass_through<IAAFGPITriggerSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFGPITrigger > )
 .def("GetClassName",PyGetClassName<IAAFGPITrigger, AxGPITrigger> )
 ;
 class_< IAAFHeaderSP > ("IAAFHeaderSP")
 .def("to_HeaderSP", query_interface_pass_through<IAAFHeaderSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFHeader > )
 .def("GetClassName",PyGetClassName<IAAFHeader, AxHeader> )
 ;
 class_< IAAFIdentificationSP > ("IAAFIdentificationSP")
 .def("to_IdentificationSP", query_interface_pass_through<IAAFIdentificationSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFIdentification > )
 .def("GetClassName",PyGetClassName<IAAFIdentification, AxIdentification> )
 ;
 class_< IAAFInterpolationDefSP > ("IAAFInterpolationDefSP")
 .def("to_InterpolationDefSP", query_interface_pass_through<IAAFInterpolationDefSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFInterpolationDef > )
 .def("GetClassName",PyGetClassName<IAAFInterpolationDef, AxInterpolationDef> )
 ;
 class_< IAAFKLVDataSP > ("IAAFKLVDataSP")
 .def("to_KLVDataSP", query_interface_pass_through<IAAFKLVDataSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFKLVData > )
 .def("GetClassName",PyGetClassName<IAAFKLVData, AxKLVData> )
 ;
 class_< IAAFLocatorSP > ("IAAFLocatorSP")
 .def("to_LocatorSP", query_interface_pass_through<IAAFLocatorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFLocator > )
 .def("to_NetworkLocatorSP", query_interface<IAAFLocator, IAAFNetworkLocator > )
 .def("GetClassName",PyGetClassName<IAAFLocator, AxLocator> )
 ;
 class_< IAAFMasterMobSP > ("IAAFMasterMobSP")
 .def("to_MasterMobSP", query_interface_pass_through<IAAFMasterMobSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFMasterMob > )
 .def("to_MasterMobExSP", query_interface<IAAFMasterMob, IAAFMasterMobEx > )
 .def("GetClassName",PyGetClassName<IAAFMasterMob, AxMasterMob> )
 ;
 class_< IAAFMasterMob2SP > ("IAAFMasterMob2SP")
 .def("to_MasterMob2SP", query_interface_pass_through<IAAFMasterMob2SP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFMasterMob2 > )
 .def("to_MasterMobExSP", query_interface<IAAFMasterMob2, IAAFMasterMobEx > )
 .def("GetClassName",PyGetClassName<IAAFMasterMob2, AxMasterMob> )
 ;
 class_< IAAFMasterMobExSP > ("IAAFMasterMobExSP")
 .def("to_MasterMobExSP", query_interface_pass_through<IAAFMasterMobExSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFMasterMobEx > )
 .def("GetClassName",PyGetClassName<IAAFMasterMobEx, AxMasterMobEx> )
 ;
 class_< IAAFMetaDefinitionSP > ("IAAFMetaDefinitionSP")
 .def("to_MetaDefinitionSP", query_interface_pass_through<IAAFMetaDefinitionSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFMetaDefinition > )
 .def("to_ClassDefSP", query_interface<IAAFMetaDefinition, IAAFClassDef > )
 .def("to_PropertyDefSP", query_interface<IAAFMetaDefinition, IAAFPropertyDef > )
 .def("to_TypeDefSP", query_interface<IAAFMetaDefinition, IAAFTypeDef > )
@@ -337,6 +380,7 @@ class_< IAAFMetaDefinitionSP > ("IAAFMetaDefinitionSP")
 ;
 class_< IAAFMobSP > ("IAAFMobSP")
 .def("to_MobSP", query_interface_pass_through<IAAFMobSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFMob > )
 .def("to_MasterMobSP", query_interface<IAAFMob, IAAFMasterMob > )
 .def("to_MasterMob2SP", query_interface<IAAFMob, IAAFMasterMob2 > )
 .def("to_MasterMobExSP", query_interface<IAAFMob, IAAFMasterMobEx > )
@@ -347,6 +391,7 @@ class_< IAAFMobSP > ("IAAFMobSP")
 ;
 class_< IAAFMobSlotSP > ("IAAFMobSlotSP")
 .def("to_MobSlotSP", query_interface_pass_through<IAAFMobSlotSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFMobSlot > )
 .def("to_TimelineMobSlotSP", query_interface<IAAFMobSlot, IAAFTimelineMobSlot > )
 .def("to_TimelineMobSlot2SP", query_interface<IAAFMobSlot, IAAFTimelineMobSlot2 > )
 .def("to_StaticMobSlotSP", query_interface<IAAFMobSlot, IAAFStaticMobSlot > )
@@ -355,14 +400,17 @@ class_< IAAFMobSlotSP > ("IAAFMobSlotSP")
 ;
 class_< IAAFNestedScopeSP > ("IAAFNestedScopeSP")
 .def("to_NestedScopeSP", query_interface_pass_through<IAAFNestedScopeSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFNestedScope > )
 .def("GetClassName",PyGetClassName<IAAFNestedScope, AxNestedScope> )
 ;
 class_< IAAFNetworkLocatorSP > ("IAAFNetworkLocatorSP")
 .def("to_NetworkLocatorSP", query_interface_pass_through<IAAFNetworkLocatorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFNetworkLocator > )
 .def("GetClassName",PyGetClassName<IAAFNetworkLocator, AxNetworkLocator> )
 ;
 class_< IAAFObjectSP > ("IAAFObjectSP")
 .def("to_ObjectSP", query_interface_pass_through<IAAFObjectSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFObject > )
 .def("to_ContentStorageSP", query_interface<IAAFObject, IAAFContentStorage > )
 .def("to_LocatorSP", query_interface<IAAFObject, IAAFLocator > )
 .def("to_NetworkLocatorSP", query_interface<IAAFObject, IAAFNetworkLocator > )
@@ -438,43 +486,53 @@ class_< IAAFObjectSP > ("IAAFObjectSP")
 ;
 class_< IAAFParameterSP > ("IAAFParameterSP")
 .def("to_ParameterSP", query_interface_pass_through<IAAFParameterSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFParameter > )
 .def("to_VaryingValueSP", query_interface<IAAFParameter, IAAFVaryingValue > )
 .def("to_ConstantValueSP", query_interface<IAAFParameter, IAAFConstantValue > )
 .def("GetClassName",PyGetClassName<IAAFParameter, AxParameter> )
 ;
 class_< IAAFParameterDefSP > ("IAAFParameterDefSP")
 .def("to_ParameterDefSP", query_interface_pass_through<IAAFParameterDefSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFParameterDef > )
 .def("GetClassName",PyGetClassName<IAAFParameterDef, AxParameterDef> )
 ;
 class_< IAAFPropertySP > ("IAAFPropertySP")
 .def("to_PropertySP", query_interface_pass_through<IAAFPropertySP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFProperty > )
 .def("GetClassName",PyGetClassName_from_string<IAAFPropertySP, classname_Property> )
 ;
 class_< IAAFPropertyDefSP > ("IAAFPropertyDefSP")
 .def("to_PropertyDefSP", query_interface_pass_through<IAAFPropertyDefSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFPropertyDef > )
 .def("GetClassName",PyGetClassName_from_string<IAAFPropertyDefSP, classname_PropertyDef> )
 ;
 class_< IAAFPropertyValueSP > ("IAAFPropertyValueSP")
 .def("to_PropertyValueSP", query_interface_pass_through<IAAFPropertyValueSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFPropertyValue > )
 .def("GetClassName",PyGetClassName_from_string<IAAFPropertyValueSP, classname_PropertyValue> )
 ;
 class_< IAAFPluginManagerSP > ("IAAFPluginManagerSP")
 .def("to_PluginManagerSP", query_interface_pass_through<IAAFPluginManagerSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFPluginManager > )
 ;
 class_< IAAFPulldownSP > ("IAAFPulldownSP")
 .def("to_PulldownSP", query_interface_pass_through<IAAFPulldownSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFPulldown > )
 .def("GetClassName",PyGetClassName<IAAFPulldown, AxPulldown> )
 ;
 class_< IAAFRGBADescriptorSP > ("IAAFRGBADescriptorSP")
 .def("to_RGBADescriptorSP", query_interface_pass_through<IAAFRGBADescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFRGBADescriptor > )
 .def("GetClassName",PyGetClassName<IAAFRGBADescriptor, AxRGBADescriptor> )
 ;
 class_< IAAFScopeReferenceSP > ("IAAFScopeReferenceSP")
 .def("to_ScopeReferenceSP", query_interface_pass_through<IAAFScopeReferenceSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFScopeReference > )
 .def("GetClassName",PyGetClassName<IAAFScopeReference, AxScopeReference> )
 ;
 class_< IAAFSegmentSP > ("IAAFSegmentSP")
 .def("to_SegmentSP", query_interface_pass_through<IAAFSegmentSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFSegment > )
 .def("to_TimecodeSP", query_interface<IAAFSegment, IAAFTimecode > )
 .def("to_SourceReferenceSP", query_interface<IAAFSegment, IAAFSourceReference > )
 .def("to_SourceClipSP", query_interface<IAAFSegment, IAAFSourceClip > )
@@ -497,65 +555,81 @@ class_< IAAFSegmentSP > ("IAAFSegmentSP")
 ;
 class_< IAAFSelectorSP > ("IAAFSelectorSP")
 .def("to_SelectorSP", query_interface_pass_through<IAAFSelectorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFSelector > )
 .def("GetClassName",PyGetClassName<IAAFSelector, AxSelector> )
 ;
 class_< IAAFSequenceSP > ("IAAFSequenceSP")
 .def("to_SequenceSP", query_interface_pass_through<IAAFSequenceSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFSequence > )
 .def("GetClassName",PyGetClassName<IAAFSequence, AxSequence> )
 ;
 class_< IAAFSourceClipSP > ("IAAFSourceClipSP")
 .def("to_SourceClipSP", query_interface_pass_through<IAAFSourceClipSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFSourceClip > )
 .def("GetClassName",PyGetClassName<IAAFSourceClip, AxSourceClip> )
 ;
 class_< IAAFSourceMobSP > ("IAAFSourceMobSP")
 .def("to_SourceMobSP", query_interface_pass_through<IAAFSourceMobSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFSourceMob > )
 .def("GetClassName",PyGetClassName<IAAFSourceMob, AxSourceMob> )
 ;
 class_< IAAFSourceReferenceSP > ("IAAFSourceReferenceSP")
 .def("to_SourceReferenceSP", query_interface_pass_through<IAAFSourceReferenceSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFSourceReference > )
 .def("to_SourceClipSP", query_interface<IAAFSourceReference, IAAFSourceClip > )
 .def("GetClassName",PyGetClassName<IAAFSourceReference, AxSourceReference> )
 ;
 class_< IAAFStaticMobSlotSP > ("IAAFStaticMobSlotSP")
 .def("to_StaticMobSlotSP", query_interface_pass_through<IAAFStaticMobSlotSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFStaticMobSlot > )
 .def("GetClassName",PyGetClassName<IAAFStaticMobSlot, AxStaticMobSlot> )
 ;
 class_< IAAFTapeDescriptorSP > ("IAAFTapeDescriptorSP")
 .def("to_TapeDescriptorSP", query_interface_pass_through<IAAFTapeDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTapeDescriptor > )
 .def("GetClassName",PyGetClassName<IAAFTapeDescriptor, AxTapeDescriptor> )
 ;
 class_< IAAFTaggedValueSP > ("IAAFTaggedValueSP")
 .def("to_TaggedValueSP", query_interface_pass_through<IAAFTaggedValueSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTaggedValue > )
 .def("GetClassName",PyGetClassName<IAAFTaggedValue, AxTaggedValue> )
 ;
 class_< IAAFTextLocatorSP > ("IAAFTextLocatorSP")
 .def("to_TextLocatorSP", query_interface_pass_through<IAAFTextLocatorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTextLocator > )
 ;
 class_< IAAFTimecodeSP > ("IAAFTimecodeSP")
 .def("to_TimecodeSP", query_interface_pass_through<IAAFTimecodeSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTimecode > )
 .def("GetClassName",PyGetClassName<IAAFTimecode, AxTimecode> )
 ;
 class_< IAAFTimelineMobSlotSP > ("IAAFTimelineMobSlotSP")
 .def("to_TimelineMobSlotSP", query_interface_pass_through<IAAFTimelineMobSlotSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTimelineMobSlot > )
 .def("GetClassName",PyGetClassName<IAAFTimelineMobSlot, AxTimelineMobSlot> )
 ;
 class_< IAAFTransitionSP > ("IAAFTransitionSP")
 .def("to_TransitionSP", query_interface_pass_through<IAAFTransitionSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTransition > )
 .def("GetClassName",PyGetClassName<IAAFTransition, AxTransition> )
 ;
 class_< IAAFTIFFDescriptorSP > ("IAAFTIFFDescriptorSP")
 .def("to_TIFFDescriptorSP", query_interface_pass_through<IAAFTIFFDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTIFFDescriptor > )
 ;
 class_< IAAFTimecodeStreamSP > ("IAAFTimecodeStreamSP")
 .def("to_TimecodeStreamSP", query_interface_pass_through<IAAFTimecodeStreamSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTimecodeStream > )
 .def("to_TimecodeStream12MSP", query_interface<IAAFTimecodeStream, IAAFTimecodeStream12M > )
 .def("GetClassName",PyGetClassName<IAAFTimecodeStream, AxTimecodeStream> )
 ;
 class_< IAAFTimecodeStream12MSP > ("IAAFTimecodeStream12MSP")
 .def("to_TimecodeStream12MSP", query_interface_pass_through<IAAFTimecodeStream12MSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTimecodeStream12M > )
 ;
 class_< IAAFTypeDefSP > ("IAAFTypeDefSP")
 .def("to_TypeDefSP", query_interface_pass_through<IAAFTypeDefSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTypeDef > )
 .def("to_TypeDefRecordSP", query_interface<IAAFTypeDef, IAAFTypeDefRecord > )
 .def("to_TypeDefVariableArraySP", query_interface<IAAFTypeDef, IAAFTypeDefVariableArray > )
 .def("to_TypeDefFixedArraySP", query_interface<IAAFTypeDef, IAAFTypeDefFixedArray > )
@@ -577,221 +651,277 @@ class_< IAAFTypeDefSP > ("IAAFTypeDefSP")
 ;
 class_< IAAFTypeDefCharacterSP > ("IAAFTypeDefCharacterSP")
 .def("to_TypeDefCharacterSP", query_interface_pass_through<IAAFTypeDefCharacterSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTypeDefCharacter > )
 .def("GetClassName",PyGetTypeCategory<IAAFTypeDefCharacterSP, AxTypeDefCharacter> )
 ;
 class_< IAAFTypeDefIndirectSP > ("IAAFTypeDefIndirectSP")
 .def("to_TypeDefIndirectSP", query_interface_pass_through<IAAFTypeDefIndirectSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTypeDefIndirect > )
 .def("to_TypeDefOpaqueSP", query_interface<IAAFTypeDefIndirect, IAAFTypeDefOpaque > )
 .def("GetClassName",PyGetTypeCategory<IAAFTypeDefIndirectSP, AxTypeDefIndirect> )
 ;
 class_< IAAFTypeDefIntSP > ("IAAFTypeDefIntSP")
 .def("to_TypeDefIntSP", query_interface_pass_through<IAAFTypeDefIntSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTypeDefInt > )
 .def("GetClassName",PyGetTypeCategory<IAAFTypeDefIntSP, AxTypeDefInt> )
 ;
 class_< IAAFTypeDefRenameSP > ("IAAFTypeDefRenameSP")
 .def("to_TypeDefRenameSP", query_interface_pass_through<IAAFTypeDefRenameSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTypeDefRename > )
 .def("GetClassName",PyGetTypeCategory<IAAFTypeDefRenameSP, AxTypeDefRename> )
 ;
 class_< IAAFTypeDefEnumSP > ("IAAFTypeDefEnumSP")
 .def("to_TypeDefEnumSP", query_interface_pass_through<IAAFTypeDefEnumSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTypeDefEnum > )
 .def("GetClassName",PyGetTypeCategory<IAAFTypeDefEnumSP, AxTypeDefEnum> )
 ;
 class_< IAAFTypeDefExtEnumSP > ("IAAFTypeDefExtEnumSP")
 .def("to_TypeDefExtEnumSP", query_interface_pass_through<IAAFTypeDefExtEnumSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTypeDefExtEnum > )
 .def("GetClassName",PyGetTypeCategory<IAAFTypeDefExtEnumSP, AxTypeDefExtEnum> )
 ;
 class_< IAAFTypeDefFixedArraySP > ("IAAFTypeDefFixedArraySP")
 .def("to_TypeDefFixedArraySP", query_interface_pass_through<IAAFTypeDefFixedArraySP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTypeDefFixedArray > )
 .def("GetClassName",PyGetTypeCategory<IAAFTypeDefFixedArraySP, AxTypeDefFixedArray> )
 ;
 class_< IAAFTypeDefRecordSP > ("IAAFTypeDefRecordSP")
 .def("to_TypeDefRecordSP", query_interface_pass_through<IAAFTypeDefRecordSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTypeDefRecord > )
 .def("GetClassName",PyGetTypeCategory<IAAFTypeDefRecordSP, AxTypeDefRecord> )
 ;
 class_< IAAFTypeDefSetSP > ("IAAFTypeDefSetSP")
 .def("to_TypeDefSetSP", query_interface_pass_through<IAAFTypeDefSetSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTypeDefSet > )
 .def("GetClassName",PyGetTypeCategory<IAAFTypeDefSetSP, AxTypeDefSet> )
 ;
 class_< IAAFTypeDefStreamSP > ("IAAFTypeDefStreamSP")
 .def("to_TypeDefStreamSP", query_interface_pass_through<IAAFTypeDefStreamSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTypeDefStream > )
 .def("GetClassName",PyGetTypeCategory<IAAFTypeDefStreamSP, AxTypeDefStream> )
 ;
 class_< IAAFTypeDefStringSP > ("IAAFTypeDefStringSP")
 .def("to_TypeDefStringSP", query_interface_pass_through<IAAFTypeDefStringSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTypeDefString > )
 .def("GetClassName",PyGetTypeCategory<IAAFTypeDefStringSP, AxTypeDefString> )
 ;
 class_< IAAFTypeDefStrongObjRefSP > ("IAAFTypeDefStrongObjRefSP")
 .def("to_TypeDefStrongObjRefSP", query_interface_pass_through<IAAFTypeDefStrongObjRefSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTypeDefStrongObjRef > )
 .def("GetClassName",PyGetTypeCategory<IAAFTypeDefStrongObjRefSP, AxTypeDefStrongObjRef> )
 ;
 class_< IAAFTypeDefWeakObjRefSP > ("IAAFTypeDefWeakObjRefSP")
 .def("to_TypeDefWeakObjRefSP", query_interface_pass_through<IAAFTypeDefWeakObjRefSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTypeDefWeakObjRef > )
 .def("GetClassName",PyGetTypeCategory<IAAFTypeDefWeakObjRefSP, AxTypeDefWeakObjRef> )
 ;
 class_< IAAFTypeDefObjectRefSP > ("IAAFTypeDefObjectRefSP")
 .def("to_TypeDefObjectRefSP", query_interface_pass_through<IAAFTypeDefObjectRefSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTypeDefObjectRef > )
 .def("GetClassName",PyGetTypeCategory<IAAFTypeDefObjectRefSP, AxTypeDefObjRef> )
 ;
 class_< IAAFTypeDefOpaqueSP > ("IAAFTypeDefOpaqueSP")
 .def("to_TypeDefOpaqueSP", query_interface_pass_through<IAAFTypeDefOpaqueSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTypeDefOpaque > )
 .def("GetClassName",PyGetTypeCategory<IAAFTypeDefOpaqueSP, AxTypeDefOpaque> )
 ;
 class_< IAAFTypeDefVariableArraySP > ("IAAFTypeDefVariableArraySP")
 .def("to_TypeDefVariableArraySP", query_interface_pass_through<IAAFTypeDefVariableArraySP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTypeDefVariableArray > )
 .def("GetClassName",PyGetTypeCategory<IAAFTypeDefVariableArraySP, AxTypeDefVariableArray> )
 ;
 class_< IAAFVaryingValueSP > ("IAAFVaryingValueSP")
 .def("to_VaryingValueSP", query_interface_pass_through<IAAFVaryingValueSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFVaryingValue > )
 .def("GetClassName",PyGetClassName<IAAFVaryingValue, AxVaryingValue> )
 ;
 class_< IAAFWAVEDescriptorSP > ("IAAFWAVEDescriptorSP")
 .def("to_WAVEDescriptorSP", query_interface_pass_through<IAAFWAVEDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFWAVEDescriptor > )
 .def("GetClassName",PyGetClassName<IAAFWAVEDescriptor, AxWAVEDescriptor> )
 ;
 class_< IEnumAAFClassDefsSP > ("IEnumAAFClassDefsSP")
 .def("to_IEnumAAFClassDefsSP", query_interface_pass_through<IEnumAAFClassDefsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFClassDefs > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFClassDefsSP, classname_IEnumAAFClassDefs> )
 ;
 class_< IEnumAAFCodecDefsSP > ("IEnumAAFCodecDefsSP")
 .def("to_IEnumAAFCodecDefsSP", query_interface_pass_through<IEnumAAFCodecDefsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFCodecDefs > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFCodecDefsSP, classname_IEnumAAFCodecDefs> )
 ;
 class_< IEnumAAFCodecFlavoursSP > ("IEnumAAFCodecFlavoursSP")
 .def("to_IEnumAAFCodecFlavoursSP", query_interface_pass_through<IEnumAAFCodecFlavoursSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFCodecFlavours > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFCodecFlavoursSP, classname_IEnumAAFCodecFlavours> )
 ;
 class_< IEnumAAFComponentsSP > ("IEnumAAFComponentsSP")
 .def("to_IEnumAAFComponentsSP", query_interface_pass_through<IEnumAAFComponentsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFComponents > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFComponentsSP, classname_IEnumAAFComponents> )
 ;
 class_< IEnumAAFContainerDefsSP > ("IEnumAAFContainerDefsSP")
 .def("to_IEnumAAFContainerDefsSP", query_interface_pass_through<IEnumAAFContainerDefsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFContainerDefs > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFContainerDefsSP, classname_IEnumAAFContainerDefs> )
 ;
 class_< IEnumAAFControlPointsSP > ("IEnumAAFControlPointsSP")
 .def("to_IEnumAAFControlPointsSP", query_interface_pass_through<IEnumAAFControlPointsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFControlPoints > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFControlPointsSP, classname_IEnumAAFControlPoints> )
 ;
 class_< IEnumAAFDataDefsSP > ("IEnumAAFDataDefsSP")
 .def("to_IEnumAAFDataDefsSP", query_interface_pass_through<IEnumAAFDataDefsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFDataDefs > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFDataDefsSP, classname_IEnumAAFDataDefs> )
 ;
 class_< IEnumAAFIdentificationsSP > ("IEnumAAFIdentificationsSP")
 .def("to_IEnumAAFIdentificationsSP", query_interface_pass_through<IEnumAAFIdentificationsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFIdentifications > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFIdentificationsSP, classname_IEnumAAFIdentifications> )
 ;
 class_< IEnumAAFInterpolationDefsSP > ("IEnumAAFInterpolationDefsSP")
 .def("to_IEnumAAFInterpolationDefsSP", query_interface_pass_through<IEnumAAFInterpolationDefsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFInterpolationDefs > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFInterpolationDefsSP, classname_IEnumAAFInterpolationDefs> )
 ;
 class_< IEnumAAFOperationDefsSP > ("IEnumAAFOperationDefsSP")
 .def("to_IEnumAAFOperationDefsSP", query_interface_pass_through<IEnumAAFOperationDefsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFOperationDefs > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFOperationDefsSP, classname_IEnumAAFOperationDefs> )
 ;
 class_< IEnumAAFEssenceDataSP > ("IEnumAAFEssenceDataSP")
 .def("to_IEnumAAFEssenceDataSP", query_interface_pass_through<IEnumAAFEssenceDataSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFEssenceData > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFEssenceDataSP, classname_IEnumAAFEssenceData> )
 ;
 class_< IEnumAAFKLVDataSP > ("IEnumAAFKLVDataSP")
 .def("to_IEnumAAFKLVDataSP", query_interface_pass_through<IEnumAAFKLVDataSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFKLVData > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFKLVDataSP, classname_IEnumAAFKLVData> )
 ;
 class_< IEnumAAFLoadedPluginsSP > ("IEnumAAFLoadedPluginsSP")
 .def("to_IEnumAAFLoadedPluginsSP", query_interface_pass_through<IEnumAAFLoadedPluginsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFLoadedPlugins > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFLoadedPluginsSP, classname_IEnumAAFLoadedPlugins> )
 ;
 class_< IEnumAAFLocatorsSP > ("IEnumAAFLocatorsSP")
 .def("to_IEnumAAFLocatorsSP", query_interface_pass_through<IEnumAAFLocatorsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFLocators > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFLocatorsSP, classname_IEnumAAFLocators> )
 ;
 class_< IEnumAAFMobSlotsSP > ("IEnumAAFMobSlotsSP")
 .def("to_IEnumAAFMobSlotsSP", query_interface_pass_through<IEnumAAFMobSlotsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFMobSlots > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFMobSlotsSP, classname_IEnumAAFMobSlots> )
 ;
 class_< IEnumAAFMobsSP > ("IEnumAAFMobsSP")
 .def("to_IEnumAAFMobsSP", query_interface_pass_through<IEnumAAFMobsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFMobs > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFMobsSP, classname_IEnumAAFMobs> )
 ;
 class_< IEnumAAFParameterDefsSP > ("IEnumAAFParameterDefsSP")
 .def("to_IEnumAAFParameterDefsSP", query_interface_pass_through<IEnumAAFParameterDefsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFParameterDefs > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFParameterDefsSP, classname_IEnumAAFParameterDefs> )
 ;
 class_< IEnumAAFParametersSP > ("IEnumAAFParametersSP")
 .def("to_IEnumAAFParametersSP", query_interface_pass_through<IEnumAAFParametersSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFParameters > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFParametersSP, classname_IEnumAAFParameters> )
 ;
 class_< IEnumAAFPropertiesSP > ("IEnumAAFPropertiesSP")
 .def("to_IEnumAAFPropertiesSP", query_interface_pass_through<IEnumAAFPropertiesSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFProperties > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFPropertiesSP, classname_IEnumAAFProperties> )
 ;
 class_< IEnumAAFPropertyDefsSP > ("IEnumAAFPropertyDefsSP")
 .def("to_IEnumAAFPropertyDefsSP", query_interface_pass_through<IEnumAAFPropertyDefsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFPropertyDefs > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFPropertyDefsSP, classname_IEnumAAFPropertyDefs> )
 ;
 class_< IEnumAAFPropertyValuesSP > ("IEnumAAFPropertyValuesSP")
 .def("to_IEnumAAFPropertyValuesSP", query_interface_pass_through<IEnumAAFPropertyValuesSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFPropertyValues > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFPropertyValuesSP, classname_IEnumAAFPropertyValues> )
 ;
 class_< IEnumAAFPluginDefsSP > ("IEnumAAFPluginDefsSP")
 .def("to_IEnumAAFPluginDefsSP", query_interface_pass_through<IEnumAAFPluginDefsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFPluginDefs > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFPluginDefsSP, classname_IEnumAAFPluginDefs> )
 ;
 class_< IEnumAAFPluginLocatorsSP > ("IEnumAAFPluginLocatorsSP")
 .def("to_IEnumAAFPluginLocatorsSP", query_interface_pass_through<IEnumAAFPluginLocatorsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFPluginLocators > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFPluginLocatorsSP, classname_IEnumAAFPluginLocators> )
 ;
 class_< IEnumAAFSegmentsSP > ("IEnumAAFSegmentsSP")
 .def("to_IEnumAAFSegmentsSP", query_interface_pass_through<IEnumAAFSegmentsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFSegments > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFSegmentsSP, classname_IEnumAAFSegments> )
 ;
 class_< IEnumAAFTaggedValuesSP > ("IEnumAAFTaggedValuesSP")
 .def("to_IEnumAAFTaggedValuesSP", query_interface_pass_through<IEnumAAFTaggedValuesSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFTaggedValues > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFTaggedValuesSP, classname_IEnumAAFTaggedValues> )
 ;
 class_< IEnumAAFTypeDefsSP > ("IEnumAAFTypeDefsSP")
 .def("to_IEnumAAFTypeDefsSP", query_interface_pass_through<IEnumAAFTypeDefsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFTypeDefs > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFTypeDefsSP, classname_IEnumAAFTypeDefs> )
 ;
 class_< IAAFRawStorageSP > ("IAAFRawStorageSP")
 .def("to_RawStorageSP", query_interface_pass_through<IAAFRawStorageSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFRawStorage > )
 ;
 class_< IAAFRandomRawStorageSP > ("IAAFRandomRawStorageSP")
 .def("to_RandomRawStorageSP", query_interface_pass_through<IAAFRandomRawStorageSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFRandomRawStorage > )
 ;
 class_< IAAFGetFileBitsSP > ("IAAFGetFileBitsSP")
 .def("to_GetFileBitsSP", query_interface_pass_through<IAAFGetFileBitsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFGetFileBits > )
 ;
 class_< IAAFSetFileBitsSP > ("IAAFSetFileBitsSP")
 .def("to_SetFileBitsSP", query_interface_pass_through<IAAFSetFileBitsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFSetFileBits > )
 ;
 class_< IAAFRandomFileSP > ("IAAFRandomFileSP")
 .def("to_RandomFileSP", query_interface_pass_through<IAAFRandomFileSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFRandomFile > )
 .def("GetClassName",PyGetClassName_from_string<IAAFRandomFileSP, classname_RandomFile> )
 ;
 class_< IAAFEndianSP > ("IAAFEndianSP")
 .def("to_EndianSP", query_interface_pass_through<IAAFEndianSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFEndian > )
 ;
 class_< IAAFSearchSourceSP > ("IAAFSearchSourceSP")
 .def("to_SearchSourceSP", query_interface_pass_through<IAAFSearchSourceSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFSearchSource > )
 ;
 class_< IAAFEssenceMultiAccessSP > ("IAAFEssenceMultiAccessSP")
 .def("to_EssenceMultiAccessSP", query_interface_pass_through<IAAFEssenceMultiAccessSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFEssenceMultiAccess > )
 .def("to_EssenceAccessSP", query_interface<IAAFEssenceMultiAccess, IAAFEssenceAccess > )
 .def("GetClassName",PyGetClassName_from_string<IAAFEssenceMultiAccessSP, classname_EssenceMultiAccess> )
 ;
 class_< IAAFTypeDefVariableArrayExSP > ("IAAFTypeDefVariableArrayExSP")
 .def("to_TypeDefVariableArrayExSP", query_interface_pass_through<IAAFTypeDefVariableArrayExSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTypeDefVariableArrayEx > )
 .def("GetClassName",PyGetTypeCategory<IAAFTypeDefVariableArrayExSP, AxTypeDefVariableArrayEx> )
 ;
 class_< IAAFAES3PCMDescriptorSP > ("IAAFAES3PCMDescriptorSP")
 .def("to_AES3PCMDescriptorSP", query_interface_pass_through<IAAFAES3PCMDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFAES3PCMDescriptor > )
 ;
 class_< IAAFAuxiliaryDescriptorSP > ("IAAFAuxiliaryDescriptorSP")
 .def("to_AuxiliaryDescriptorSP", query_interface_pass_through<IAAFAuxiliaryDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFAuxiliaryDescriptor > )
 .def("GetClassName",PyGetClassName<IAAFAuxiliaryDescriptor, AxAuxiliaryDescriptor> )
 ;
 class_< IAAFComponent2SP > ("IAAFComponent2SP")
 .def("to_Component2SP", query_interface_pass_through<IAAFComponent2SP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFComponent2 > )
 .def("to_TransitionSP", query_interface<IAAFComponent2, IAAFTransition > )
 .def("to_SegmentSP", query_interface<IAAFComponent2, IAAFSegment > )
 .def("to_TimecodeSP", query_interface<IAAFComponent2, IAAFTimecode > )
@@ -816,38 +946,47 @@ class_< IAAFComponent2SP > ("IAAFComponent2SP")
 ;
 class_< IAAFDataDef2SP > ("IAAFDataDef2SP")
 .def("to_DataDef2SP", query_interface_pass_through<IAAFDataDef2SP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFDataDef2 > )
 .def("GetClassName",PyGetClassName<IAAFDataDef2, AxDataDef> )
 ;
 class_< IAAFDataDef3SP > ("IAAFDataDef3SP")
 .def("to_DataDef3SP", query_interface_pass_through<IAAFDataDef3SP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFDataDef3 > )
 .def("GetClassName",PyGetClassName<IAAFDataDef3, AxDataDef> )
 ;
 class_< IAAFDescriptiveFrameworkSP > ("IAAFDescriptiveFrameworkSP")
 .def("to_DescriptiveFrameworkSP", query_interface_pass_through<IAAFDescriptiveFrameworkSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFDescriptiveFramework > )
 .def("GetClassName",PyGetClassName<IAAFDescriptiveFramework, AxDescriptiveFramework> )
 ;
 class_< IAAFDescriptiveMarkerSP > ("IAAFDescriptiveMarkerSP")
 .def("to_DescriptiveMarkerSP", query_interface_pass_through<IAAFDescriptiveMarkerSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFDescriptiveMarker > )
 .def("GetClassName",PyGetClassName<IAAFDescriptiveMarker, AxDescriptiveMarker> )
 ;
 class_< IAAFDictionary2SP > ("IAAFDictionary2SP")
 .def("to_Dictionary2SP", query_interface_pass_through<IAAFDictionary2SP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFDictionary2 > )
 .def("GetClassName",PyGetClassName<IAAFDictionary2, AxDictionary> )
 ;
 class_< IAAFHeader2SP > ("IAAFHeader2SP")
 .def("to_Header2SP", query_interface_pass_through<IAAFHeader2SP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFHeader2 > )
 .def("GetClassName",PyGetClassName<IAAFHeader2, AxHeader> )
 ;
 class_< IAAFImportDescriptorSP > ("IAAFImportDescriptorSP")
 .def("to_ImportDescriptorSP", query_interface_pass_through<IAAFImportDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFImportDescriptor > )
 .def("GetClassName",PyGetClassName<IAAFImportDescriptor, AxImportDescriptor> )
 ;
 class_< IAAFKLVDataDefinitionSP > ("IAAFKLVDataDefinitionSP")
 .def("to_KLVDataDefinitionSP", query_interface_pass_through<IAAFKLVDataDefinitionSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFKLVDataDefinition > )
 .def("GetClassName",PyGetClassName<IAAFKLVDataDefinition, AxKLVDataDef> )
 ;
 class_< IAAFMob2SP > ("IAAFMob2SP")
 .def("to_Mob2SP", query_interface_pass_through<IAAFMob2SP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFMob2 > )
 .def("to_MasterMobSP", query_interface<IAAFMob2, IAAFMasterMob > )
 .def("to_MasterMob2SP", query_interface<IAAFMob2, IAAFMasterMob2 > )
 .def("to_MasterMobExSP", query_interface<IAAFMob2, IAAFMasterMobEx > )
@@ -858,13 +997,16 @@ class_< IAAFMob2SP > ("IAAFMob2SP")
 ;
 class_< IAAFMultipleDescriptorSP > ("IAAFMultipleDescriptorSP")
 .def("to_MultipleDescriptorSP", query_interface_pass_through<IAAFMultipleDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFMultipleDescriptor > )
 ;
 class_< IAAFPCMDescriptorSP > ("IAAFPCMDescriptorSP")
 .def("to_PCMDescriptorSP", query_interface_pass_through<IAAFPCMDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFPCMDescriptor > )
 .def("GetClassName",PyGetClassName<IAAFPCMDescriptor, AxPCMDescriptor> )
 ;
 class_< IAAFPhysicalDescriptorSP > ("IAAFPhysicalDescriptorSP")
 .def("to_PhysicalDescriptorSP", query_interface_pass_through<IAAFPhysicalDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFPhysicalDescriptor > )
 .def("to_ImportDescriptorSP", query_interface<IAAFPhysicalDescriptor, IAAFImportDescriptor > )
 .def("to_RecordingDescriptorSP", query_interface<IAAFPhysicalDescriptor, IAAFRecordingDescriptor > )
 .def("to_AuxiliaryDescriptorSP", query_interface<IAAFPhysicalDescriptor, IAAFAuxiliaryDescriptor > )
@@ -872,77 +1014,99 @@ class_< IAAFPhysicalDescriptorSP > ("IAAFPhysicalDescriptorSP")
 ;
 class_< IAAFRecordingDescriptorSP > ("IAAFRecordingDescriptorSP")
 .def("to_RecordingDescriptorSP", query_interface_pass_through<IAAFRecordingDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFRecordingDescriptor > )
 .def("GetClassName",PyGetClassName<IAAFRecordingDescriptor, AxRecordingDescriptor> )
 ;
 class_< IAAFRGBADescriptor2SP > ("IAAFRGBADescriptor2SP")
 .def("to_RGBADescriptor2SP", query_interface_pass_through<IAAFRGBADescriptor2SP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFRGBADescriptor2 > )
 .def("GetClassName",PyGetClassName<IAAFRGBADescriptor2, AxRGBADescriptor> )
 ;
 class_< IAAFSoundDescriptorSP > ("IAAFSoundDescriptorSP")
 .def("to_SoundDescriptorSP", query_interface_pass_through<IAAFSoundDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFSoundDescriptor > )
 .def("to_PCMDescriptorSP", query_interface<IAAFSoundDescriptor, IAAFPCMDescriptor > )
 .def("GetClassName",PyGetClassName<IAAFSoundDescriptor, AxSoundDescriptor> )
 ;
 class_< IAAFTaggedValueDefinitionSP > ("IAAFTaggedValueDefinitionSP")
 .def("to_TaggedValueDefinitionSP", query_interface_pass_through<IAAFTaggedValueDefinitionSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTaggedValueDefinition > )
 .def("GetClassName",PyGetClassName<IAAFTaggedValueDefinition, AxTaggedValueDef> )
 ;
 class_< IAAFTimelineMobSlot2SP > ("IAAFTimelineMobSlot2SP")
 .def("to_TimelineMobSlot2SP", query_interface_pass_through<IAAFTimelineMobSlot2SP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFTimelineMobSlot2 > )
 .def("GetClassName",PyGetClassName<IAAFTimelineMobSlot2, AxTimelineMobSlot> )
 ;
 class_< IEnumAAFKLVDataDefsSP > ("IEnumAAFKLVDataDefsSP")
 .def("to_IEnumAAFKLVDataDefsSP", query_interface_pass_through<IEnumAAFKLVDataDefsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFKLVDataDefs > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFKLVDataDefsSP, classname_IEnumAAFKLVDataDefs> )
 ;
 class_< IEnumAAFTaggedValueDefsSP > ("IEnumAAFTaggedValueDefsSP")
 .def("to_IEnumAAFTaggedValueDefsSP", query_interface_pass_through<IEnumAAFTaggedValueDefsSP > )
+.def("ResolveSP", resolve_any_smartpointer< IEnumAAFTaggedValueDefs > )
 .def("GetClassName",PyGetClassName_from_string<IEnumAAFTaggedValueDefsSP, classname_IEnumAAFTaggedValueDefs> )
 ;
 class_< IAAFBWFImportDescriptorSP > ("IAAFBWFImportDescriptorSP")
 .def("to_BWFImportDescriptorSP", query_interface_pass_through<IAAFBWFImportDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFBWFImportDescriptor > )
 ;
 class_< IAAFDataEssenceDescriptorSP > ("IAAFDataEssenceDescriptorSP")
 .def("to_DataEssenceDescriptorSP", query_interface_pass_through<IAAFDataEssenceDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFDataEssenceDescriptor > )
 ;
 class_< IAAFDescriptiveClipSP > ("IAAFDescriptiveClipSP")
 .def("to_DescriptiveClipSP", query_interface_pass_through<IAAFDescriptiveClipSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFDescriptiveClip > )
 ;
 class_< IAAFDescriptiveObjectSP > ("IAAFDescriptiveObjectSP")
 .def("to_DescriptiveObjectSP", query_interface_pass_through<IAAFDescriptiveObjectSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFDescriptiveObject > )
 ;
 class_< IAAFMPEGVideoDescriptorSP > ("IAAFMPEGVideoDescriptorSP")
 .def("to_MPEGVideoDescriptorSP", query_interface_pass_through<IAAFMPEGVideoDescriptorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFMPEGVideoDescriptor > )
 ;
 class_< IAAFRIFFChunkSP > ("IAAFRIFFChunkSP")
 .def("to_RIFFChunkSP", query_interface_pass_through<IAAFRIFFChunkSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFRIFFChunk > )
 ;
 class_< IAAFPluginSP > ("IAAFPluginSP")
 .def("to_IAAFPluginSP", query_interface_pass_through<IAAFPluginSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFPlugin > )
 ;
 class_< IAAFClassExtensionSP > ("IAAFClassExtensionSP")
 .def("to_IAAFClassExtensionSP", query_interface_pass_through<IAAFClassExtensionSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFClassExtension > )
 ;
 class_< IAAFEssenceStreamSP > ("IAAFEssenceStreamSP")
 .def("to_IAAFEssenceStreamSP", query_interface_pass_through<IAAFEssenceStreamSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFEssenceStream > )
 ;
 class_< IAAFEssenceDataStreamSP > ("IAAFEssenceDataStreamSP")
 .def("to_IAAFEssenceDataStreamSP", query_interface_pass_through<IAAFEssenceDataStreamSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFEssenceDataStream > )
 ;
 class_< IAAFEssenceCodecSP > ("IAAFEssenceCodecSP")
 .def("to_IAAFEssenceCodecSP", query_interface_pass_through<IAAFEssenceCodecSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFEssenceCodec > )
 ;
 class_< IAAFMultiEssenceCodecSP > ("IAAFMultiEssenceCodecSP")
 .def("to_IAAFMultiEssenceCodecSP", query_interface_pass_through<IAAFMultiEssenceCodecSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFMultiEssenceCodec > )
 ;
 class_< IAAFEssenceContainerSP > ("IAAFEssenceContainerSP")
 .def("to_IAAFEssenceContainerSP", query_interface_pass_through<IAAFEssenceContainerSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFEssenceContainer > )
 ;
 class_< IAAFInterpolatorSP > ("IAAFInterpolatorSP")
 .def("to_IAAFInterpolatorSP", query_interface_pass_through<IAAFInterpolatorSP > )
+.def("ResolveSP", resolve_any_smartpointer< IAAFInterpolator > )
 ;
 class_< IUnknownSP > ("IUnknownSP")
 .def("to_IUnknownSP", query_interface_pass_through<IUnknownSP > )
+.def("ResolveSP", resolve_any_smartpointer< IUnknown > )
 .def("GetClassName",PyGetClassName_from_string<IUnknownSP, classname_IUnknown> )
 ;
 }
