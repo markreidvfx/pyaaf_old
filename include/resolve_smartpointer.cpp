@@ -53,7 +53,7 @@ boost::python::object resolve_object(IAAFObjectSP sp)
     CASE(ContentStorage)
     
     CASE( AIFCDescriptor )
-    CASE( ClassDef )
+//    CASE( ClassDef )
     CASE( CodecDef )
     CASE( CommentMarker )
     CASE( Component )
@@ -93,7 +93,7 @@ boost::python::object resolve_object(IAAFObjectSP sp)
     CASE( MasterMob )
     CASE( MasterMob2 )
     CASE( MasterMobEx )
-    CASE( MetaDefinition )
+//    CASE( MetaDefinition )
     CASE( Mob )
     CASE( MobSlot )
     CASE( NestedScope )
@@ -102,7 +102,7 @@ boost::python::object resolve_object(IAAFObjectSP sp)
     CASE( Parameter )
 //    CASE( ParameterDef )
 //    CASE( Property )
-    CASE( PropertyDef )
+//    CASE( PropertyDef )
 //    CASE( PropertyValue )
     CASE( PluginManager )
     CASE( Pulldown )
@@ -210,54 +210,76 @@ boost::python::object resolve_object(IAAFObjectSP sp)
     }
 }
 
-boost::python::object resolve_typedef(IAAFTypeDefSP spTypeDef)
+boost::python::object resolve_metadef(IUnknownSP spMetaDef)
 {
     
-    AxTypeDef axTypeDef(spTypeDef);
-    eAAFTypeCategory_t cat = axTypeDef.GetTypeCategory();
     
-    switch( cat )
+    
+    if (isClassType<IAAFTypeDef>(spMetaDef) )
     {
             
-            #define CASE(T)	\
-            case kAAFTypeCat##T :	\
-            { \
-            IAAFTypeDef##T##SP sp; \
-            AxQueryInterface( axTypeDef.GetTypeDefSP(), sp ); \
-            return boost::python::object(sp); \
-            }
-            
-            CASE( Int )
-            CASE( Character )
-            CASE( StrongObjRef )
-            CASE( WeakObjRef )
-            CASE( Rename )
-            CASE( Enum )
-            CASE( FixedArray )
-            CASE( Set )
-            CASE( Record )
-            CASE( Stream )
-            CASE( String )
-            CASE( ExtEnum )
-            CASE( Indirect )
-            CASE( Opaque )
-            CASE( VariableArray )
-            
-            #undef CASE
-            
-        case kAAFTypeCatUnknown:
-            // FIXME - What to do here?  Get RawAccessType perhaps, but how is that
-            // distinquished from encrypted using only the process() argument type?
-            break;
-        case kAAFTypeCatEncrypted:
-            // FIXME - see kAAFTypeCatUnknown above.
-            break;
-            
-        default:
-            throw AxExBadImp( L"unknown type category" );
-            
+        IAAFTypeDefSP spTypeDef =  AxQueryInterface<IUnknown,IAAFTypeDef>(spMetaDef);
+        AxTypeDef axTypeDef(spTypeDef);
+        eAAFTypeCategory_t cat = axTypeDef.GetTypeCategory();
+        
+        switch( cat )
+        {
+                
+                #define CASE(T)	\
+                case kAAFTypeCat##T :	\
+                { \
+                IAAFTypeDef##T##SP sp; \
+                AxQueryInterface( axTypeDef.GetTypeDefSP(), sp ); \
+                return boost::python::object(sp); \
+                }
+                
+                CASE( Int )
+                CASE( Character )
+                CASE( StrongObjRef )
+                CASE( WeakObjRef )
+                CASE( Rename )
+                CASE( Enum )
+                CASE( FixedArray )
+                CASE( Set )
+                CASE( Record )
+                CASE( Stream )
+                CASE( String )
+                CASE( ExtEnum )
+                CASE( Indirect )
+                CASE( Opaque )
+                CASE( VariableArray )
+                
+                #undef CASE
+                
+            case kAAFTypeCatUnknown:
+                // FIXME - What to do here?  Get RawAccessType perhaps, but how is that
+                // distinquished from encrypted using only the process() argument type?
+                break;
+            case kAAFTypeCatEncrypted:
+                // FIXME - see kAAFTypeCatUnknown above.
+                break;
+                
+            default:
+                throw AxExBadImp( L"unknown type category" );
+                
+        }
     }
+    
+    #define CASE(T)	\
+    else if (isClassType<IAAF##T>(spMetaDef) ){	\
+    IAAF##T##SP spItem = AxQueryInterface<IUnknown,IAAF##T>(spMetaDef);	\
+    return boost::python::object(spItem);}
+    
+    CASE(ClassDef)
+    CASE(PropertyDef)
 
+    #undef CASE
+
+    else
+    {
+        
+        throw AxExBadImp( L"unknown typeDef category" );
+    }
     
     return boost::python::object();
 }
@@ -320,11 +342,9 @@ boost::python::object resolve_smartpointer(IUnknownSP sp)
         
     }
     
-    else if (isClassType<IAAFTypeDef>(sp))
+    else if (isClassType<IAAFMetaDefinition>(sp))
     {
-        IAAFTypeDefSP spObject = AxQueryInterface<IUnknown,IAAFTypeDef>(sp);
-        
-        return resolve_typedef(spObject);
+        return resolve_metadef(sp);
         
     }
     
