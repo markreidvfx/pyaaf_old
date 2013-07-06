@@ -4,17 +4,22 @@ import pickle
 import os
 
 AX_NAME_REPLACERS = (("",""),("Definition","Def"),
-                     ('EdgeCode','Edgecode'),
-                     ("Avid MC Mob Reference","Object"))
+                     ('EdgeCode','Edgecode'))
 
 def Ax(sp):
     """
-    converts smartpointer(SP) object to corresponding AxObject.
-    if sp does not have the a method named GetClassName the object is returned as is
+    converts a smartpointer (objects prefixed with SP) object to a AxObject.
+    if sp is not a smartpointer the object is returned as is.
     """
-    
-    if not hasattr(sp,"GetClassName"):
+    # if not a smartpointer return sp
+    if not isinstance(sp, core.smartpointers.AxSmartPointer):
         return sp
+    
+    sp = sp.ResolveSP()
+    
+    #if sp is a IAAFObjectSP After resolving, return a AxObject
+    if isinstance(sp, core.smartpointers.IAAFObjectSP):
+        return core.AxObject(sp)
     
     class_name = sp.GetClassName()
     
@@ -45,28 +50,16 @@ def Ax(sp):
         
         class_object = get_AxClass(sp)
         if not class_object:
-            raise ValueError("no AxObject for %s %s" % (class_name,str(sp)))
-        
-        #if sp is already a AxObject simple return it
-        if isinstance(sp, class_object):
-            return sp
-        
-        methodToCall = None
-        name = class_name
-        for old, new in AX_NAME_REPLACERS:
-            name = name.replace(old,new)
-            method = 'to_%sSP' % name
-            if hasattr(sp,method):
-                methodToCall = getattr(sp, method)
-        
-        if not methodToCall:
-            raise ValueError("no smartpointer conversion for %s %s" % (class_name, str(sp)))
-                
-        return class_object(methodToCall())
+            raise ValueError("no AxObject found for %s %s" % (class_name,str(sp)))
+
+        return class_object(sp)
     
 def get_AxClass(sp):
     
-    if not hasattr(sp,"GetClassName"):
+    """find the Ax Class for a given smartpointer
+    """
+    
+    if not isinstance(sp, core.smartpointers.AxSmartPointer):
         return None
     class_name = sp.GetClassName() 
     
