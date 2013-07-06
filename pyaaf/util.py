@@ -21,6 +21,9 @@ def Ax(sp):
     if isinstance(sp, core.smartpointers.IAAFObjectSP):
         return core.AxObject(sp)
     
+    if not hasattr(sp, "GetClassName"):
+        return sp
+    
     class_name = sp.GetClassName()
     
     #iterators are wrap in a AxIterWraper 
@@ -50,6 +53,7 @@ def Ax(sp):
         
         class_object = get_AxClass(sp)
         if not class_object:
+
             raise ValueError("no AxObject found for %s %s" % (class_name,str(sp)))
 
         return class_object(sp)
