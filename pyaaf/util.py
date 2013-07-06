@@ -3,7 +3,9 @@ import core
 import pickle
 import os
 
-AX_NAME_REPLACERS = (("",""),("Definition","Def"),('EdgeCode','Edgecode'))
+AX_NAME_REPLACERS = (("",""),("Definition","Def"),
+                     ('EdgeCode','Edgecode'),
+                     ("Avid MC Mob Reference","Object"))
 
 def Ax(sp):
     """
@@ -38,12 +40,12 @@ def Ax(sp):
            return AxIterWraper(class_object(sp))
        
        else:
-           raise ValueError("unknown Ax iterator for %s" % class_name)
+           raise ValueError("unknown Ax iterator for %s %s" % (class_name, str(sp)) )
     else:
         
         class_object = get_AxClass(sp)
         if not class_object:
-            raise ValueError(class_name)
+            raise ValueError("no AxObject for %s %s" % (class_name,str(sp)))
         
         #if sp is already a AxObject simple return it
         if isinstance(sp, class_object):
@@ -58,7 +60,7 @@ def Ax(sp):
                 methodToCall = getattr(sp, method)
         
         if not methodToCall:
-            raise ValueError("no smartpointer conversion for %s" % class_name)
+            raise ValueError("no smartpointer conversion for %s %s" % (class_name, str(sp)))
                 
         return class_object(methodToCall())
     
@@ -110,8 +112,6 @@ def __AxWrap(d):
         if name in skip:
             pass
         elif name.startswith("Ax"):
-            
-            
             __AxWrapClass(obj,docs.get(name) or {})
             
 
