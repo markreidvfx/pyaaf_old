@@ -301,31 +301,18 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefStringSP& s
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefStrongObjRefSP& spTypeDef)
 {
-    
     AxTypeDefStrongObjRef axDefRef(spTypeDef);
     
-    IAAFObjectSP spObj = axDefRef.GetObject<IAAFObject>(spPropVal);
-    _obj = boost::python::object(spObj);
+    IUnknownSP spObj = axDefRef.GetObject<IUnknown>(spPropVal);
+    _obj = resolve_smartpointer(spObj);
 }
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefWeakObjRefSP& spTypeDef)
 {
     AxTypeDefWeakObjRef axDefWRef(spTypeDef);
-    AxClassDef axClasDef(axDefWRef.GetObjectType());
-      
-    if (axClasDef.IsConcrete())
-    {
-        
-    IAAFObjectSP spObj = axDefWRef.GetObject<IAAFObject>(spPropVal);
-    _obj = boost::python::object(spObj);
-    }
     
-    else
-    {
-    IAAFTypeDefSP spObj = axDefWRef.GetObject<IAAFTypeDef>(spPropVal);
-    _obj = boost::python::object(spObj);
-    }
-    
+    IUnknownSP spObj = axDefWRef.GetObject<IUnknown>(spPropVal);
+    _obj = resolve_smartpointer(spObj);
 }
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefObjectRefSP& spTypeDef)

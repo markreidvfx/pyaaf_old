@@ -13,6 +13,7 @@
 #include <AxUtil.h>
 #include <AAFTypeDefUIDs.h>
 #include <utilities.h>
+#include <resolve_smartpointer.h>
 
 
 class PyGetValue : public AxPropertyValueNoopPrtcl {
