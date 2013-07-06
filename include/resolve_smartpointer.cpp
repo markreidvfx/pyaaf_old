@@ -201,9 +201,7 @@ boost::python::object resolve_object(IAAFObjectSP sp)
     else
     {
     std::cout <<"* Unable To Resovle" << classname << "\n";
-    //throw AxExBadImp( L"unknown IAAFObjectSP type category" );
 
-    
     return boost::python::object(sp);
     
     
@@ -251,16 +249,8 @@ boost::python::object resolve_metadef(IUnknownSP spMetaDef)
                 
                 #undef CASE
                 
-            case kAAFTypeCatUnknown:
-                // FIXME - What to do here?  Get RawAccessType perhaps, but how is that
-                // distinquished from encrypted using only the process() argument type?
-                break;
-            case kAAFTypeCatEncrypted:
-                // FIXME - see kAAFTypeCatUnknown above.
-                break;
-                
             default:
-                throw AxExBadImp( L"unknown type category" );
+                throw AxExBadImp( L"unknown typeDef category" );
                 
         }
     }
