@@ -49,10 +49,11 @@ Include("resolve_smartpointer.h")
 declaration_code = 'declaration_code("""\n'
 
 declaration_code += 'class SmartPointers {};\n'
-
+declaration_code += 'class AxSmartPointer {};\n'
 
 pyste += 'module_code("""\n'
 pyste += 'scope smartpointers = class_<SmartPointers>("smartpointers");\n'
+pyste += 'class_<AxSmartPointer>("AxSmartPointer");\n'
 
 for line in s.splitlines():
     
@@ -80,7 +81,7 @@ for line in s.splitlines():
             
             #print pointer_name
             
-            string =  'class_< %s > ("%s")\n' 
+            string =  'class_< %s , bases < AxSmartPointer >  > ("%s")\n' 
             string = string % (pointer_name,pointer_name)
             
             string += '.def("to_%sSP", query_interface_pass_through<%s > )\n' % ( name, pointer_name)
