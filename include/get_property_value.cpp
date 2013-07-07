@@ -286,7 +286,10 @@ void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefSetSP& spTy
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefStreamSP& spTypeDef)
 {
-    throw std::invalid_argument("IAAFTypeDefStreamSP Not Implemented");
+    
+    //TODO Implemented THIS
+    //std::cout << "IAAFTypeDefStreamSP GetValue Not Implemented Yet\n";
+    _obj = boost::python::object(0);
 }
 
 void PyGetValue::process( IAAFPropertyValueSP& spPropVal, IAAFTypeDefStringSP& spTypeDef)
