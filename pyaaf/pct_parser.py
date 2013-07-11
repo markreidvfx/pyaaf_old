@@ -103,9 +103,17 @@ def pct_parser(data):
         offset = length + 6
         data_chunk = data[i+6:i+offset]
         
+
+            
+        if key2 in (101,100):
+            chunks.append(parse_chunk((key1,key2),data_chunk))
+            
+        elif key2 in (104,102):
+            #marque data
+            break
         
-        
-        chunks.append(parse_chunk((key1,key2),data_chunk))
+        else:
+            raise ValueError("Unkown data type %i" % key2)
         
         #move to the next chunk
         i += offset
