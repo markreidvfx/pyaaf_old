@@ -691,16 +691,24 @@ def SetMob(mob,grahicsview):
         
             
         last_transition = 0
+        last_clip = None
         for component in components:
             component_length = component.GetLength() -last_transition
             
             if isinstance(component,pyaaf.AxTransition):
-                last_transition = component_length
-                #clip = track.addClip(component_length)
-                #clip.setBrush(Qt.blue)
+                cutpoint = component.GetCutPoint()
+
+                tail_shorten = component_length-cutpoint
+                
+                if last_clip:
+                    last_clip.length -= tail_shorten
+                    track.length -= tail_shorten
+                
+                last_transition = cutpoint
             else:
             
                 clip = track.addClip(component_length)
+                last_clip = clip
                 if isinstance(component,(pyaaf.AxFiller,pyaaf.AxScopeReference)):
                     
                     clip.setBrush(Qt.gray)
