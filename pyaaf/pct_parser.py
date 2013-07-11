@@ -53,7 +53,7 @@ def first_byte(data):
     for i in xrange(len(data)-10):
 
         key1,key2,length,avid  = struct.unpack(">HHH4s",data[i:i+10])
-        if key1 == 161 and key2 in (100,101) and avid == "AVID":
+        if key1 == 161 and key2 in (100,101,102,104) and avid == "AVID":
             return i
 
     raise ValueError("Invalid Data")
@@ -104,12 +104,16 @@ def pct_parser(data):
         data_chunk = data[i+6:i+offset]
         
 
-            
         if key2 in (101,100):
             chunks.append(parse_chunk((key1,key2),data_chunk))
             
-        elif key2 in (104,102):
-            #marque data
+        elif key2 in (102,104):
+            end = first_byte(data[i+6:])
+            marque_data = data[i+6 + 4:i+end+6]
+            chunks.append({"id":(key1,key2),
+                           "type":"MarqueTitle",
+                           'data':str(marque_data)})
+            
             break
         
         else:
