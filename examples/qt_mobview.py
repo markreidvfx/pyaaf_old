@@ -656,13 +656,13 @@ def AddMobFromIndex(index,grahicsview):
         SetMob(mob,grahicsview)
         
         
-def get_video_tracks(mob):
+def get_tracks(mob,trackType= 'Picture'):
     tracks = []
     
     for slot in mob.GetSlots():
         segment = slot.GetSegment()
 
-        if segment.GetDataDef().GetName() == "Picture":
+        if segment.GetDataDef().GetName() == trackType:
             if isinstance(segment, pyaaf.AxNestedScope):
                 
                 for nested_segment in segment.GetSegments():
@@ -676,7 +676,15 @@ def get_video_tracks(mob):
                 
             elif isinstance(segment, pyaaf.AxSourceClip):
                 tracks.append([segment])
-
+                
+            elif isinstance(segment, pyaaf.AxSelector):
+                tracks.append([segment.GetSelectedSegment()])
+                
+            elif isinstance(segment, pyaaf.AxEssenceGroup):
+                choices = []
+                for c in xrange(segment.CountChoices()):
+                    choices.append(segment.GetChoiceAt(c))
+                tracks.append(choices)
     return tracks
 
 def get_transition_offset(index,component_list):
@@ -707,11 +715,11 @@ def SetMob(mob,grahicsview):
     
     scene.clear()
     
-    video_tracks = get_video_tracks(mob)
+    video_tracks = get_tracks(mob)
     
     for track_num, components in reversed(list(enumerate(video_tracks))):
         track = scene.addTrack()
-        track.name = "Track %i" % (track_num+1)
+        track.name = "Track V%i" % (track_num+1)
         length = 0
         for i,component in enumerate(components):
             
