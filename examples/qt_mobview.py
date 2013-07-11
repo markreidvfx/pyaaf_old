@@ -655,65 +655,77 @@ def AddMobFromIndex(index,grahicsview):
     if isinstance(mob, pyaaf.AxMob):
         SetMob(mob,grahicsview)
         
+        
+def get_video_tracks(mob):
+    tracks = []
+    
+    for slot in mob.GetSlots():
+        segment = slot.GetSegment()
+
+        if segment.GetDataDef().GetName() == "Picture":
+            if isinstance(segment, pyaaf.AxNestedScope):
+                
+                for nested_segment in segment.GetSegments():
+                    
+                    if isinstance(nested_segment, pyaaf.AxSequence):
+                        tracks.append(list(nested_segment.GetComponents()))
+                        
+                
+            elif isinstance(segment, pyaaf.AxSequence):
+                tracks.append(list(segment.GetComponents()))
+                
+            elif isinstance(segment, pyaaf.AxSourceClip):
+                tracks.append([segment])
+
+    return tracks
+
+def get_transition_offset(index,component_list):
+    
+    offset = 0
+
+    nextItem = None
+    prevousItem = None
+    
+    if len(component_list) > index + 1:
+        nextItem = component_list[index + 1]
+        
+    if index != 0:
+        prevousItem = component_list[index -1]
+
+    if isinstance(nextItem, pyaaf.AxTransition):
+        offset -= nextItem.GetLength() - nextItem.GetCutPoint()
+
+    if isinstance(prevousItem, pyaaf.AxTransition):
+        offset -= prevousItem.GetCutPoint()
+        
+    return offset
+        
 
 def SetMob(mob,grahicsview):
 
     scene = grahicsview.scene()
-    sequences = []   
-    for slot in mob.GetSlots():
-        if isinstance(slot, (pyaaf.AxTimelineMobSlot)):
-            segment = slot.GetSegment()
-             
-            if isinstance(segment, pyaaf.AxSequence):
-                sequences.append(segment)
-             
-            elif isinstance(segment, pyaaf.AxNestedScope):
-                for seq in segment.GetSegments():
-                    if isinstance(seq, pyaaf.AxSequence):
-                        sequences.append(seq)
-                        
-            elif isinstance(segment, pyaaf.AxSourceClip):
-                sequences.append(segment)
+    
     scene.clear()
-    i = 0   
-    for i, seq in reversed(list(enumerate(sequences))):
-        
+    
+    video_tracks = get_video_tracks(mob)
+    
+    for track_num, components in reversed(list(enumerate(video_tracks))):
         track = scene.addTrack()
-        track.name = "Track %i" % i
-        
-        
-        if isinstance(seq, pyaaf.AxSequence):
-            components = list(seq.GetComponents())
+        track.name = "Track %i" % (track_num+1)
+        length = 0
+        for i,component in enumerate(components):
             
-        else:
-            components = [seq]
-        
-        
-            
-        last_transition = 0
-        last_clip = None
-        for component in components:
-            component_length = component.GetLength() -last_transition
-            
-            if isinstance(component,pyaaf.AxTransition):
-                cutpoint = component.GetCutPoint()
-
-                tail_shorten = component_length-cutpoint
+            if not isinstance(component,pyaaf.AxTransition):
                 
-                if last_clip:
-                    last_clip.length -= tail_shorten
-                    track.length -= tail_shorten
+                transition_offset = get_transition_offset(i,components)
+                component_length = component.GetLength() + transition_offset
                 
-                last_transition = cutpoint
-            else:
-            
                 clip = track.addClip(component_length)
                 last_clip = clip
+                #make filler and scope grey
                 if isinstance(component,(pyaaf.AxFiller,pyaaf.AxScopeReference)):
-                    
                     clip.setBrush(Qt.gray)
-                #elif isinstance(component, pyaaf.AxScopeReference):
-                    #clip.setBrush(Qt.gray)
+
                 else:
                     clip.setBrush(Qt.red)
                     
@@ -731,15 +743,8 @@ def SetMob(mob,grahicsview):
                 if name:
                     clip.name = name
                     clip.adjust()
-                    
-                last_transition = 0
-        
-            #clip.adjust()
-
-
-
-
-
+                
+                length += component_length
 
 
 if __name__ == "__main__":

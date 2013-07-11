@@ -22,9 +22,11 @@ def get_video_tracks(mob):
                     if isinstance(nested_segment, pyaaf.AxSequence):
                         tracks.append(list(nested_segment.GetComponents()))
                         
-                
             elif isinstance(segment, pyaaf.AxSequence):
                 tracks.append(list(segment.GetComponents()))
+                
+            elif isinstance(segment, pyaaf.AxSourceClip):
+                tracks.append([segment])
 
     return tracks
 
