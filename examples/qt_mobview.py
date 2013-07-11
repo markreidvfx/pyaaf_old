@@ -707,7 +707,37 @@ def get_transition_offset(index,component_list):
         offset -= prevousItem.GetCutPoint()
         
     return offset
+
+def get_source_clip_name(item):
+    
+    try:
+        ref = item.ResolveRef()
+        name = ref.GetName()
+        return name
+    except:
+        pass
+    
+    return None
+
+def get_operation_group_name(item):
+    
+    operation_name = item.GetOperationDef().GetName()
+    for i in xrange(item.CountSourceSegments()):
+        segment = item.GetInputSegmentAt(i)
         
+        if isinstance(segment, pyaaf.AxSourceClip):
+            name = get_source_clip_name(segment)
+            if name:
+                return "%s(%s)" % (name,operation_name)
+        
+        else:
+            for component in segment.GetComponents():
+                #print component
+                if isinstance(component, pyaaf.AxSourceClip):
+                    name = get_source_clip_name(component)
+                    if name:
+                        return "%s(%s)" % (name,operation_name)
+
 
 def SetMob(mob,grahicsview):
 
@@ -739,14 +769,14 @@ def SetMob(mob,grahicsview):
                     
                 name = None 
                 if isinstance(component, pyaaf.AxSourceClip):
-                    try:
-                        ref = component.ResolveRef()
-                        name = ref.GetName()
-                    except:
-                        pass
+                    name = get_source_clip_name(component)
                     
                 elif isinstance(component, pyaaf.AxOperationGroup):
-                    name = component.GetOperationDef().GetName()
+                    
+                    #segment = component.GetInputSegmentAt(0)
+                    name = get_operation_group_name(component)
+                    if not name:
+                        name = component.GetOperationDef().GetName()
                 
                 if name:
                     clip.name = name
