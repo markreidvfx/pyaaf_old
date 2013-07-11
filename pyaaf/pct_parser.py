@@ -45,19 +45,18 @@ def parse_chunk(id,data):
             
     return d
 
+    
 def first_byte(data):
     """
-    if the data source is a AvidBagOfBits the data starts on the first byte
-    if the data source is a .pct or .pict file the first byte is 512
-    so if there is a unsigned short in the first two bytes assume its a AvidBagOfBits
+    seek until you find a an int with a value of 161, 101 and string name AVID
     """
-    
-    if struct.unpack(">H", data[:2])[0]:
-        return 0
-    else:
-        return 512
-        
+    for i in xrange(len(data)-10):
 
+        key1,key2,length,avid  = struct.unpack(">HHH4s",data[i:i+10])
+        if key1 == 161 and key2 in (100,101) and avid == "AVID":
+            return i
+
+    raise ValueError("Invalid Data")
 
 def pct_parser(data):
     """
@@ -72,9 +71,11 @@ def pct_parser(data):
     return a list of dictionaries
     """
     
-    i = first_byte(data) + 40 #main data doesn't seem to start till 40 in
+    i = first_byte(data)
     chunks = []
     
+    #print find_first_byte(data)
+    #return
     while True:
         
         #the data is broken into chunks
@@ -101,6 +102,7 @@ def pct_parser(data):
 
         offset = length + 6
         data_chunk = data[i+6:i+offset]
+        
         
         
         chunks.append(parse_chunk((key1,key2),data_chunk))
@@ -139,10 +141,11 @@ if __name__ == "__main__":
     
     d = pct_parser(s)
     
+    
     for pct_item in d:
-        
+         
         print "%s:" % pct_item['type']
-        
+         
         for key,value in sorted(pct_item.items()):
             if key == "data":
                 if options.verbose:
