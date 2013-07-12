@@ -63,9 +63,13 @@ class GraphicsClip(QtGui.QGraphicsRectItem):
         self.right = None
         self.name = None
         
+        self._reference = None
+        
         self.setFlag(QtGui.QGraphicsItem.ItemIsSelectable,True)
         
-        
+    def getReference(self):
+        return self._reference
+
     def adjust(self):
         
         height = self.track.height
@@ -110,10 +114,11 @@ class GraphicsTrack(QtGui.QGraphicsRectItem):
         
         
 
-    def addClip(self,length):
+    def addClip(self,length,reference=None):
         
         clip = GraphicsClip(length)
         clip.track = self
+        clip._reference = reference
         
         if self.clips:
             
@@ -758,7 +763,7 @@ def SetMob(mob,grahicsview):
                 transition_offset = get_transition_offset(i,components)
                 component_length = component.GetLength() + transition_offset
                 
-                clip = track.addClip(component_length)
+                clip = track.addClip(component_length,component)
                 last_clip = clip
                 #make filler and scope grey
                 if isinstance(component,(pyaaf.AxFiller,pyaaf.AxScopeReference)):
